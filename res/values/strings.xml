@@ -1727,6 +1727,9 @@
     <!-- About phone screen,  setting option name-->
     <string name="mod_version">Playground ICS version</string>
     <string name="mod_version_default">Undefined</string>
+    <!-- About phone screen, build date of ROM -->
+    <string name="mod_build_date">Build date</string>
+    <string name="mod_build_date_default">2012-01-01-0000</string>
 
     <!-- About phone screen, show when a value of some status item is unavailable. -->
     <string name="device_info_not_available">Not available</string>
@@ -3541,7 +3544,7 @@ found in the list of installed apps.</string>
         for background apps</string>
 
     <!-- UI debug setting: kill app long-press back [CHAR LIMIT=25] -->
-    <string name="kill_app_longpress_back">Kill App Back Button</string>
+    <string name="kill_app_longpress_back">Kill app back button</string>
     <!-- UI debug settting: kill app long-press back [CHAR LIMIT=50] -->
     <string name="kill_app_longpress_back_summary">Kill the foreground app by long-pressing
             the back key</string>
