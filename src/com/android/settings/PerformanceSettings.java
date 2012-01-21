@@ -165,13 +165,13 @@ public class PerformanceSettings extends SettingsPreferenceFragment
 	        String disableBootanimation = SystemProperties.get(DISABLE_BOOTANIMATION_PERSIST_PROP, DISABLE_BOOTANIMATION_DEFAULT);
 	        mDisableBootanimPref.setChecked("1".equals(disableBootanimation));
 
-	        mLockLauncherPref = (CheckBoxPreference) prefSet.findPreference(LOCK_LAUNCHER_PREF);
+	        /*mLockLauncherPref = (CheckBoxPreference) prefSet.findPreference(LOCK_LAUNCHER_PREF);
 	        mLockLauncherPref.setChecked(Settings.System.getInt(getContentResolver(),
-	                Settings.System.LOCK_LAUNCHER_IN_MEMORY, LOCK_LAUNCHER_DEFAULT) == 1);
+	                Settings.System.LOCK_LAUNCHER_IN_MEMORY, LOCK_LAUNCHER_DEFAULT) == 1);*/
 
-	        mLockMessagingPref = (CheckBoxPreference) prefSet.findPreference(LOCK_MESSAGING_PREF);
+	        /*mLockMessagingPref = (CheckBoxPreference) prefSet.findPreference(LOCK_MESSAGING_PREF);
 	        mLockMessagingPref.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-	                Settings.System.LOCK_MESSAGING_IN_MEMORY, LOCK_MESSAGING_DEFAULT) == 1);
+	                Settings.System.LOCK_MESSAGING_IN_MEMORY, LOCK_MESSAGING_DEFAULT) == 1);*/
 
 	        
 	        /* Display the warning dialog */ 
@@ -226,17 +226,17 @@ public class PerformanceSettings extends SettingsPreferenceFragment
             return true;
         }
 
-        if (preference == mLockLauncherPref) {
+        /*if (preference == mLockLauncherPref) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(), 
                     Settings.System.LOCK_LAUNCHER_IN_MEMORY, mLockLauncherPref.isChecked() ? 1 : 0);
             return true;
-        }
+        }*/
 
-        if (preference == mLockMessagingPref) {
+        /*if (preference == mLockMessagingPref) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.LOCK_MESSAGING_IN_MEMORY, mLockMessagingPref.isChecked() ? 1 : 0);
             return true;
-        }
+        }*/
 
         
         return false;
