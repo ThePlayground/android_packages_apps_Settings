@@ -1362,6 +1362,13 @@
     <!-- VM Heap Size -->
     <string name="pref_heapsize_title">VM heap size</string>
     <string name="pref_heapsize_summary">Maximum amount of memory per VM heap (requires reboot)</string>
+    <!-- KSM -->
+    <string name="pref_ksm_title">Kernel samepage merging</string>
+    <string name="pref_ksm_summary">KSM reduces physical memory requirements and improves performance.</string>
+    <string name="pref_ksm_sleep_title">KSM sleep</string>
+    <string name="pref_ksm_sleep_summary">Number of milliseconds KSM should sleep before next scan</string>
+    <string name="pref_ksm_pages_title">KSM pages</string>
+    <string name="pref_ksm_pages_summary">Number of present pages to scan before KSM goes to sleep.</string>
     <!-- Purgeable Assets -->
     <string name="pref_purgeable_assets_title">Allow purging of assets</string>
     <string name="pref_purgeable_assets_summary">Purging of bitmap memory assets allows the freeing of more RAM when needed (requires reboot)</string>

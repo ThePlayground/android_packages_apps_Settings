@@ -32,6 +32,29 @@
         android:title="@string/pref_purgeable_assets_title"
         android:summary="@string/pref_purgeable_assets_summary" />
 
+    <CheckBoxPreference
+        android:key="pref_ksm"
+        android:title="@string/pref_ksm_title"
+        android:summary="@string/pref_ksm_summary" />
+
+    <ListPreference
+        android:key="pref_ksm_pages"
+        android:dialogTitle="@string/pref_ksm_pages_title"
+        android:title="@string/pref_ksm_pages_title"
+        android:summary="@string/pref_ksm_pages_summary"
+        android:entries="@array/entries_ksm_pages"
+        android:entryValues="@array/values_ksm_pages"
+        android:dependency="pref_ksm" />
+
+    <ListPreference
+        android:key="pref_ksm_sleep"
+        android:dialogTitle="@string/pref_ksm_sleep_title"
+        android:title="@string/pref_ksm_sleep_title"
+        android:summary="@string/pref_ksm_sleep_summary"
+        android:entries="@array/entries_ksm_sleep"
+        android:entryValues="@array/values_ksm_sleep"
+        android:dependency="pref_ksm" />
+
     <ListPreference
         android:key="pref_heapsize"
         android:dialogTitle="@string/pref_heapsize_title"
