@@ -35,6 +35,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String TAG = "SystemSettings";
 
     private static final String KEY_FONT_SIZE = "font_size";
+    private static final String KEY_COMBINED_BAR = "combined_bar";
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_POWER_WIDGET = "power_widget";
     private static final String KEY_STATUS_BAR = "status_bar";
