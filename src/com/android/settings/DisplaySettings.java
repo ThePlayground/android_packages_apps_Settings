@@ -235,6 +235,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE,
                     value ? 1 : 0);
             return true;
+
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

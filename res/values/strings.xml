@@ -638,10 +638,8 @@
     <string name="display_settings">Display</string>
     <!-- Sound & display settings screen, accelerometer-based rotation check box label -->
     <string name="accelerometer_title">Auto-rotate screen</string>
-    <!-- Sound & display settings screen, accelerometer-based inverted rotation check box label -->
     <string name="rotate_180_title">Allow 180° rotation</string>
-    <!-- Sound & display settings screen, accelerometer-based inverted rotation summary text when check box is selected -->
-    <string name="rotate_180_summary">Allow your device to rotate upside down</string>
+    <string name="rotate_180_summary">Allow your device to rotate upsideown!</string>
     <!-- Sound & display settings screen, accelerometer-based rotation summary text when check box is selected -->
     <string name="accelerometer_summary_on" product="tablet">Switch orientation automatically when rotating tablet</string>
     <!-- Sound & display settings screen, accelerometer-based rotation summary text when check box is selected -->
@@ -811,7 +809,6 @@
     <string name="status_bar_title">Status bar</string>
     <string name="status_bar_clock_title">Clock</string>
     <string name="status_bar_general_title">General</string>
-    <string name="carrier_text">Custom Carrier Text</string>
     <string name="status_bar_show_clock_title">Show clock</string>
     <string name="status_bar_show_clock_summary">Show the clock in the Status bar</string>
     <string name="status_bar_am_pm_title">AM/PM style</string>
