@@ -53,6 +53,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String PREF_180 = "rotate_180";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
+    private static final String KEY_ELECTRON_BEAM_ANIMATION_ON = "electron_beam_animation_on";
+    private static final String KEY_ELECTRON_BEAM_ANIMATION_OFF = "electron_beam_animation_off";
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
 
     private CheckBoxPreference mVolumeWake;
@@ -60,6 +62,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mAllow180Rotation;
     private CheckBoxPreference mNotificationPulse;
     private CheckBoxPreference mNavigationBar;
+    private CheckBoxPreference mElectronBeamAnimationOn;
+    private CheckBoxPreference mElectronBeamAnimationOff;
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -119,6 +123,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 Settings.System.NAVIGATION_BAR_VISIBLE, 0) == 1);
             mNavigationBar.setOnPreferenceChangeListener(this);
         }
+
+        mElectronBeamAnimationOn = (CheckBoxPreference) findPreference(KEY_ELECTRON_BEAM_ANIMATION_ON);
+        mElectronBeamAnimationOff = (CheckBoxPreference) findPreference(KEY_ELECTRON_BEAM_ANIMATION_OFF);
+        mElectronBeamAnimationOn.setChecked(Settings.System.getInt(resolver,
+                Settings.System.ELECTRON_BEAM_ANIMATION_ON, 0) == 1);
+        mElectronBeamAnimationOff.setChecked(Settings.System.getInt(resolver,
+                Settings.System.ELECTRON_BEAM_ANIMATION_OFF, 1) == 1);
 
 
         mVolumeWake = (CheckBoxPreference) findPreference(KEY_VOLUME_WAKE);
@@ -245,6 +256,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     value ? 1 : 0);
             return true;
 
+        } else if (preference == mElectronBeamAnimationOn) {
+            Settings.System.putInt(getContentResolver(), Settings.System.ELECTRON_BEAM_ANIMATION_ON,
+                    mElectronBeamAnimationOn.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mElectronBeamAnimationOff) {
+            Settings.System.putInt(getContentResolver(), Settings.System.ELECTRON_BEAM_ANIMATION_OFF,
+                    mElectronBeamAnimationOff.isChecked() ? 1 : 0);
+            return true;
         } else if (preference == mVolumeWake) {
             Settings.System.putInt(getContentResolver(), Settings.System.VOLUME_WAKE_SCREEN,
                     mVolumeWake.isChecked() ? 1 : 0);
