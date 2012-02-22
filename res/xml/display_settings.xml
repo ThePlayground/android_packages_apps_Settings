@@ -36,6 +36,11 @@
         <CheckBoxPreference
             android:key="accelerometer"
             android:title="@string/accelerometer_title"/>
+    
+        <CheckBoxPreference
+            android:key="rotate_180"
+            android:title="@string/rotate_180_title"
+            android:summary="@string/rotate_180_summary" />
 
         <ListPreference
             android:key="screen_timeout"

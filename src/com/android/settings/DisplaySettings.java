@@ -54,11 +54,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private static final String KEY_SCREEN_TIMEOUT = "screen_timeout";
     private static final String KEY_ACCELEROMETER = "accelerometer";
+    private static final String PREF_180 = "rotate_180";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String PREF_CARRIER_TEXT = "carrier_text";
 
     private CheckBoxPreference mAccelerometer;
+    private CheckBoxPreference mAllow180Rotation;
     private CheckBoxPreference mNotificationPulse;
     private CheckBoxPreference mNavigationBar;
     private Preference mCarrier;
@@ -85,6 +87,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         mAccelerometer = (CheckBoxPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
+
+        mAllow180Rotation = (CheckBoxPreference) findPreference(PREF_180);
+        mAllow180Rotation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+            Settings.System.ACCELEROMETER_ROTATION_ANGLES, (1 | 2 | 8)) == (1 | 2 | 4 | 8));
 
         mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
         updateCarrierText();
@@ -233,6 +239,12 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             } catch (RemoteException exc) {
                 Log.w(TAG, "Unable to save auto-rotate setting");
             }
+        } else if (preference == mAllow180Rotation) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.ACCELEROMETER_ROTATION_ANGLES, checked ? (1 | 2 | 4 | 8)
+                    : (1 | 2 | 8));
+            return true;
         } else if (preference == mNotificationPulse) {
             boolean value = mNotificationPulse.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,
