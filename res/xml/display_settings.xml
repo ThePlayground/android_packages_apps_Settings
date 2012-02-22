@@ -18,10 +18,6 @@
         android:title="@string/display_settings"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-        <Preference
-            android:key="carrier_text"
-            android:title="@string/carrier_text" />
-
         <com.android.settings.BrightnessPreference
             android:key="brightness"
             android:title="@string/brightness"
