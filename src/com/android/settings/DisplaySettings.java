@@ -38,6 +38,10 @@ import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.IWindowManager;
 import android.view.Surface;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.text.Spannable;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -52,10 +56,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_ACCELEROMETER = "accelerometer";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
+    private static final String PREF_CARRIER_TEXT = "carrier_text";
 
     private CheckBoxPreference mAccelerometer;
     private CheckBoxPreference mNotificationPulse;
     private CheckBoxPreference mNavigationBar;
+    private Preference mCarrier;
+    
+    String mCarrierText = null;
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -77,6 +85,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         mAccelerometer = (CheckBoxPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
+
+        mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
+        updateCarrierText();
 
         mScreenTimeoutPreference = (ListPreference) findPreference(KEY_SCREEN_TIMEOUT);
         final long currentTimeout = Settings.System.getLong(resolver, SCREEN_OFF_TIMEOUT,
@@ -112,6 +123,15 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mNavigationBar.setOnPreferenceChangeListener(this);
         }
 
+    }
+
+    private void updateCarrierText() {
+        mCarrierText = Settings.System.getString(getContentResolver(), Settings.System.CUSTOM_CARRIER_TEXT);
+        if (mCarrierText == null) {
+            mCarrier.setSummary("Upon changing you will need to data wipe to get back stock. Requires reboot.");
+        } else {
+            mCarrier.setSummary(mCarrierText);
+        }
     }
 
     private void updateTimeoutPreferenceDescription(long currentTimeout) {
@@ -223,7 +243,25 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE,
                     value ? 1 : 0);
             return true;
-
+        } else if (preference == mCarrier) {
+            AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+            ad.setTitle("Custom Carrier Text");
+            ad.setMessage("Enter new carrier text here");
+            final EditText text = new EditText(getActivity());
+            text.setText(mCarrierText != null ? mCarrierText : "");
+            ad.setView(text);
+            ad.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String value = ((Spannable) text.getText()).toString();
+                    Settings.System.putString(getActivity().getContentResolver(), Settings.System.CUSTOM_CARRIER_TEXT, value);
+                    updateCarrierText();
+                }
+            });
+            ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                }
+            });
+            ad.show();
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
