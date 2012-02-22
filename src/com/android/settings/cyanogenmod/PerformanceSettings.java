@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.settings;
+package com.android.settings.cyanogenmod;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -24,6 +24,9 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+
+import com.android.settings.R;
+import com.android.settings.SettingsPreferenceFragment;
 
 /**
  * Performance Settings
