@@ -52,6 +52,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_ACCELEROMETER = "accelerometer";
     private static final String PREF_180 = "rotate_180";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
+    private static final String KEY_BATTERY_PULSE = "battery_pulse";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String KEY_ELECTRON_BEAM_ANIMATION_ON = "electron_beam_animation_on";
     private static final String KEY_ELECTRON_BEAM_ANIMATION_OFF = "electron_beam_animation_off";
@@ -61,6 +62,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mAccelerometer;
     private CheckBoxPreference mAllow180Rotation;
     private CheckBoxPreference mNotificationPulse;
+    private CheckBoxPreference mBatteryPulse;
     private CheckBoxPreference mNavigationBar;
     private CheckBoxPreference mElectronBeamAnimationOn;
     private CheckBoxPreference mElectronBeamAnimationOff;
@@ -122,6 +124,18 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mNavigationBar.setChecked(Settings.System.getInt(resolver,
                 Settings.System.NAVIGATION_BAR_VISIBLE, 0) == 1);
             mNavigationBar.setOnPreferenceChangeListener(this);
+        }
+
+        mBatteryPulse = (CheckBoxPreference) findPreference(KEY_BATTERY_PULSE);
+        if (mBatteryPulse != null) {
+            if (getResources().getBoolean(
+                    com.android.internal.R.bool.config_intrusiveBatteryLed) == false) {
+                getPreferenceScreen().removePreference(mBatteryPulse);
+            } else {
+                mBatteryPulse.setChecked(Settings.System.getInt(resolver,
+                        Settings.System.BATTERY_LIGHT_PULSE, 1) == 1);
+                mBatteryPulse.setOnPreferenceChangeListener(this);
+            }
         }
 
         mElectronBeamAnimationOn = (CheckBoxPreference) findPreference(KEY_ELECTRON_BEAM_ANIMATION_ON);
@@ -248,6 +262,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else if (preference == mNotificationPulse) {
             boolean value = mNotificationPulse.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,
+                    value ? 1 : 0);
+            return true;
+        } else if (preference == mBatteryPulse) {
+            boolean value = mBatteryPulse.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.BATTERY_LIGHT_PULSE,
                     value ? 1 : 0);
             return true;
         } else if (preference == mNavigationBar) {
