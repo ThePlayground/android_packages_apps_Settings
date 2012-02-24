@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 CyanogenMod
+ * Copyright (C) 2012 Twisted
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +20,7 @@ package com.android.settings.cyanogenmod;
 import android.app.ActivityManagerNative;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.SystemProperties;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.ListPreference;
@@ -39,6 +41,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_POWER_WIDGET = "power_widget";
     private static final String KEY_STATUS_BAR = "status_bar";
+    static final String SIZE_OVERRIDE_PROPERTY = "ro.config.statusbar";
 
     private ListPreference mFontSizePref;
 
@@ -52,7 +55,8 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
         mFontSizePref = (ListPreference) findPreference(KEY_FONT_SIZE);
         mFontSizePref.setOnPreferenceChangeListener(this);
-        if (!Utils.isScreenLarge()) {
+        boolean mStatusBar = SystemProperties.get(SIZE_OVERRIDE_PROPERTY).equalsIgnoreCase("true");
+        if (!Utils.isScreenLarge() || mStatusBar) {
             getPreferenceScreen().removePreference(findPreference(KEY_COMBINED_BAR));
         } else {
             getPreferenceScreen().removePreference(findPreference(KEY_NOTIFICATION_DRAWER));
