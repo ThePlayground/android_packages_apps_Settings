@@ -20,12 +20,10 @@
 
     <PreferenceCategory
         android:title="@string/profile_appgroups_title">
-
-            <PreferenceScreen
-                android:key="app_groups"
-                android:title="@string/profile_appgroups_manage"
-                android:fragment="com.android.settings.profiles.AppGroupList" />
-
+        <PreferenceScreen
+            android:key="app_groups"
+            android:title="@string/profile_appgroups_manage"
+            android:fragment="com.android.settings.profiles.AppGroupList" />
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -16,6 +16,8 @@
 
 package com.android.settings.profiles;
 
+import java.util.UUID;
+
 import android.app.Profile;
 import android.app.ProfileGroup;
 import android.app.ProfileGroup.Mode;
@@ -25,9 +27,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceActivity;
-
-import java.util.UUID;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -79,7 +78,6 @@ public class ProfileGroupConfig extends SettingsPreferenceFragment implements
             UUID uuid = UUID.fromString(args.getString("ProfileGroup"));
 
             mProfileManager = (ProfileManager) getSystemService(PROFILE_SERVICE);
-            String name = mProfileManager.getNotificationGroup(uuid).getName();
             mProfileGroup = mProfile.getProfileGroup(uuid);
 
             mRingerMode = (ListPreference) findPreference(KEY_RINGERMODE);
@@ -129,21 +127,16 @@ public class ProfileGroupConfig extends SettingsPreferenceFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mVibrateMode) {
             mProfileGroup.setVibrateMode(Mode.valueOf((String) newValue));
-        }
-        if (preference == mSoundMode) {
+        } else if (preference == mSoundMode) {
             mProfileGroup.setSoundMode(Mode.valueOf((String) newValue));
-        }
-        if (preference == mRingerMode) {
+        } else if (preference == mRingerMode) {
             mProfileGroup.setRingerMode(Mode.valueOf((String) newValue));
-        }
-        if (preference == mLightsMode) {
+        } else if (preference == mLightsMode) {
             mProfileGroup.setLightsMode(Mode.valueOf((String) newValue));
-        }
-        if (preference == mRingTone) {
+        } else if (preference == mRingTone) {
             Uri uri = Uri.parse((String) newValue);
             mProfileGroup.setRingerOverride(uri);
-        }
-        if (preference == mSoundTone) {
+        } else if (preference == mSoundTone) {
             Uri uri = Uri.parse((String) newValue);
             mProfileGroup.setSoundOverride(uri);
         }
@@ -153,5 +146,4 @@ public class ProfileGroupConfig extends SettingsPreferenceFragment implements
         updateState();
         return true;
     }
-
 }

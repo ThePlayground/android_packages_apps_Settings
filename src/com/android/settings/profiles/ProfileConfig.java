@@ -58,9 +58,6 @@ public class ProfileConfig extends SettingsPreferenceFragment
     // constant value that can be used to check return code from sub activity.
     private static final int PROFILE_GROUP_DETAILS = 1;
 
-    //Below line intended for use with upcoming Status Bar Indicator functionality
-    //private CheckBoxPreference mStatusBarPreference;
-
     private StreamItem[] mStreams;
 
     private ConnectionItem[] mConnections;
@@ -102,7 +99,7 @@ public class ProfileConfig extends SettingsPreferenceFragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem delete = menu.add(0, MENU_DELETE, 1, R.string.profile_delete)
+        MenuItem delete = menu.add(0, MENU_DELETE, 1, R.string.profile_menu_delete)
                 .setIcon(R.drawable.ic_menu_trash_holo_dark);
         delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -147,8 +144,6 @@ public class ProfileConfig extends SettingsPreferenceFragment
             mNamePreference = new NamePreference(getActivity(), mProfile.getName());
             mNamePreference.setOnPreferenceChangeListener(this);
             generalPrefs.addPreference(mNamePreference);
-
-            //TODO: other general category preferences go here
         }
 
         // Populate the audio streams list
@@ -210,14 +205,6 @@ public class ProfileConfig extends SettingsPreferenceFragment
                 groupList.addPreference(pref);
             }
         }
-
-        //Below lines intended for use with upcoming Status Bar Indicator functionality
-        /*
-        mStatusBarPreference = (CheckBoxPreference) findPreference("profile_statusbar");
-        mStatusBarPreference.setChecked(mProfile.getStatusBarIndicator());
-        mStatusBarPreference.setOnPreferenceChangeListener(this);
-        */
-
     }
 
     @Override
@@ -244,14 +231,6 @@ public class ProfileConfig extends SettingsPreferenceFragment
                 Toast.makeText(getActivity(), R.string.duplicate_profile_name, Toast.LENGTH_SHORT).show();
             }
         }
-
-        //Below lines intended for use with upcoming Status Bar Indicator functionality
-        /*
-        if (preference == mStatusBarPreference) {
-            mProfile.setStatusBarIndicator((Boolean) newValue);
-            mProfileManager.updateProfile(mProfile);
-        }
-        */
         return true;
     }
 
@@ -284,7 +263,7 @@ public class ProfileConfig extends SettingsPreferenceFragment
             toast.show();
         } else {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-            alert.setTitle(R.string.profile_delete);
+            alert.setTitle(R.string.profile_menu_delete);
             alert.setIcon(android.R.drawable.ic_dialog_alert);
             alert.setMessage(R.string.profile_delete_confirm);
             alert.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -330,5 +309,4 @@ public class ProfileConfig extends SettingsPreferenceFragment
             mLabel = label;
         }
     }
-
 }

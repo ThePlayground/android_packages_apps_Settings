@@ -191,19 +191,9 @@
         <item name="android:shadowColor">#B0000000</item>
     </style>
 
-    <style name="profile_list_left_column">
-        <item name="android:layout_width">68dip</item>
-        <item name="android:layout_height">68dip</item>
-    </style>
-
-    <style name="ProfilesPreferenceStyleRadioButton">
+    <style name="ProfilesPreferenceStyle">
         <item name="android:layout">@layout/preference_profiles</item>
-        <item name="android:widgetLayout">@layout/preference_profiles_widget_radiobutton</item>
-    </style>
-
-    <style name="ProfilesPreferenceStyleCheckBox">
-        <item name="android:layout">@layout/preference_profiles</item>
-        <item name="android:widgetLayout">@layout/preference_profiles_widget_checkbox</item>
+        <item name="android:widgetLayout">@layout/preference_profiles_widget</item>
     </style>
 
 </resources>

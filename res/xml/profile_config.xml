@@ -23,11 +23,6 @@
         android:title="@string/profile_name_title">
     </PreferenceCategory>
 
-<!--
-    CheckBoxPreference
-        android:key="profile_statusbar"
-        android:title="@string/profile_statusbar"
--->
     <PreferenceCategory
         android:key="profile_connectionoverrides"
         android:title="@string/profile_connectionoverrides_title" />

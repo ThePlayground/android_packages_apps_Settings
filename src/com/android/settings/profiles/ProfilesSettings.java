@@ -63,7 +63,7 @@ public class ProfilesSettings extends SettingsPreferenceFragment implements
     private ProfileManager mProfileManager;
 
     // constant value that can be used to check return code from sub activity.
-    private static final int APP_GROUP_DETAILS = 1;
+    private static final int PROFILE_DETAILS = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,47 +109,24 @@ public class ProfilesSettings extends SettingsPreferenceFragment implements
     }
 
     private void addProfile() {
-        Context context = getActivity();
-        if (context != null) {
-            LayoutInflater factory = LayoutInflater.from(getActivity());
-            final View dialogView = factory.inflate(R.layout.add_profile_dialog, null);
-            final EditText pname = (EditText) dialogView.findViewById(R.id.profile_name);
+        // TODO: Consider adding a random character/number to the end of the profile name to make it unique
+        mProfile = new Profile(getString(R.string.new_profile_name));
+        mProfileManager.addProfile(mProfile);
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            dialog.setTitle(R.string.add_profile_dialog_title);
-            dialog.setView(dialogView);
-            dialog.setPositiveButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String value = pname.getText().toString();
-                            // Do not create a new profile with the same name
-                            if (!mProfileManager.profileExists(value)) {
-                                mProfile = new Profile(value);
-                                mProfileManager.addProfile(mProfile);
-                                fillList();
-                            } else {
-                                Toast.makeText(getActivity(), R.string.duplicate_profile_name, Toast.LENGTH_SHORT).show();
-                                // TODO: Handle this better - the dialog box should pop up again.
-                            }
-                        }
-                    });
-            dialog.setNegativeButton(android.R.string.cancel,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-            dialog.create().show();
-        }
+        // Start the profile details preference screen
+        Bundle args = new Bundle();
+        args.putParcelable("Profile", mProfile);
+        PreferenceActivity pa = (PreferenceActivity) getActivity();
+        pa.startPreferencePanel(ProfileConfig.class.getName(), args,
+                R.string.profile_profile_manage, null, this, PROFILE_DETAILS);
     }
 
     private void resetProfiles() {
         Log.d(TAG, "resetProfiles(): entered");
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-        alert.setTitle(R.string.profile_reset_all_title);
+        alert.setTitle(R.string.profile_reset_title);
         alert.setIcon(android.R.drawable.ic_dialog_alert);
-        alert.setMessage(R.string.profile_reset_all_message);
+        alert.setMessage(R.string.profile_reset_message);
         alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 mProfileManager.resetAll();
@@ -188,7 +165,7 @@ public class ProfilesSettings extends SettingsPreferenceFragment implements
                     Bundle args = new Bundle();
                     args.putParcelable("Profile", profile);
 
-                    ProfilesPreferenceRB ppref = new ProfilesPreferenceRB(this, args);
+                    ProfilesPreference ppref = new ProfilesPreference(this, args);
                     ppref.setKey(profile.getUuid().toString());
                     ppref.setTitle(profile.getName());
                     ppref.setPersistent(false);
@@ -210,11 +187,9 @@ public class ProfilesSettings extends SettingsPreferenceFragment implements
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        Log.d(TAG, "onPreferenceChange(): Preference - " + preference + ", newValue - " + newValue
-                + ", newValue type - " + newValue.getClass());
+        Log.d(TAG, "Preference - " + preference + ", newValue - " + newValue);
         if (newValue instanceof String) {
             setSelectedProfile((String) newValue);
-            // Use this to refresh the list for now but there must be a better way to just update the radio button status
             fillList();
         }
         return true;

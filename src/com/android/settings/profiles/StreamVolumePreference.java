@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 The Android Open Source Project
+ * Copyright (C) 2012 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +35,6 @@ import android.widget.SeekBar;
 
 public class StreamVolumePreference extends Preference implements
         CompoundButton.OnCheckedChangeListener, View.OnClickListener {
-
-    private static String mSelectedKey = null;
 
     private boolean mProtectFromCheckedChange = false;
 
@@ -129,7 +127,7 @@ public class StreamVolumePreference extends Preference implements
         final AudioManager am = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         builder.setTitle(mStreamItem.mLabel);
         mBar = new SeekBar(getContext());
-        mBar.setPaddingRelative(32, 16, 32, 16); // TODO: not sure if this is OK
+        mBar.setPaddingRelative(32, 16, 32, 16); // TODO: confirm appropriate padding
         mBar.setMax(am.getStreamMaxVolume(mStreamItem.mStreamId));
         mBar.setProgress(mStreamItem.mSettings.getValue());
         builder.setView(mBar);
@@ -154,9 +152,7 @@ public class StreamVolumePreference extends Preference implements
     @Override
     public void onClick(android.view.View v) {
         if ((v != null) && (R.id.text_layout == v.getId())) {
-            Context context = getContext();
             createVolumeDialog().show();
         }
     }
-
 }
