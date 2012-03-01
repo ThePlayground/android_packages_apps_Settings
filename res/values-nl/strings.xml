@@ -1585,6 +1585,7 @@
 
     <!-- Profiles settings #CM -->
     <string name="profiles_settings_title">Profielen</string>
+    <string name="profile_settings_title">Profiel</string>
     <string name="profiles_general_title">Algemeen</string>
     <string name="profiles_add">Toevoegen</string>
     <string name="profile_menu_delete">Verwijderen</string>
@@ -1614,9 +1615,6 @@
     <string name="quiet_hours_haptic_on">Haptische feedback zal worden uitgeschakeld</string>
     <string name="quiet_hours_haptic_off">Haptische feedback zal normaal functioneren</string>
 
-    <!-- Main Settings screen setting option name to go into the profile settings screen -->
-    <string name="profile_settings_title">Profiel</string>
-
     <!-- Add Profile -->
     <string name="add_profile_dialog_title">Maak nieuw profiel</string>
     <string name="profile_name_title">Profielnaam</string>
@@ -1640,9 +1638,7 @@
 
     <!-- Profile Config screen PreferenceGroup titles -->
     <string name="profile_connectionoverrides_title">Verbindingsoverschrijvingen</string>
-    <string name="profile_connectionoverrides_summary">Raak aan om in/uit te schakelen</string>
     <string name="profile_volumeoverrides_title">Volume-overschrijvingen</string>
-    <string name="profile_volumeoverrides_summary">Raak aan om volume in te stellen.</string>
 
     <!-- Menu item for managing profiles -->
     <string name="profile_profiles_manage">Profielen</string>
@@ -1695,29 +1691,4 @@
     <string name="toggleAirplane">Vliegtuigmodus</string>
     <string name="toggleFlashlight">Zaklamp</string>
     <string name="toggleLockScreen">Vergrendelscherm</string>
-
-    <string name="toggleWifiDescription">Schakel Wi-Fi in/uit</string>
-    <string name="toggleWifiApDescription">Schakel de draagbare Wi-Fi-hospot in/uit</string>
-    <string name="toggleBluetoothDescription">Schakel Bluetooth in/uit</string>
-    <string name="toggleGPSDescription">Schakel GPS in/uit</string>
-    <string name="toggleDataDescription">Schakel mobiele data in/uit</string>
-    <string name="toggleSyncDescription">Schakel datasynchronisatie in/uit</string>
-    <string name="toggle2g3gDescription">Schakel tussen 2G en 3G</string>
-    <string name="toggleSoundDescription">Schakel tussen beltoon en alleen trillen</string>
-    <string name="toggleBrightnessDescription">Schakel tussen helderheidsniveaus</string>
-    <string name="toggleAutoRotateDescription">Schakel automatische schermoriëntatie in/uit</string>
-    <string name="toggleScreenTimeoutDescription">Stel verschillende scherm-time-outs in/uit</string>
-    <string name="toggleAirplaneDescription">Schakel vliegtuigmodus in/uit</string>
-    <string name="toggleFlashlightDescription">Schakel zaklmap in/uit</string>
-    <string name="toggleLockScreenDescription">Schakel vergrendelscherm in/uit</string>
-    <string name="toggleWimaxDescription">Schakel WiMAX in/uit</string>
-
-    <!-- Display : Rotation #CM -->
-    <string name="display_rotation_category_title">Accelerometerrotatie</string>
-    <string name="display_rotation_title">Rotatiemodi</string>
-    <string name="display_rotation_summary">Kies de beschikbare hoeken voor automatisch roteren</string>
-    <string name="display_rotation_0_title">0 graden</string>
-    <string name="display_rotation_90_title">90 graden</string>
-    <string name="display_rotation_180_title">180 graden</string>
-    <string name="display_rotation_270_title">270 graden</string>
 </resources>
