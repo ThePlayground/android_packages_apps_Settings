@@ -39,6 +39,9 @@ import android.util.Log;
 import android.view.IWindowManager;
 import android.view.Surface;
 
+import com.android.settings.cyanogenmod.DisplayRotation;
+import com.android.settings.R;
+
 import java.util.ArrayList;
 
 public class DisplaySettings extends SettingsPreferenceFragment implements
@@ -56,7 +59,15 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String KEY_ELECTRON_BEAM_ANIMATION_ON = "electron_beam_animation_on";
     private static final String KEY_ELECTRON_BEAM_ANIMATION_OFF = "electron_beam_animation_off";
+    private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
+
+    private static final String ROTATION_ANGLE_0 = "0";
+    private static final String ROTATION_ANGLE_90 = "90";
+    private static final String ROTATION_ANGLE_180 = "180";
+    private static final String ROTATION_ANGLE_270 = "270";
+    private static final String ROTATION_ANGLE_DELIM = ", ";
+    private static final String ROTATION_ANGLE_DELIM_FINAL = " & ";
 
     private CheckBoxPreference mVolumeWake;
     private CheckBoxPreference mAccelerometer;
@@ -70,11 +81,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private final Configuration mCurConfig = new Configuration();
 
     private ListPreference mScreenTimeoutPreference;
+    private PreferenceScreen mDisplayRotationPreference;
 
     private ContentObserver mAccelerometerRotationObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
             updateAccelerometerRotationCheckbox();
+            updateDisplayRotationPreferenceDescription();
         }
     };
 
@@ -85,6 +98,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.display_settings);
 
+        mDisplayRotationPreference = (PreferenceScreen) findPreference(KEY_DISPLAY_ROTATION);
         mAccelerometer = (CheckBoxPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
 
@@ -99,6 +113,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
         disableUnusableTimeouts(mScreenTimeoutPreference);
         updateTimeoutPreferenceDescription(currentTimeout);
+        updateDisplayRotationPreferenceDescription();
 
         mNotificationPulse = (CheckBoxPreference) findPreference(KEY_NOTIFICATION_PULSE);
         if (mNotificationPulse != null
@@ -152,6 +167,46 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
 
         }
+    }
+
+    private void updateDisplayRotationPreferenceDescription() {
+        PreferenceScreen preference = mDisplayRotationPreference;
+        StringBuilder summary = new StringBuilder();
+        Boolean rotationEnabled = Settings.System.getInt(getContentResolver(),
+                Settings.System.ACCELEROMETER_ROTATION, 0) != 0;
+        int mode = Settings.System.getInt(getContentResolver(),
+                Settings.System.ACCELEROMETER_ROTATION_ANGLES,
+                DisplayRotation.ROTATION_0_MODE|DisplayRotation.ROTATION_90_MODE|DisplayRotation.ROTATION_270_MODE);
+
+        if (!rotationEnabled) {
+            summary.append(getString(R.string.display_rotation_disabled));
+        } else {
+            ArrayList rotationList = new ArrayList();
+            String delim = "";
+            summary.append(getString(R.string.display_rotation_enabled) + " ");
+            if ((mode & DisplayRotation.ROTATION_0_MODE) != 0) {
+                rotationList.add(ROTATION_ANGLE_0);
+            }
+            if ((mode & DisplayRotation.ROTATION_90_MODE) != 0) {
+                rotationList.add(ROTATION_ANGLE_90);
+            }
+            if ((mode & DisplayRotation.ROTATION_180_MODE) != 0) {
+                rotationList.add(ROTATION_ANGLE_180);
+            }
+            if ((mode & DisplayRotation.ROTATION_270_MODE) != 0) {
+                rotationList.add(ROTATION_ANGLE_270);
+            }
+            for(int i=0;i<rotationList.size();i++) {
+                summary.append(delim).append(rotationList.get(i));
+                if (rotationList.size() >= 2 && (rotationList.size() - 2) == i) {
+                    delim = " " + ROTATION_ANGLE_DELIM_FINAL + " ";
+                } else {
+                    delim = ROTATION_ANGLE_DELIM + " ";
+                }
+            }
+            summary.append(" " + getString(R.string.display_rotation_unit));
+        }
+        preference.setSummary(summary);
     }
 
     private void updateTimeoutPreferenceDescription(long currentTimeout) {
@@ -215,6 +270,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        updateDisplayRotationPreferenceDescription();
 
         updateState();
         getContentResolver().registerContentObserver(

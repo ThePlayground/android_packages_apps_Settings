@@ -43,16 +43,16 @@ public class DisplayRotation extends SettingsPreferenceFragment implements OnPre
     private static final String ROTATION_180_PREF = "display_rotation_180";
     private static final String ROTATION_270_PREF = "display_rotation_270";
 
-    private static final int ROTATION_0_MODE = 1;
-    private static final int ROTATION_90_MODE = 2;
-    private static final int ROTATION_180_MODE = 4;
-    private static final int ROTATION_270_MODE = 8;
-
     private CheckBoxPreference mAccelerometer;
     private CheckBoxPreference mRotation0Pref;
     private CheckBoxPreference mRotation90Pref;
     private CheckBoxPreference mRotation180Pref;
     private CheckBoxPreference mRotation270Pref;
+
+    public static final int ROTATION_0_MODE = 1;
+    public static final int ROTATION_90_MODE = 2;
+    public static final int ROTATION_180_MODE = 4;
+    public static final int ROTATION_270_MODE = 8;
 
     private ContentObserver mAccelerometerRotationObserver = new ContentObserver(new Handler()) {
         @Override
