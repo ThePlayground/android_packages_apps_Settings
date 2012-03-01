@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright (C) 2012 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,20 +16,13 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+    android:title="@string/combined_bar_title">
 
-    <PreferenceCategory
-        android:title="@string/profile_appgroups_title">
-
-            <PreferenceScreen
-                android:key="app_groups"
-                android:title="@string/profile_appgroups_manage"
-                android:fragment="com.android.settings.profiles.AppGroupList" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="profiles_list"
-        android:title="@string/profile_profiles_manage" />
+    <!-- Status bar tweaks -->
+    <CheckBoxPreference
+	android:key="combined_bar_auto_hide"
+	android:title="@string/combined_bar_auto_hide_title"
+	android:summary="@string/combined_bar_auto_hide_summary"
+	android:defaultValue="true" />
 
 </PreferenceScreen>
