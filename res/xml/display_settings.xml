@@ -37,6 +37,10 @@
             android:key="rotate_180"
             android:title="@string/rotate_180_title"
             android:summary="@string/rotate_180_summary" />
+        <PreferenceScreen
+            android:key="display_rotation"
+            android:fragment="com.android.settings.cyanogenmod.DisplayRotation"
+            android:title="@string/display_rotation_title" />
 
         <ListPreference
             android:key="screen_timeout"

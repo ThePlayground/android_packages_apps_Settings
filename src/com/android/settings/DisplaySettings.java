@@ -66,7 +66,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mElectronBeamAnimationOff;
 
     private final Configuration mCurConfig = new Configuration();
-    
+
     private ListPreference mScreenTimeoutPreference;
 
     private ContentObserver mAccelerometerRotationObserver = new ContentObserver(new Handler()) {

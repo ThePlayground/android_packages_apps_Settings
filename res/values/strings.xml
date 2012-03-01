@@ -580,8 +580,6 @@
     <!-- Sound settings screen, setting option summary text -->
     <string name="ringtone_summary">""</string>
     <!-- Sound settings screen, volume title -->
-    <string name="link_volume_ringtones">Link volumes</string>
-    <string name="link_volume_mutes">Link mute states</string>
     <string name="all_volume_title">Volumes</string>
     <!-- Sound settings screen, music effects title [CHAR LIMIT=30]-->
     <string name="musicfx_title">Music effects</string>
@@ -632,6 +630,9 @@
     <string name="volume_notification_description">Notifications</string>
     <!-- Volume description for alarm volume -->
     <string name="volume_alarm_description">Alarms</string>
+    <string name="link_volume_ringtones">Link volumes</string>
+    <string name="link_volume_ringtones_toast">Make sure to change your volume to re-set your notification volume to match your ringtone volume.</string>
+    <string name="link_volume_mutes">Link mute states</string>
 
     <!-- Quiet hours #CM -->
     <string name="quiet_hours_title">Quiet hours</string>
@@ -1639,6 +1640,24 @@
     <string name="preview_data_summary">%s</string>
     <string name="view_stats_title">View stats</string>
     <string name="anonymous_learn_more">Learn more</string>
+
+    <!-- Anonymous Statistics - Notification -->
+    <string name="anonymous_notification_desc">Enable or Disable CyanogenMod Statistics</string>
+
+    <!-- Anonymous Statistics - Preview -->
+    <string name="preview_id_title">Unique ID</string>
+    <string name="preview_device_title">Device</string>
+    <string name="preview_version_title">Version</string>
+    <string name="preview_country_title">Country</string>
+    <string name="preview_carrier_title">Carrier</string>
+
+    <!-- Display : Rotation #CM -->
+    <string name="display_rotation_title">Rotation</string>
+    <string name="display_rotation_category_title">Rotation modes</string>
+    <string name="display_rotation_0_title">0 degrees</string>
+    <string name="display_rotation_90_title">90 degrees</string>
+    <string name="display_rotation_180_title">180 degrees</string>
+    <string name="display_rotation_270_title">270 degrees</string>
 
     <!-- About device screen, model of device. -->
     <string name="model_number">Model number</string>

@@ -1711,4 +1711,13 @@
     <string name="toggleFlashlightDescription">Schakel zaklmap in/uit</string>
     <string name="toggleLockScreenDescription">Schakel vergrendelscherm in/uit</string>
     <string name="toggleWimaxDescription">Schakel WiMAX in/uit</string>
+
+    <!-- Display : Rotation #CM -->
+    <string name="display_rotation_category_title">Accelerometerrotatie</string>
+    <string name="display_rotation_title">Rotatiemodi</string>
+    <string name="display_rotation_summary">Kies de beschikbare hoeken voor automatisch roteren</string>
+    <string name="display_rotation_0_title">0 graden</string>
+    <string name="display_rotation_90_title">90 graden</string>
+    <string name="display_rotation_180_title">180 graden</string>
+    <string name="display_rotation_270_title">270 graden</string>
 </resources>
