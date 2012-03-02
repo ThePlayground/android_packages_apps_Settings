@@ -841,6 +841,8 @@
     <string name="pref_lockscreen_layout_summary">Remember to scroll down and change your targets after changing styles</string>
     <string name="title_pref_lockscreen_quad_targets">Quad Targets</string>	
     <string name="summary_pref_lockscreen_quad_targets">Adds Phone and Messaging shortcuts on the lock screen</string>
+    <string name="title_pref_lockscreen_octo_targets">Octo Targets</string>
+    <string name="summary_pref_lockscreen_octo_targets">Adds too many shortcuts on the lock screen</string>
     <string name="custom_app_n_dialog_title">Choose action for target %1$s</string>
     <string name="custom_app_n">Custom app %1$s</string>
     <string name="lockscreen_targets">Lockscreen targets</string>
@@ -850,10 +852,16 @@
     <string name="lockscreen_action_mms">SMS</string>
     <string name="lockscreen_action_phone">Phone</string>
     <string name="lockscreen_action_none">Empty</string>
+    
     <string name="lockscreen_landscape_title">Horizontal lockscreen</string>
     <string name="lockscreen_landscape_summary">Whether horizontal lockscreen orientation will be enabled</string>
-    <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>
-    <string name="lockscreen_wallpaper_summary">You can remove the wallpaper from the menu in this window</string>
+
+
+    <!-- Shortcut picker -->
+    <string name="use_custom_app_title">Use custom application</string>
+    <string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>
+    <string name="select_custom_app_title">Select custom application</string>
+    <string name="group_applications">Applications</string>
 
     <!-- Wallpaper settings title [CHAR LIMIT=30] -->
     <string name="wallpaper_settings_title">Wallpaper</string>
