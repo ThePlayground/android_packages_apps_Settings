@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.android.settings;
+package com.android.settings.cyanogenmod;
 
 import android.app.ActivityManagerNative;
 import android.content.res.Configuration;
