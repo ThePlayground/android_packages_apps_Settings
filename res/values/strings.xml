@@ -835,7 +835,25 @@
 
     <!-- Lock screen #CM -->
     <string name="lock_screen_title">Lock screen</string>
-    <!-- Lock Screen -->
+
+    <!-- Lock Screen #AOKP-->
+    <string name="pref_lockscreen_layout_title">Lockscreen style</string>
+    <string name="pref_lockscreen_layout_summary">Remember to scroll down and change your targets after changing styles</string>
+    <string name="title_pref_lockscreen_quad_targets">Quad Targets</string>	
+    <string name="summary_pref_lockscreen_quad_targets">Adds Phone and Messaging shortcuts on the lock screen</string>
+    <string name="custom_app_n_dialog_title">Choose action for target %1$s</string>
+    <string name="custom_app_n">Custom app %1$s</string>
+    <string name="lockscreen_targets">Lockscreen targets</string>
+    <string name="lockscreen_action_unlock">Unlock</string>
+    <string name="lockscreen_action_sound">Sound toggle</string>
+    <string name="lockscreen_action_camera">Camera</string>
+    <string name="lockscreen_action_mms">SMS</string>
+    <string name="lockscreen_action_phone">Phone</string>
+    <string name="lockscreen_action_none">Empty</string>
+    <string name="lockscreen_landscape_title">Horizontal lockscreen</string>
+    <string name="lockscreen_landscape_summary">Whether horizontal lockscreen orientation will be enabled</string>
+    <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>
+    <string name="lockscreen_wallpaper_summary">You can remove the wallpaper from the menu in this window</string>
 
     <!-- Wallpaper settings title [CHAR LIMIT=30] -->
     <string name="wallpaper_settings_title">Wallpaper</string>

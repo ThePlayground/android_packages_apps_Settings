@@ -20,10 +20,9 @@
         android:title="@string/themes_settings_title"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-        <!-- Temporary - Preference stub -->
-        <Preference android:key="stubbed"
-                style="?android:preferenceInformationStyle"
-                android:title="@string/stubbed"
-                android:summary="@string/stubbed_summary" />
+        <CheckBoxPreference
+                android:key="pref_lockscreen_quad_targets"
+                android:title="@string/title_pref_lockscreen_quad_targets"
+                android:summary="@string/summary_pref_lockscreen_quad_targets" />
 
 </PreferenceScreen>

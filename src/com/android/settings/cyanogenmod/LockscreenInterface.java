@@ -20,7 +20,11 @@ import android.content.ContentResolver;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
+import android.preference.CheckBoxPreference;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -29,7 +33,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "LockscreenInterface";
 
+    private static final String QUAD_TARGETS = "pref_lockscreen_quad_targets";
+
     private final Configuration mCurConfig = new Configuration();
+
+    CheckBoxPreference mQuadTargets;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,9 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         ContentResolver resolver = getActivity().getContentResolver();
 
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
+
+        mQuadTargets = (CheckBoxPreference) findPreference(QUAD_TARGETS);
+        mQuadTargets.setChecked(Settings.System.getInt(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_QUAD_TARGETS, 0) == 1);
     }
 
     @Override
@@ -56,6 +67,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mQuadTargets) {	
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_QUAD_TARGETS, ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+            return true;
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
