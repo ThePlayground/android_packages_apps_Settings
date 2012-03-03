@@ -69,6 +69,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity().getApplicationContext();
         
         keys.add(Settings.System.LOCKSCREEN_LANDSCAPE);
         
