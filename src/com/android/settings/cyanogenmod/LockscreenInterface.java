@@ -36,6 +36,8 @@ import android.view.MenuItem;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.android.settings.R;
+import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.Utils;
 import com.android.settings.cyanogenmod.ShortcutPickerHelper;
 
 public class LockscreenInterface extends SettingsPreferenceFragment implements ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
