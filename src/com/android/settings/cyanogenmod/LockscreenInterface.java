@@ -273,7 +273,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                 mPicker.onActivityResult(requestCode, resultCode, data);
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
     
     public void copy(File src, File dst) throws IOException {
