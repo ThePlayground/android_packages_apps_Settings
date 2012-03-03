@@ -32,7 +32,7 @@ import com.android.settings.R;
 
 public class ShortcutPickerHelper {
 
-    private Activity mParent;
+    private Fragment mParent;
     private OnPickListener mListener;
 
     public static final int REQUEST_PICK_SHORTCUT = 100;
@@ -43,7 +43,7 @@ public class ShortcutPickerHelper {
         void shortcutPicked(String uri, String friendlyName, boolean isApplication);
     }
 
-    public ShortcutPickerHelper(Activity parent, OnPickListener listener) {
+    public ShortcutPickerHelper(Fragment parent, OnPickListener listener) {
         mParent = parent;
         mListener = listener;
     }
