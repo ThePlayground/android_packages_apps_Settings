@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import android.content.ContentResolver;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.MediaStore;
@@ -36,8 +38,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import com.android.settings.R;
 import com.android.settings.cyanogenmod.ShortcutPickerHelper;
 
-public class Lockscreens extends Activity implements
-ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
+public class LockscreenInterface extends SettingsPreferenceFragment implements ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
     
     private static final String TAG = "Lockscreens";
     
@@ -58,6 +59,8 @@ ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
     private String mCurrentCustomActivityString;
     
     private ShortcutPickerHelper mPicker;
+    
+    protected Context mContext;
     
     ArrayList<String> keys = new ArrayList<String>();
     
@@ -153,8 +156,7 @@ ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
     
     public void refreshSettings() {
         
-        int lockscreenTargets = Settings.System.getInt(getContentResolver(),
-                                                       Settings.System.LOCKSCREEN_LAYOUT, 2);
+        int lockscreenTargets = Settings.System.getInt(getContentResolver(), Settings.System.LOCKSCREEN_LAYOUT, 2);
         
         PreferenceGroup targetGroup = (PreferenceGroup) findPreference("lockscreen_targets");
         targetGroup.removeAll();
@@ -186,8 +188,7 @@ ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
     }
     
     private String getProperSummary(int i) {
-        String uri = Settings.System.getString(getActivity().getContentResolver(),
-                                               Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[i]);
+        String uri = Settings.System.getString(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[i]);
         
         if (uri == null)
             return getResources().getString(R.string.lockscreen_action_none);
