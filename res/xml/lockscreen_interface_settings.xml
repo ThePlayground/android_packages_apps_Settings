@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">
-    
+
+    <Preference
+        android:key="wallpaper"
+        android:title="@string/lockscreen_wallpaper_title"
+        android:summary="@string/lockscreen_wallpaper_summary" />
+
 	<ListPreference
-    android:entries="@array/pref_lockscreen_options_entries"
-    android:entryValues="@array/pref_lockscreen_options_values"
-    android:key="pref_lockscreen_layout"
-    android:title="Lockscreen Style" />
+        android:entries="@array/pref_lockscreen_options_entries"
+        android:entryValues="@array/pref_lockscreen_options_values"
+        android:key="pref_lockscreen_layout"
+        android:title="Lockscreen Style" />
         
     <CheckBoxPreference
         android:key="lockscreen_landscape"
         android:title="@string/lockscreen_landscape_title"
         android:summary="@string/lockscreen_landscape_summary" />
-        
     
 	<PreferenceCategory
 		android:key="lockscreen_targets"
