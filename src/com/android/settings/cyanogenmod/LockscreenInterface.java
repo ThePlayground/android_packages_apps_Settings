@@ -62,14 +62,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     
     private ShortcutPickerHelper mPicker;
     
-    protected Context mContext;
-    
     ArrayList<String> keys = new ArrayList<String>();
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity().getApplicationContext();
         
         keys.add(Settings.System.LOCKSCREEN_LANDSCAPE);
         
@@ -124,7 +121,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             
         } else if (keys.contains(preference.getKey())) {
             Log.e("RC_Lockscreens", "key: " + preference.getKey());
-            return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(), ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+            return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(),((CheckBoxPreference) preference).isChecked() ? 1 : 0);
         }
         
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -227,22 +224,20 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mLockscreenOption) {
             int val = Integer.parseInt((String) newValue);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                                   Settings.System.LOCKSCREEN_LAYOUT, val);
+            Settings.System.putInt(getActivity().getContentResolver(),Settings.System.LOCKSCREEN_LAYOUT, val);
             refreshSettings();
             return true;
             
         } else if (preference.getKey().startsWith("lockscreen_target")) {
-            int index = Integer.parseInt(preference.getKey().substring(
-                       preference.getKey().lastIndexOf("_") + 1));
-            Log.e("CMSettings", "lockscreen target, index: " + index);
+            int index = Integer.parseInt(preference.getKey().substring(preference.getKey().lastIndexOf("_") + 1));
+            Log.e("ROMAN", "lockscreen target, index: " + index);
             
             if (newValue.equals("**app**")) {
                 mCurrentCustomActivityPreference = preference;
                 mCurrentCustomActivityString = Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index];
                 mPicker.pickShortcut();
             } else {
-                Settings.System.putString(getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index], (String) newValue);
+                Settings.System.putString(getContentResolver(),Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index], (String) newValue);
                 refreshSettings();
             }
             return true;
