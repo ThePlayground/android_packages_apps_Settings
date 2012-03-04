@@ -270,10 +270,12 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, wallpaperStream);
                 
             } else if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
-                       || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION) {
+                       || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION
+                       || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
                 mPicker.onActivityResult(requestCode, resultCode, data);
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
     
     public void copy(File src, File dst) throws IOException {
