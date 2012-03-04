@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The CyanogenMod Project
+ * Copyright (C) 2011 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,41 @@
 
 package com.android.settings.profiles;
 
+import com.android.settings.R;
+
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.preference.Preference;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.PreferenceActivity;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.android.settings.R;
+import android.preference.Preference;
 
 public class NamePreference extends Preference implements
     View.OnClickListener, Preference.OnPreferenceChangeListener {
     private static final String TAG = NamePreference.class.getSimpleName();
 
     private TextView mNameView;
-
+    
     private String mName;
-
+    
     /**
      * @param context
      * @param title

@@ -1085,7 +1085,7 @@
         <item>1800000</item>
     </string-array>
 
-    <!-- Profile mode options. -->
+	<!-- Profile mode options. -->
     <string-array name="profile_entries">
         <item>On</item>
         <item>Off</item>

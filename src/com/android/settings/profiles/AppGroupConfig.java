@@ -107,7 +107,7 @@ public class AppGroupConfig extends SettingsPreferenceFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem delete = menu.add(0, MENU_DELETE, 0, R.string.profile_menu_delete)
+        MenuItem delete = menu.add(0, MENU_DELETE, 0, R.string.profile_delete)
                 .setIcon(R.drawable.ic_menu_trash_holo_dark);
         delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -246,7 +246,7 @@ public class AppGroupConfig extends SettingsPreferenceFragment {
                 break;
             case DELETE_CONFIRM:
                 builder.setMessage(R.string.profile_app_delete_confirm);
-                builder.setTitle(R.string.profile_menu_delete);
+                builder.setTitle(R.string.profile_delete);
                 builder.setIcon(android.R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(android.R.string.yes,
                         new DialogInterface.OnClickListener() {
@@ -403,6 +403,7 @@ public class AppGroupConfig extends SettingsPreferenceFragment {
             }
             return convertView;
         }
+
     }
 
     static class ViewHolder {
@@ -410,4 +411,5 @@ public class AppGroupConfig extends SettingsPreferenceFragment {
         TextView summary;
         ImageView icon;
     }
+
 }

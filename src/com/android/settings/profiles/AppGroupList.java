@@ -58,6 +58,7 @@ public class AppGroupList extends SettingsPreferenceFragment {
         }
 
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -67,6 +68,7 @@ public class AppGroupList extends SettingsPreferenceFragment {
                 .setAlphabeticShortcut('a');
         addAppGroup.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
     }
 
     @Override
@@ -146,3 +148,4 @@ public class AppGroupList extends SettingsPreferenceFragment {
                 0, group.getName().toString(), this, APP_GROUP_CONFIG);
     }
 }
+

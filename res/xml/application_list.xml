@@ -17,9 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <PreferenceCategory
-        android:key="profile_applist_title"
-        android:title="@string/profile_applist_title" >
-    </PreferenceCategory>
+    <PreferenceCategory android:key="profile_applist_title"
+            android:title="@string/profile_applist_title" />
 
 </PreferenceScreen>
