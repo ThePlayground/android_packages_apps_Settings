@@ -38,6 +38,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
+    private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String KEY_POWER_WIDGET = "power_widget";
     static final String SIZE_OVERRIDE_PROPERTY = "ro.config.statusbar";
 
@@ -56,6 +57,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         boolean mStatusBar = SystemProperties.get(SIZE_OVERRIDE_PROPERTY).equalsIgnoreCase("true");
         if (Utils.isScreenLarge() && !mStatusBar) {
             getPreferenceScreen().removePreference(findPreference(KEY_NOTIFICATION_DRAWER));
+            getPreferenceScreen().removePreference(findPreference(KEY_NAVIGATION_BAR));
             getPreferenceScreen().removePreference(findPreference(KEY_POWER_WIDGET));
         }
     }

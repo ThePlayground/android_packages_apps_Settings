@@ -784,6 +784,35 @@
     <string name="combined_bar_auto_hide_title">Auto hide</string>
     <string name="combined_bar_auto_hide_summary">Allow combined bar to hide when showing a fullscreen app</string>
 
+    <!-- Navigation Bar #CM -->
+    <string name="navigation_bar_title">Navigation bar</string>
+    <string name="navigation_bar_info">To begin editing, click on the unlock icon.\nOnce unlocked, click buttons to
+    modify behavior and long press to drag and re-arrange.\nOnce done, click the lock button to save changes.</string>
+    <string name="first_panel_text">
+    &#8226; To start editing the navigation bar, you must click the unlock icon near the top right of this screen.\n\n
+    &#8226; Lock icon means you are in regular mode, and unlock means you are in editing mode.\n\n
+    &#8226; After entering edit mode, blank places will be expanded and turned into + icons"</string>
+    <string name="second_panel_text">\n
+    &#8226; Click on any of the buttons to assign functionality
+    </string>
+    <string name="third_panel_text">
+    &#8226; Select an action to assign to the active button\n\n
+    &#8226; Already assigned actions are greyed out.\n\n
+    &#8226; To be able to use them, assign Blank to the button using it\n
+    </string>
+    <string name="fourth_panel_text">\n
+    &#8226; You will see the navigation bar update to represent the new action\n\n
+    &#8226; You can choose to edit more buttons or press the lock icon to save the settings.\n\n
+    </string>
+    <string name="first_panel_legend">
+    &#8226; Each action can only be assigned to one button\n\n
+    &#8226; Menu action can only be assigned to side buttons\n\n
+    &#8226; To re-arrange, you must long press/drag
+    </string>
+    <string name="navigation_page_number">- Page %d -</string>
+    <string name="navigation_bar_guide_title">Navigation Bar Guide</string>
+    <string name="navigation_bar_tips_title">Quick tips</string>
+
     <!-- Power Widget #CM -->
     <string name="power_widget_title">Power widget</string>
     <string name="title_expanded_widget">Show power widget</string>
