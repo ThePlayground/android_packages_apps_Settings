@@ -54,7 +54,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         mFontSizePref = (ListPreference) findPreference(KEY_FONT_SIZE);
         mFontSizePref.setOnPreferenceChangeListener(this);
         boolean mStatusBar = SystemProperties.get(SIZE_OVERRIDE_PROPERTY).equalsIgnoreCase("true");
-        if (Utils.isScreenLarge() || !mStatusBar) {
+        if (Utils.isScreenLarge() && !mStatusBar) {
             getPreferenceScreen().removePreference(findPreference(KEY_NOTIFICATION_DRAWER));
             getPreferenceScreen().removePreference(findPreference(KEY_POWER_WIDGET));
         }
