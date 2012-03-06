@@ -774,7 +774,7 @@
     <string name="system_interface_title">System interface</string>
     
     <!-- Notification Drawer #CM -->
-    <string name="notification_drawer_title">Notification drawer</string>
+    <string name="notification_drawer_title">Notifications</string>
     <string name="carrier_text">Custom Carrier Text</string>
     <string name="carrier_text_summary">Change the carrier text in notification pulldown. Requires a reboot.</string>
     <string name="carrier_text_message">Change carrier text to:</string>
