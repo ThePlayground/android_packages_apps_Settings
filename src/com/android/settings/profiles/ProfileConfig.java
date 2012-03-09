@@ -81,6 +81,9 @@ public class ProfileConfig extends SettingsPreferenceFragment
         mConnections.add(new ConnectionItem(ConnectionSettings.PROFILE_CONNECTION_GPS, getString(R.string.toggleGPS)));
         mConnections.add(new ConnectionItem(ConnectionSettings.PROFILE_CONNECTION_WIFI, getString(R.string.toggleWifi)));
         mConnections.add(new ConnectionItem(ConnectionSettings.PROFILE_CONNECTION_WIFIAP, getString(R.string.toggleWifiAp)));
+        if (WimaxHelper.isWimaxSupported(getActivity())) {
+            mConnections.add(new ConnectionItem(ConnectionSettings.PROFILE_CONNECTION_WIMAX, getString(R.string.toggleWimax)));
+        }
 
         addPreferencesFromResource(R.xml.profile_config);
 
@@ -175,9 +178,6 @@ public class ProfileConfig extends SettingsPreferenceFragment
         PreferenceGroup connectionList = (PreferenceGroup) prefSet.findPreference("profile_connectionoverrides");
         if (connectionList != null) {
             connectionList.removeAll();
-            if (WimaxHelper.isWimaxSupported(connectionList.getContext())) {
-                mConnections.add(new ConnectionItem(ConnectionSettings.PROFILE_CONNECTION_WIMAX, getString(R.string.toggleWimax)));
-            }
             for (ConnectionItem connection : mConnections) {
                 ConnectionSettings settings = mProfile.getSettingsForConnection(connection.mConnectionId);
                 if (settings == null) {
