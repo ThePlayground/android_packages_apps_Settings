@@ -61,6 +61,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_ELECTRON_BEAM_ANIMATION_OFF = "electron_beam_animation_off";
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
+    private static final String KEY_DUAL_PANE = "dual_pane";
 
     private static final String ROTATION_ANGLE_0 = "0";
     private static final String ROTATION_ANGLE_90 = "90";
@@ -77,6 +78,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mNavigationBar;
     private CheckBoxPreference mElectronBeamAnimationOn;
     private CheckBoxPreference mElectronBeamAnimationOff;
+    private CheckBoxPreference mDualPane;
 
     private final Configuration mCurConfig = new Configuration();
 
@@ -167,6 +169,12 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
 
         }
+
+        mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
+        if (mDualPane != null) {
+            mDualPane.setChecked(Settings.System.getInt(resolver,Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
+        }
+
     }
 
     private void updateDisplayRotationPreferenceDescription() {
@@ -342,6 +350,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else if (preference == mVolumeWake) {
             Settings.System.putInt(getContentResolver(), Settings.System.VOLUME_WAKE_SCREEN,
                     mVolumeWake.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mDualPane) {
+            Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
