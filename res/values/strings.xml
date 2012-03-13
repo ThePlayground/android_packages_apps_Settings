@@ -711,8 +711,6 @@
     <string name="dialog_title_font_size">Font size</string>
     <!-- Display settings screen, battery light repeat pulsing title -->
     <string name="battery_pulse_title">Pulse low battery light</string>
-    <!-- Sound & display settings screen, setting option summary to change whether navigation bar is shown -->
-    <string name="navigation_bar_summary">(Requires reboot)</string>
 
     <!-- Backlight #CM -->
     <string name="backlight_title">Automatic backlight</string>
@@ -4281,7 +4279,7 @@ found in the list of installed apps.</string>
     <string name="percentage"><xliff:g id="number" example="30">%d</xliff:g>%%</string>
 
     <string name="dual_pane_title">Dual-pane view</string>
-    <string name="dual_pane_summary">Apps supporting this setting will be displayed in a single view that places top level menus next to their submenus in a single window</string>
+    <string name="dual_pane_summary">Side-by-side menu display for applications that provide a dual-pane preference option</string>
 
     <!-- A menu item in "About phone" that allows the user to update the phone with settings
     from their cell phone carrier. The use of the string is similar to the string
