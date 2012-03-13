@@ -726,7 +726,7 @@
 	<string name="open_market_summary">Press back when done to return here.</string>
 	<string name="custom_density_title">5. Change density to whatever you like!</string>
 	<string name="custom_density_summary">If you ever have compatibility issues with the market, be sure to return here and repeat the process.</string>
-
+    <string name="dpi">DPI</string>
 
     <!-- Backlight #CM -->
     <string name="backlight_title">Automatic backlight</string>
