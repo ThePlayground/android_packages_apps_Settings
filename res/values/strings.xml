@@ -713,7 +713,7 @@
     <string name="battery_pulse_title">Pulse low battery light</string>
 
     <!-- LCD Density -->
-	<string name="lcd_density_wizard">LCD Density Wizard</string>
+	<string name="lcd_density_wizard">LCD Density</string>
 	<string name="follow_through_title">Follow through!</string>
 	<string name="follow_through_summary">Make sure you follow the steps one-by-one and complete each one before proceeding to the next.</string>
 	<string name="stock_density_title">1. Change LCD Density to stock value</string>
@@ -4294,8 +4294,8 @@ found in the list of installed apps.</string>
     <!-- Representation of a numerical percentage. [CHAR LIMIT=8] -->
     <string name="percentage"><xliff:g id="number" example="30">%d</xliff:g>%%</string>
 
-    <string name="dual_pane_title">Dual-pane view</string>
-    <string name="dual_pane_summary">Side-by-side menu display for applications that provide a dual-pane preference option</string>
+    <string name="dual_pane_title">Dual-panel layout</string>
+    <string name="dual_pane_summary">Side-by-side menu display for applications that provide a dual-pane preference</string>
 
     <!-- A menu item in "About phone" that allows the user to update the phone with settings
     from their cell phone carrier. The use of the string is similar to the string
