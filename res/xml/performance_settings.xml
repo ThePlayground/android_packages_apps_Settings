@@ -53,4 +53,9 @@
         android:entries="@array/entries_scrollingcache"
         android:entryValues="@array/values_scrollingcache" />
 
+    <CheckBoxPreference
+        android:key="proximity_disable"
+        android:title="@string/pref_proximity_disable_title"
+        android:summary="@string/pref_proximity_disable_summary" />
+
 </PreferenceScreen>
