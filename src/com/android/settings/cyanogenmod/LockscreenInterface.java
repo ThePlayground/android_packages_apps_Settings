@@ -39,6 +39,8 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.android.settings.cyanogenmod.ShortcutPickerHelper;
+import com.android.settings.cyanogenmod.CMDProcessor;
+import com.android.settings.cyanogenmod.Helpers;
 
 public class LockscreenInterface extends SettingsPreferenceFragment implements ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
     
@@ -138,9 +140,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.remove_wallpaper:
+                Helpers.getMount("rw");
                 File f = new File(mContext.getFilesDir(), WALLPAPER_NAME);
                 Log.e(TAG, mContext.deleteFile(WALLPAPER_NAME) + "");
                 Log.e(TAG, mContext.deleteFile(WALLPAPER_NAME) + "");
+                Helpers.getMount("ro");
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -249,7 +253,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_PICK_WALLPAPER) {
-                
+                Helpers.getMount("rw");
                 FileOutputStream wallpaperStream = null;
                 try {
                     wallpaperStream = mContext.openFileOutput(WALLPAPER_NAME, Context.MODE_PRIVATE);
@@ -263,7 +267,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                 Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
                 
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, wallpaperStream);
-                
+                Helpers.getMount("ro");
             } else if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
                        || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION
                        || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
