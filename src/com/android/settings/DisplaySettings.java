@@ -61,6 +61,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_ELECTRON_BEAM_ANIMATION_OFF = "electron_beam_animation_off";
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
+    private static final String KEY_COMPATIBILITY_MODE = "compatibility_mode";
     private static final String KEY_DUAL_PANE = "dual_pane";
 
     private static final String ROTATION_ANGLE_0 = "0";
@@ -76,6 +77,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mBatteryPulse;
     private CheckBoxPreference mElectronBeamAnimationOn;
     private CheckBoxPreference mElectronBeamAnimationOff;
+    private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mDualPane;
 
     private final Configuration mCurConfig = new Configuration();
@@ -160,6 +162,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
 
         }
+
+        mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATIBILITY_MODE);
+        mCompatibilityMode.setPersistent(false);
+        mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(),
+        Settings.System.COMPATIBILITY_MODE, 1) != 0);
 
         mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
         if (mDualPane != null) {
@@ -329,6 +336,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else if (preference == mVolumeWake) {
             Settings.System.putInt(getContentResolver(), Settings.System.VOLUME_WAKE_SCREEN,
                     mVolumeWake.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mCompatibilityMode) {
+            Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mDualPane) {
             Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);

@@ -4322,6 +4322,13 @@ found in the list of installed apps.</string>
     <!-- Layout Control -->
     <string name="display_category_layout_options_title">Layout</string>
 
+    <!-- Sound & display settings screen, compatibility mode check box label -->
+    <string name="compatibility_mode_title">Compatibility Mode</string>
+    <!-- Sound & display settings screen, compatibility mode option summary text when check box is selected -->
+    <string name="compatibility_mode_summary_on">Run apps in Compatibility mode. This require rebooting. </string>
+    <!-- Sound & display settings screen, compatibility mode option summary text when check box is clear -->
+    <string name="compatibility_mode_summary_off">Turn off compatibility mode to allow app layouts</string>
+
     <string name="dual_pane_title">Dual-panel layout</string>
     <string name="dual_pane_summary">Side-by-side menu display for applications that provide a dual-pane preference</string>
 
