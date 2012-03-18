@@ -54,7 +54,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_AUTOMATIC_BACKLIGHT = "backlight_widget";
     private static final String KEY_SCREEN_TIMEOUT = "screen_timeout";
     private static final String KEY_ACCELEROMETER = "accelerometer";
-    private static final String PREF_180 = "rotate_180";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_BATTERY_PULSE = "battery_pulse";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
@@ -73,7 +72,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mVolumeWake;
     private CheckBoxPreference mAccelerometer;
-    private CheckBoxPreference mAllow180Rotation;
     private CheckBoxPreference mNotificationPulse;
     private CheckBoxPreference mBatteryPulse;
     private CheckBoxPreference mElectronBeamAnimationOn;
@@ -104,10 +102,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mDisplayRotationPreference = (PreferenceScreen) findPreference(KEY_DISPLAY_ROTATION);
         mAccelerometer = (CheckBoxPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
-
-        mAllow180Rotation = (CheckBoxPreference) findPreference(PREF_180);
-        mAllow180Rotation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
-            Settings.System.ACCELEROMETER_ROTATION_ANGLES, (1 | 2 | 8)) == (1 | 2 | 4 | 8));
 
         mScreenTimeoutPreference = (ListPreference) findPreference(KEY_SCREEN_TIMEOUT);
         final long currentTimeout = Settings.System.getLong(resolver, SCREEN_OFF_TIMEOUT,
@@ -314,12 +308,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             } catch (RemoteException exc) {
                 Log.w(TAG, "Unable to save auto-rotate setting");
             }
-        } else if (preference == mAllow180Rotation) {
-            boolean checked = ((CheckBoxPreference) preference).isChecked();
-            Settings.System.putInt(getActivity().getContentResolver(),
-                Settings.System.ACCELEROMETER_ROTATION_ANGLES, checked ? (1 | 2 | 4 | 8)
-                    : (1 | 2 | 8));
-            return true;
         } else if (preference == mNotificationPulse) {
             boolean value = mNotificationPulse.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,

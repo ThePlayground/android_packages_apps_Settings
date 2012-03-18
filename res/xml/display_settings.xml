@@ -29,19 +29,6 @@
                 android:title="@string/backlight_title"
                 android:summary="@string/backlight_summary" />
 
-        <CheckBoxPreference
-            android:key="accelerometer"
-            android:title="@string/accelerometer_title"/>
-    
-        <CheckBoxPreference
-            android:key="rotate_180"
-            android:title="@string/rotate_180_title"
-            android:summary="@string/rotate_180_summary" />
-        <PreferenceScreen
-            android:key="display_rotation"
-            android:fragment="com.android.settings.cyanogenmod.DisplayRotation"
-            android:title="@string/display_rotation_title" />
-
         <ListPreference
             android:key="screen_timeout"
             android:title="@string/screen_timeout"
@@ -54,6 +41,19 @@
             android:key="notification_pulse"
             android:title="@string/notification_pulse_title"
             android:persistent="false" />
+
+        <PreferenceCategory
+            android:key="category_layout_options"
+            android:title="@string/display_category_layout_options_title"/>
+
+        <CheckBoxPreference
+            android:key="accelerometer"
+            android:title="@string/accelerometer_title"/>
+        
+        <PreferenceScreen
+            android:key="display_rotation"
+            android:fragment="com.android.settings.cyanogenmod.DisplayRotation"
+            android:title="@string/display_rotation_title" />
 
         <CheckBoxPreference
             android:key="dual_pane"

@@ -4319,6 +4319,9 @@ found in the list of installed apps.</string>
     <!-- Representation of a numerical percentage. [CHAR LIMIT=8] -->
     <string name="percentage"><xliff:g id="number" example="30">%d</xliff:g>%%</string>
 
+    <!-- Layout Control -->
+    <string name="display_category_layout_options_title">Layout</string>
+
     <string name="dual_pane_title">Dual-panel layout</string>
     <string name="dual_pane_summary">Side-by-side menu display for applications that provide a dual-pane preference</string>
 
