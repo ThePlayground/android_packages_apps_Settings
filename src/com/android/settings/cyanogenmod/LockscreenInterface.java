@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import android.content.ContentResolver;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -39,8 +40,6 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.android.settings.cyanogenmod.ShortcutPickerHelper;
-import com.android.settings.cyanogenmod.CMDProcessor;
-import com.android.settings.cyanogenmod.Helpers;
 
 public class LockscreenInterface extends SettingsPreferenceFragment implements ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
     
@@ -53,12 +52,17 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     public static final int SELECT_WALLPAPER = 3;
     
     private static final String WALLPAPER_NAME = "lockscreen_wallpaper.jpg";
+
+    private static final String PROXIMITY_DISABLE_PREF = "proximity_disable";
+    private static final String PROXIMITY_DISABLE_PROP = "gsm.proximity.enable";
+    private static final String PROXIMITY_DISABLE_DEFAULT = "true";
     
     ListPreference mLockscreenOption;
     CheckBoxPreference mLockscreenLandscape;
+    CheckBoxPreference mDisableProximityPref;
     
     Preference mLockscreenWallpaper;
-    
+
     private Preference mCurrentCustomActivityPreference;
     private String mCurrentCustomActivityString;
     
@@ -78,6 +82,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         mLockscreenOption = (ListPreference) findPreference(PREF_LOCKSCREEN_LAYOUT);
         mLockscreenOption.setOnPreferenceChangeListener(this);
         mLockscreenOption.setValue(Settings.System.getInt(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_LAYOUT, 0) + "");
+
+        mDisableProximityPref = (CheckBoxPreference) findPreference(PROXIMITY_DISABLE_PREF);
+        String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
+        mDisableProximityPref.setChecked("true".equals(disableProximity));
         
         mLockscreenWallpaper = findPreference("wallpaper");
         
@@ -121,9 +129,12 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
             return true;
             
+        } else if (preference == mDisableProximityPref) {
+            SystemProperties.set(PROXIMITY_DISABLE_PROP,
+                                 mDisableProximityPref.isChecked() ? "true" : "false");
         } else if (keys.contains(preference.getKey())) {
             Log.e("RC_Lockscreens", "key: " + preference.getKey());
-            return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(),((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+            return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(), ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
         }
         
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -140,11 +151,9 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.remove_wallpaper:
-                Helpers.getMount("rw");
                 File f = new File(mContext.getFilesDir(), WALLPAPER_NAME);
                 Log.e(TAG, mContext.deleteFile(WALLPAPER_NAME) + "");
                 Log.e(TAG, mContext.deleteFile(WALLPAPER_NAME) + "");
-                Helpers.getMount("ro");
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -187,6 +196,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             p.setSummary(getProperSummary(i));
             p.setOnPreferenceChangeListener(this);
             targetGroup.addPreference(p);
+
         }
         
     }
@@ -221,6 +231,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         if (Settings.System.putString(getActivity().getContentResolver(),
                                       mCurrentCustomActivityString, uri)) {
             mCurrentCustomActivityPreference.setSummary(friendlyName);
+
         }
     }
     
@@ -234,14 +245,13 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             
         } else if (preference.getKey().startsWith("lockscreen_target")) {
             int index = Integer.parseInt(preference.getKey().substring(preference.getKey().lastIndexOf("_") + 1));
-            Log.e("ROMAN", "lockscreen target, index: " + index);
             
             if (newValue.equals("**app**")) {
                 mCurrentCustomActivityPreference = preference;
                 mCurrentCustomActivityString = Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index];
                 mPicker.pickShortcut();
             } else {
-                Settings.System.putString(getContentResolver(),Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index], (String) newValue);
+                Settings.System.putString(getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index], (String) newValue);
                 refreshSettings();
             }
             return true;
@@ -253,7 +263,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_PICK_WALLPAPER) {
-                Helpers.getMount("rw");
+
                 FileOutputStream wallpaperStream = null;
                 try {
                     wallpaperStream = mContext.openFileOutput(WALLPAPER_NAME, Context.MODE_PRIVATE);
@@ -267,10 +277,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                 Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
                 
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, wallpaperStream);
-                Helpers.getMount("ro");
-            } else if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
-                       || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION
-                       || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
+
+            } else if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
                 mPicker.onActivityResult(requestCode, resultCode, data);
             }
         }

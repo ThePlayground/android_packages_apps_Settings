@@ -16,10 +16,12 @@
 
 package com.android.settings;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -54,6 +56,8 @@ public class ApnEditor extends SettingsPreferenceFragment
     private final static String KEY_ROAMING_PROTOCOL = "apn_roaming_protocol";
     private final static String KEY_CARRIER_ENABLED = "carrier_enabled";
     private final static String KEY_BEARER = "bearer";
+    protected static final String EDIT_ACTION = "edit_action";
+    protected static final String EDIT_DATA = "edit_data";
 
     private static final int MENU_DELETE = Menu.FIRST;
     private static final int MENU_SAVE = Menu.FIRST + 1;
@@ -167,7 +171,7 @@ public class ApnEditor extends SettingsPreferenceFragment
         // Only enable this on CDMA phones for now, since it may cause problems on other phone
         // types.  (This screen is not normally accessible on CDMA phones, but is useful for
         // testing.)
-        TelephonyManager tm = (TelephonyManager)getSystemService(getActivity().TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
         if (tm.getCurrentPhoneType() == Phone.PHONE_TYPE_CDMA) {
             mRoamingProtocol.setOnPreferenceChangeListener(this);
         } else {
@@ -182,15 +186,21 @@ public class ApnEditor extends SettingsPreferenceFragment
         mRes = getResources();
 
         final Intent intent = getActivity().getIntent();
-        final String action = intent.getAction();
+        String action = intent.getAction();
+        Bundle fragArgs = getArguments();
+
+        if (fragArgs != null && fragArgs.containsKey(EDIT_ACTION)) {
+            mUri = Uri.parse(fragArgs.getString(EDIT_DATA));
+            action = fragArgs.getString(EDIT_ACTION);
+        } else {
+            mUri = intent.getData();
+        }
 
         mFirstTime = icicle == null;
 
-        if (action.equals(Intent.ACTION_EDIT)) {
-            mUri = intent.getData();
-        } else if (action.equals(Intent.ACTION_INSERT)) {
+        if (action.equals(Intent.ACTION_INSERT)) {
             if (mFirstTime || icicle.getInt(SAVED_POS) == 0) {
-                mUri = getContentResolver().insert(intent.getData(), new ContentValues());
+                mUri = getContentResolver().insert(mUri, new ContentValues());
             } else {
                 mUri = ContentUris.withAppendedId(Telephony.Carriers.CONTENT_URI,
                         icicle.getInt(SAVED_POS));
@@ -208,14 +218,15 @@ public class ApnEditor extends SettingsPreferenceFragment
 
             // The new entry was created, so assume all will end well and
             // set the result to be returned.
-            getActivity().setResult(getActivity().RESULT_OK, (new Intent()).setAction(mUri.toString()));
+            getActivity().setResult(Activity.RESULT_OK, (new Intent()).setAction(mUri.toString()));
 
-        } else {
+        } else if (!action.equals(Intent.ACTION_EDIT)) {
             finish();
             return;
         }
 
-        mCursor = getActivity().managedQuery(mUri, sProjection, null, null);
+        CursorLoader qCursor = new CursorLoader(getActivity(), mUri, sProjection, null, null, null);
+        mCursor = qCursor.loadInBackground();
         mCursor.moveToFirst();
 
         fillUi();

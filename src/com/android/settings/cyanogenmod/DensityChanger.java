@@ -62,7 +62,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.lcd_density);
 
-        String currentDensity = SystemProperties.get("qemu.sf.lcd_density");
+        String currentDensity = SystemProperties.get("ro.sf.lcd_density");
         PreferenceScreen prefs = getPreferenceScreen();
 
         mStockDensity = (ListPreference) findPreference("stock_density");
@@ -217,8 +217,8 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
     private void setLcdDensity(int newDensity) {
         Helpers.getMount("rw");
-        new CMDProcessor().su.runWaitFor("busybox sed -i 's|qemu.sf.lcd_density=.*|"
-                + "qemu.sf.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
+        new CMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
+                + "ro.sf.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
         Helpers.getMount("ro");
     }
 

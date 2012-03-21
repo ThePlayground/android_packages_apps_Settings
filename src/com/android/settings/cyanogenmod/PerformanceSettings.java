@@ -45,11 +45,11 @@ public class PerformanceSettings extends SettingsPreferenceFragment
 
     private static final String USE_DITHERING_DEFAULT = "1";
 
-    private static final String PROXIMITY_DISABLE_PREF = "proximity_disable";
+    private static final String TILED_RENDERING_PREF = "tiled_rendering";
             
-    private static final String PROXIMITY_DISABLE_PROP = "gsm.proximity.enable";
+    private static final String TILED_RENDERING_PROP = "debug.enabletr";
 
-    private static final String PROXIMITY_DISABLE_DEFAULT = "1";
+    private static final String TILED_RENDERING_DEFAULT = "false";
 
     private static final String USE_16BPP_ALPHA_PREF = "pref_use_16bpp_alpha";
 
@@ -69,7 +69,7 @@ public class PerformanceSettings extends SettingsPreferenceFragment
 
     private CheckBoxPreference mUseDitheringPref;
 
-    private CheckBoxPreference mDisableProximityPref;
+    private CheckBoxPreference mTiledRenderingPref;
 
     private CheckBoxPreference mUse16bppAlphaPref;
 
@@ -96,7 +96,6 @@ public class PerformanceSettings extends SettingsPreferenceFragment
             mProcessor = (PreferenceScreen) prefSet.findPreference(PROCESSOR);
             mMemoryManagement = (PreferenceScreen) prefSet.findPreference(MEMORY_MANAGEMENT);
             mUseDitheringPref = (CheckBoxPreference) prefSet.findPreference(USE_DITHERING_PREF);
-            mDisableProximityPref = (CheckBoxPreference) prefSet.findPreference(PROXIMITY_DISABLE_PREF);
             mUse16bppAlphaPref = (CheckBoxPreference) prefSet.findPreference(USE_16BPP_ALPHA_PREF);
             mDisableBootanimPref = (CheckBoxPreference) prefSet
                     .findPreference(DISABLE_BOOTANIMATION_PREF);
@@ -105,8 +104,13 @@ public class PerformanceSettings extends SettingsPreferenceFragment
                     USE_DITHERING_DEFAULT);
             mUseDitheringPref.setChecked("1".equals(useDithering));
 
-            String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
-            mDisableProximityPref.setChecked("1".equals(disableProximity));
+            mTiledRenderingPref = (CheckBoxPreference) prefSet.findPreference(TILED_RENDERING_PREF);
+            String tiledRendering = SystemProperties.get(TILED_RENDERING_PROP, TILED_RENDERING_DEFAULT);
+            if (tiledRendering != null) {
+                mTiledRenderingPref.setChecked("true".equals(tiledRendering));
+            } else {
+                prefSet.removePreference(mTiledRenderingPref);
+            }
 
             String use16bppAlpha = SystemProperties.get(USE_16BPP_ALPHA_PROP, "0");
             mUse16bppAlphaPref.setChecked("1".equals(use16bppAlpha));
@@ -141,9 +145,9 @@ public class PerformanceSettings extends SettingsPreferenceFragment
         if (preference == mUseDitheringPref) {
             SystemProperties.set(USE_DITHERING_PERSIST_PROP,
                     mUseDitheringPref.isChecked() ? "1" : "0");
-        } else if (preference == mDisableProximityPref) {
-            SystemProperties.set(PROXIMITY_DISABLE_PROP,
-                    mDisableProximityPref.isChecked() ? "1" : "0");
+        } else if (preference == mTiledRenderingPref) {
+            SystemProperties.set(TILED_RENDERING_PROP,
+                    mTiledRenderingPref.isChecked() ? "true" : "false");
         } else if (preference == mUse16bppAlphaPref) {
             SystemProperties.set(USE_16BPP_ALPHA_PROP,
                     mUse16bppAlphaPref.isChecked() ? "1" : "0");

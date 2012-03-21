@@ -54,8 +54,8 @@
         android:entryValues="@array/values_scrollingcache" />
 
     <CheckBoxPreference
-        android:key="proximity_disable"
-        android:title="@string/pref_proximity_disable_title"
-        android:summary="@string/pref_proximity_disable_summary" />
+        android:key="tiled_rendering"
+        android:title="@string/pref_tiled_rendering_title"
+        android:summary="@string/pref_tiled_rendering_summary" />
 
 </PreferenceScreen>

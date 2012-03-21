@@ -926,6 +926,9 @@
     <string name="lockscreen_landscape_title">Horizontal lockscreen</string>
     <string name="lockscreen_landscape_summary">Whether horizontal lockscreen orientation will be enabled</string>
 
+    <!-- Lockscreen Settings : Proximity -->
+    <string name="pref_proximity_disable_title">Proximity detection</string>
+    <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
 
     <!-- Shortcut picker -->
     <string name="use_custom_app_title">Use custom application</string>
@@ -1588,9 +1591,9 @@
     <string name="pref_use_dithering_title">Surface dithering</string>
     <string name="pref_use_dithering_summary">Dithering improves image quality on some displays at the cost of performance (requires reboot)</string>
 
-    <!-- Performance Settings : Proximity -->
-    <string name="pref_proximity_disable_title">Proximity detection</string>
-    <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
+    <!-- Performance Settings : Rendering -->
+    <string name="pref_tiled_rendering_title">Tile Rendering</string>
+    <string name="pref_tiled_rendering_summary">Process the screen as individual blocks running in async</string>
 
     <!-- Performance Settings : 16bpp Alpha -->
     <string name="pref_use_16bpp_alpha_title">16bit transparency</string>
