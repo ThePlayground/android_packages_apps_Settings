@@ -7,22 +7,26 @@
         android:title="@string/lockscreen_wallpaper_title"
         android:summary="@string/lockscreen_wallpaper_summary" />
 
+    <CheckBoxPreference
+        android:key="lockscreen_landscape"
+        android:title="@string/lockscreen_landscape_title"
+        android:summary="@string/lockscreen_landscape_summary" />
+
 	<ListPreference
         android:entries="@array/pref_lockscreen_options_entries"
         android:entryValues="@array/pref_lockscreen_options_values"
         android:key="pref_lockscreen_layout"
         android:title="Lockscreen Style" />
-        
-    <CheckBoxPreference
-        android:key="lockscreen_landscape"
-        android:title="@string/lockscreen_landscape_title"
-        android:summary="@string/lockscreen_landscape_summary" />
     
 	<PreferenceCategory
 		android:key="lockscreen_targets"
 		android:title="@string/lockscreen_targets">
         
 	</PreferenceCategory>
+
+    <PreferenceCategory
+		android:key="lockscreen_security"
+		android:title="@string/lockscreen_security_title" />
 
     <CheckBoxPreference
         android:key="proximity_disable"

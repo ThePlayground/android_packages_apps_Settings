@@ -903,7 +903,7 @@
     <string name="status_bar_signal_text_hidden">Hidden</string>
 
     <!-- Lock screen #CM -->
-    <string name="lock_screen_title">Lock screen</string>
+    <string name="lock_screen_title">Lockscreen</string>
 
     <!-- Lock Screen #AOKP-->
     <string name="pref_lockscreen_layout_title">Lockscreen style</string>
@@ -925,6 +925,8 @@
     <string name="lockscreen_wallpaper_summary">You can remove the wallpaper from the menu in this window</string>
     <string name="lockscreen_landscape_title">Horizontal lockscreen</string>
     <string name="lockscreen_landscape_summary">Whether horizontal lockscreen orientation will be enabled</string>
+
+    <string name="lockscreen_security_title">System security</string>
 
     <!-- Lockscreen Settings : Proximity -->
     <string name="pref_proximity_disable_title">Proximity detection</string>
