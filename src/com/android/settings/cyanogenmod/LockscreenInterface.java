@@ -57,7 +57,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
 
     private static final String PROXIMITY_DISABLE_PREF = "proximity_disable";
     private static final String PROXIMITY_DISABLE_PROP = "gsm.proximity.enable";
-    private static final String PROXIMITY_DISABLE_DEFAULT = "true";
+    private static final String PROXIMITY_DISABLE_DEFAULT = "1";
     
     ListPreference mLockscreenOption;
     CheckBoxPreference mLockscreenLandscape;
@@ -87,7 +87,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
 
         mDisableProximityPref = (CheckBoxPreference) findPreference(PROXIMITY_DISABLE_PREF);
         String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
-        mDisableProximityPref.setChecked("true".equals(disableProximity));
+        mDisableProximityPref.setChecked("1".equals(disableProximity));
         
         mLockscreenWallpaper = findPreference("wallpaper");
         
@@ -133,7 +133,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             
         } else if (preference == mDisableProximityPref) {
             SystemProperties.set(PROXIMITY_DISABLE_PROP,
-                                 mDisableProximityPref.isChecked() ? "true" : "false");
+                                 mDisableProximityPref.isChecked() ? "1" : "0");
         } else if (keys.contains(preference.getKey())) {
             Log.e("RC_Lockscreens", "key: " + preference.getKey());
             return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(), ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
