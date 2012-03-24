@@ -165,7 +165,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                setLcdDensity(newDensityValue);
+                                setLcdDensity(newDensityValue, false);
                                 dialog.dismiss();
                                 mCustomDensity.setSummary(newDensityValue + "");
 
@@ -175,10 +175,8 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                setLcdDensity(newDensityValue);
-                                PowerManager pm = (PowerManager) getActivity()
-                                        .getSystemService(Context.POWER_SERVICE);
-                                pm.reboot("Resetting density");
+                                setLcdDensity(newDensityValue, true);
+                                dialog.dismiss();
                             }
                         })
                         .setNegativeButton("Cancel",
@@ -207,7 +205,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
             }
         } else if (preference == mStockDensity) {
             newDensityValue = Integer.parseInt((String) newValue);
-            setLcdDensity(newDensityValue);
+            setLcdDensity(newDensityValue, false);
             mStockDensity.setSummary("Density set to: " + newDensityValue);
             return true;
         }
@@ -215,11 +213,16 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         return false;
     }
 
-    private void setLcdDensity(int newDensity) {
+    private void setLcdDensity(int newDensity, boolean reboot) {
         Helpers.getMount("rw");
         new CMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
                 + "ro.sf.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
         Helpers.getMount("ro");
+if (reboot) {
+PowerManager pm = (PowerManager) getActivity()
+.getSystemService(Context.POWER_SERVICE);
+pm.reboot("Resetting density");
+}
     }
 
     class ClearUserDataObserver extends IPackageDataObserver.Stub {
