@@ -669,6 +669,8 @@
     <!-- Sound & display settings screen, section header for settings related to display -->
     <string name="display_settings">Display</string>
     <!-- Sound & display settings screen, accelerometer-based rotation check box label -->
+    <!-- Layout Control -->
+    <string name="display_category_layout_options_title">Layout</string>
     <string name="accelerometer_title">Auto-rotate screen</string>
     <string name="rotate_180_title">Allow 180° rotation</string>
     <string name="rotate_180_summary">Allow your device to rotate upsideown!</string>
@@ -796,6 +798,26 @@
     <string name="carrier_text">Custom Carrier Text</string>
     <string name="carrier_text_summary">Change the carrier text in notification pulldown. Requires a reboot.</string>
     <string name="carrier_text_message">Change carrier text to:</string>
+
+    <!-- Playground Tweaks Panel -->
+    <string name="playground_panel">Playground Tweaks</string>
+    <string name="playground_panel_title">Enter Playground</string>
+
+    <string name="compatibility_mode_title">Compatibility Mode</string>
+    <string name="compatibility_mode_summary_off">Run apps in Compatibility mode. This require rebooting.</string>
+    <string name="compatibility_mode_summary_on">Turn off compatibility mode to allow app layouts.</string>
+    
+    <string name="dual_pane_title">Dual-panel layout</string>
+    <string name="dual_pane_summary">Side-by-side display for apps that provide a dual-pane option</string>
+
+    <string name="pref_tiled_rendering_title">Tile Rendering</string>
+    <string name="pref_tiled_rendering_summary">Process the screen as individual blocks running in async</string>
+
+    <string name="pref_proximity_disable_title">Proximity detection</string>
+    <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
+
+    <string name="cache_external_title">External Cache</string>
+    <string name="cache_external_summary">Google apps will store their related cache on the sdcard</string>
 
     <!-- Combined Bar #CM -->
     <string name="combined_bar_title">Combined bar</string>
@@ -926,6 +948,7 @@
     <string name="lockscreen_action_camera">Camera</string>
     <string name="lockscreen_action_mms">SMS</string>
     <string name="lockscreen_action_phone">Phone</string>
+    <string name="lockscreen_action_torch">Torch</string>
     <string name="lockscreen_action_none">Empty</string>
     <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>
     <string name="lockscreen_wallpaper_summary">You can remove the wallpaper from the menu in this window</string>
@@ -933,10 +956,6 @@
     <string name="lockscreen_landscape_summary">Whether horizontal lockscreen orientation will be enabled</string>
 
     <string name="lockscreen_security_title">System security</string>
-
-    <!-- Lockscreen Settings : Proximity -->
-    <string name="pref_proximity_disable_title">Proximity detection</string>
-    <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
 
     <!-- Shortcut picker -->
     <string name="use_custom_app_title">Use custom application</string>
@@ -1600,10 +1619,6 @@
     <!-- Performance Settings : Dithering -->
     <string name="pref_use_dithering_title">Surface dithering</string>
     <string name="pref_use_dithering_summary">Dithering improves image quality on some displays at the cost of performance (requires reboot)</string>
-
-    <!-- Performance Settings : Rendering -->
-    <string name="pref_tiled_rendering_title">Tile Rendering</string>
-    <string name="pref_tiled_rendering_summary">Process the screen as individual blocks running in async</string>
 
     <!-- Performance Settings : 16bpp Alpha -->
     <string name="pref_use_16bpp_alpha_title">16bit transparency</string>
@@ -4331,19 +4346,6 @@ found in the list of installed apps.</string>
 
     <!-- Representation of a numerical percentage. [CHAR LIMIT=8] -->
     <string name="percentage"><xliff:g id="number" example="30">%d</xliff:g>%%</string>
-
-    <!-- Layout Control -->
-    <string name="display_category_layout_options_title">Layout</string>
-
-    <!-- Sound & display settings screen, compatibility mode check box label -->
-    <string name="compatibility_mode_title">Compatibility Mode</string>
-    <!-- Sound & display settings screen, compatibility mode option summary text when check box is selected -->
-    <string name="compatibility_mode_summary_off">Run apps in Compatibility mode. This require rebooting.</string>
-    <!-- Sound & display settings screen, compatibility mode option summary text when check box is clear -->
-    <string name="compatibility_mode_summary_on">Turn off compatibility mode to allow app layouts.</string>
-
-    <string name="dual_pane_title">Dual-panel layout</string>
-    <string name="dual_pane_summary">Side-by-side display for apps that provide a dual-pane option</string>
 
     <!-- A menu item in "About phone" that allows the user to update the phone with settings
     from their cell phone carrier. The use of the string is similar to the string

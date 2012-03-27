@@ -23,14 +23,5 @@
 		android:title="@string/lockscreen_targets">
         
 	</PreferenceCategory>
-
-    <PreferenceCategory
-		android:key="lockscreen_security"
-		android:title="@string/lockscreen_security_title" />
-
-    <CheckBoxPreference
-        android:key="proximity_disable"
-        android:title="@string/pref_proximity_disable_title"
-        android:summary="@string/pref_proximity_disable_summary" />
     
 </PreferenceScreen>

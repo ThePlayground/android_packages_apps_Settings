@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2010 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="@string/playground_panel"
+        xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+
+        <CheckBoxPreference
+            android:key="compatibility_mode"
+            android:title="@string/compatibility_mode_title"
+            android:summaryOn="@string/compatibility_mode_summary_on"
+            android:summaryOff="@string/compatibility_mode_summary_off" />
+
+        <CheckBoxPreference
+            android:key="dual_pane"
+            android:title="@string/dual_pane_title"
+            android:summary="@string/dual_pane_summary" />
+
+        <CheckBoxPreference
+            android:key="tiled_rendering"
+            android:title="@string/pref_tiled_rendering_title"
+            android:summary="@string/pref_tiled_rendering_summary" />
+
+        <CheckBoxPreference
+            android:key="proximity_disable"
+            android:title="@string/pref_proximity_disable_title"
+            android:summary="@string/pref_proximity_disable_summary" />
+
+        <Preference
+            android:key="external_cache"
+            android:title="@string/cache_external_title"
+            android:summary="@string/cache_external_summary" />
+
+        <CheckBoxPreference
+            android:key="notification_drawer_carrier_text"
+            android:title="@string/carrier_text"
+            android:summary="@string/carrier_text_summary"
+            android:defaultValue="false" />
+        
+        <Preference
+            android:key="custom_carrier_text"
+            android:title="@string/carrier_text" />
+
+</PreferenceScreen>

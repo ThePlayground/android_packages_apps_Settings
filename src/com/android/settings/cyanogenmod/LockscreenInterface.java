@@ -54,14 +54,9 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     public static final int SELECT_WALLPAPER = 3;
     
     private static final String WALLPAPER_NAME = "lockscreen_wallpaper.jpg";
-
-    private static final String PROXIMITY_DISABLE_PREF = "proximity_disable";
-    private static final String PROXIMITY_DISABLE_PROP = "gsm.proximity.enable";
-    private static final String PROXIMITY_DISABLE_DEFAULT = "1";
     
     ListPreference mLockscreenOption;
     CheckBoxPreference mLockscreenLandscape;
-    CheckBoxPreference mDisableProximityPref;
     
     Preference mLockscreenWallpaper;
 
@@ -84,10 +79,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         mLockscreenOption = (ListPreference) findPreference(PREF_LOCKSCREEN_LAYOUT);
         mLockscreenOption.setOnPreferenceChangeListener(this);
         mLockscreenOption.setValue(Settings.System.getInt(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_LAYOUT, 0) + "");
-
-        mDisableProximityPref = (CheckBoxPreference) findPreference(PROXIMITY_DISABLE_PREF);
-        String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
-        mDisableProximityPref.setChecked("1".equals(disableProximity));
         
         mLockscreenWallpaper = findPreference("wallpaper");
         
@@ -131,9 +122,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
             return true;
             
-        } else if (preference == mDisableProximityPref) {
-            SystemProperties.set(PROXIMITY_DISABLE_PROP,
-                                 mDisableProximityPref.isChecked() ? "1" : "0");
         } else if (keys.contains(preference.getKey())) {
             Log.e("RC_Lockscreens", "key: " + preference.getKey());
             return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(), ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
@@ -222,6 +210,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                 return getResources().getString(R.string.lockscreen_action_phone);
             else if (uri.equals("**mms**"))
                 return getResources().getString(R.string.lockscreen_action_mms);
+            else if (uri.equals("**torch**"))
+                return getResources().getString(R.string.lockscreen_action_torch);
             else if (uri.equals("**null**"))
                 return getResources().getString(R.string.lockscreen_action_none);
         } else {

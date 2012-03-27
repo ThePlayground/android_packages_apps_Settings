@@ -113,8 +113,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
             if (activityName != null) {
                 mContext.startActivity(openMarket);
             } else {
-                preference
-                        .setSummary("Couldn't open Google Play! If you're sure it's installed, open it from the launcher.");
+                preference.setSummary("Couldn't open Google Play! If you're sure it's installed, open it from the launcher.");
             }
             return true;
 
@@ -218,11 +217,10 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         new CMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
                 + "ro.sf.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
         Helpers.getMount("ro");
-if (reboot) {
-PowerManager pm = (PowerManager) getActivity()
-.getSystemService(Context.POWER_SERVICE);
-pm.reboot("Resetting density");
-}
+        if (reboot) {
+            PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+            pm.reboot("Resetting density");
+        }
     }
 
     class ClearUserDataObserver extends IPackageDataObserver.Stub {

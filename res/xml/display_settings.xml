@@ -55,17 +55,6 @@
             android:fragment="com.android.settings.cyanogenmod.DisplayRotation"
             android:title="@string/display_rotation_title" />
 
-        <CheckBoxPreference
-            android:key="compatibility_mode"
-            android:title="@string/compatibility_mode_title"
-            android:summaryOn="@string/compatibility_mode_summary_on"
-            android:summaryOff="@string/compatibility_mode_summary_off" />
-
-        <CheckBoxPreference
-            android:key="dual_pane"
-            android:title="@string/dual_pane_title"
-            android:summary="@string/dual_pane_summary" />
-
         <PreferenceCategory
             android:key="category_animation_options"
             android:title="@string/display_category_animation_options_title"/>

@@ -53,9 +53,4 @@
         android:entries="@array/entries_scrollingcache"
         android:entryValues="@array/values_scrollingcache" />
 
-    <CheckBoxPreference
-        android:key="tiled_rendering"
-        android:title="@string/pref_tiled_rendering_title"
-        android:summary="@string/pref_tiled_rendering_summary" />
-
 </PreferenceScreen>

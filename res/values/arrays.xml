@@ -1065,6 +1065,7 @@
 		<item>Phone</item>
 		<item>Camera</item>
         <item>SMS</item>
+        <item>Torch</item>
 		<item>Custom app</item>
 		<item>Blank</item>
 	</string-array>
@@ -1075,6 +1076,7 @@
 		<item>**phone**</item>
 		<item>**camera**</item>
         <item>**mms**</item>
+        <item>**torch**</item>
 		<item>**app**</item>
 		<item>**null**</item>
 	</string-array>
