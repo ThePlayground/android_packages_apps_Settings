@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.cyanogenmod;
+package com.android.settings.playground;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,7 +61,7 @@ import com.android.settings.cyanogenmod.Helpers;
 /**
  * Performance Settings
  */
-public class ThePlayground extends SettingsPreferenceFragment
+public class PlaygroundPanel extends SettingsPreferenceFragment
 implements Preference.OnPreferenceChangeListener {
     private static final String TAG = "Playground";
     
@@ -225,7 +225,7 @@ implements Preference.OnPreferenceChangeListener {
             return true;
         }  else if (preference == mCarrier) {
             AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-            ad.setTitle(R.string.carrier_text);
+            ad.setTitle(R.string.carrier_text_title);
             ad.setMessage(R.string.carrier_text_message);
             final EditText text = new EditText(getActivity());
             ad.setView(text);

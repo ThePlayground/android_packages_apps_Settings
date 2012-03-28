@@ -46,12 +46,12 @@
 
         <CheckBoxPreference
             android:key="notification_drawer_carrier_text"
-            android:title="@string/carrier_text"
+            android:title="@string/carrier_text_title"
             android:summary="@string/carrier_text_summary"
             android:defaultValue="false" />
         
         <Preference
             android:key="custom_carrier_text"
-            android:title="@string/carrier_text" />
+            android:title="@string/carrier_text_heading" />
 
 </PreferenceScreen>
