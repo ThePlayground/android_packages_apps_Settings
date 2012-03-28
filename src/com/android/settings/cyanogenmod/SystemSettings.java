@@ -39,7 +39,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_LCD_DENSITY = "lcd_density";
-    private static final String KEY_PLAYGROUND = "playground";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String KEY_POWER_WIDGET = "power_widget";
     static final String SIZE_OVERRIDE_PROPERTY = "ro.config.statusbar";

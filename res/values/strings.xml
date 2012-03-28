@@ -800,8 +800,8 @@
     <string name="carrier_text_message">Change carrier text to:</string>
 
     <!-- Playground Tweaks Panel -->
-    <string name="playground_panel">Playground Tweaks</string>
-    <string name="playground_panel_title">Enter Playground</string>
+    <string name="playground_panel">Playground Tweaks Panel</string>
+    <string name="playground_panel_title">Playground</string>
 
     <string name="compatibility_mode_title">Compatibility Mode</string>
     <string name="compatibility_mode_summary_off">Run apps in Compatibility mode. This require rebooting.</string>

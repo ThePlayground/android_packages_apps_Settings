@@ -1359,6 +1359,8 @@
 
         <activity android:name=".cyanogenmod.SystemSettings" />
 
+        <activity android:name=".cyanogenmod.ThePlayground" />
+
         <activity android:name=".cyanogenmod.PerformanceSettings" />
 
         <activity android:name=".profiles.ProfilesSettings" />

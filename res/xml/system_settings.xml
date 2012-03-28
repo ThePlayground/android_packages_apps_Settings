@@ -63,9 +63,4 @@
         android:entryValues="@array/entryvalues_font_size"
         android:dialogTitle="@string/dialog_title_font_size" />
 
-    <PreferenceScreen
-        android:key="playground"
-        android:fragment="com.android.settings.cyanogenmod.ThePlayground"
-        android:title="@string/playground_panel_title" />
-
 </PreferenceScreen>
