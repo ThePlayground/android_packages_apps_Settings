@@ -210,11 +210,13 @@ public class AppGroupConfig extends SettingsPreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mNamePreference) {
             String name = mNamePreference.getName().toString();
-            if (!mProfileManager.notificationGroupExists(name)) {
-                mNotificationGroup.setName(name);
-            } else {
-                mNamePreference.setName(mNotificationGroup.getName());
-                Toast.makeText(getActivity(), R.string.duplicate_appgroup_name, Toast.LENGTH_LONG).show();
+            if (!name.equals(mNotificationGroup.getName())) {
+                if (!mProfileManager.notificationGroupExists(name)) {
+                    mNotificationGroup.setName(name);
+                } else {
+                    mNamePreference.setName(mNotificationGroup.getName());
+                    Toast.makeText(getActivity(), R.string.duplicate_appgroup_name, Toast.LENGTH_LONG).show();
+                }
             }
         }
         return true;

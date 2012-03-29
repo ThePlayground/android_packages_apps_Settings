@@ -27,6 +27,7 @@ import android.preference.PreferenceScreen;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.Utils;
 
 public class AppGroupList extends SettingsPreferenceFragment {
 
@@ -53,7 +54,12 @@ public class AppGroupList extends SettingsPreferenceFragment {
     public void onResume() {
         super.onResume();
         refreshList();
-    }
+
+        // On tablet devices remove the padding
+        if (Utils.isScreenLarge()) {
+            getListView().setPadding(0, 0, 0, 0);
+        }
+}
 
     public void refreshList() {
         PreferenceScreen appgroupList = getPreferenceScreen();
