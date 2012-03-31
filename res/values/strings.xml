@@ -1716,6 +1716,10 @@
     <string name="baseband_version">Baseband version</string>
     <!-- About device screen, version of kernel. -->
     <string name="kernel_version">Kernel version</string>
+    <!-- About device screen, version of kernel. -->
+    <string name="cpu_info">CPU model</string>
+    <!-- About device screen, version of kernel. -->
+    <string name="mem_info">RAM total</string>
     <!-- About device screen, version of modification of Android. -->
     <string name="mod_version">Playground ICS version</string>
     <string name="mod_version_default">Undefined</string>
