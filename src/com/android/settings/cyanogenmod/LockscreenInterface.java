@@ -1,12 +1,7 @@
 
 package com.android.settings.cyanogenmod;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -19,21 +14,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemProperties;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceGroup;
-import android.preference.PreferenceScreen;
+import android.preference.*;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
-import android.view.Display;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.*;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.android.settings.R;
@@ -94,6 +80,19 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         refreshSettings();
         setHasOptionsMenu(true);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        
+        Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+        if (!isSDPresent) {
+            mLockscreenWallpaper.setEnabled(false);
+            mLockscreenWallpaper.setSummary("Sdcard Unavailable");
+            
+        }
+        refreshSettings();
+    }
     
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -105,7 +104,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             float spotlightX = (float) display.getWidth() / width;
             float spotlightY = (float) display.getHeight() / height;
             
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             intent.putExtra("crop", "true");
             intent.putExtra("aspectX", width);
@@ -116,9 +115,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             // intent.putExtra("return-data", false);
             intent.putExtra("spotlightX", spotlightX);
             intent.putExtra("spotlightY", spotlightY);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, getLockscreenExternalUri());
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-            
             startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
             return true;
             
@@ -266,12 +262,20 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                     return; // NOOOOO
                 }
                 
-                // should use intent.getData() here but it keeps returning null
-                Uri selectedImageUri = getLockscreenExternalUri();
-                Log.e(TAG, "Selected image uri: " + selectedImageUri);
-                Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
-                
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, wallpaperStream);
+                Uri selectedImageUri = data.getData();
+                Log.d(TAG, "Selected image uri: " + selectedImageUri);
+                try {
+                    Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(selectedImageUri.getPath()));
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, wallpaperStream);
+                } catch (FileNotFoundException e) {
+                    Log.e(TAG, "Error opening file!", e);
+                    Toast.makeText(getActivity(), "Error opening file!", Toast.LENGTH_LONG).show();
+                    return;
+                } catch (OutOfMemoryError e) {
+                    Log.e(TAG, "Out of memory!", e);
+                    Toast.makeText(getActivity(), "Out of memory! Try a smaller image.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Helpers.getMount("ro");
 
             } else if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
