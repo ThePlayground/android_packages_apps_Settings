@@ -21,6 +21,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Toast;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
