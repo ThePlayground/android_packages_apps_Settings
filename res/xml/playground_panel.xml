@@ -34,6 +34,13 @@
             android:title="@string/pref_tiled_rendering_title"
             android:summary="@string/pref_tiled_rendering_summary" />
 
+        <ListPreference
+            android:key="composition_type"
+            android:title="@string/pref_comp_type_title"
+            android:summary="@string/pref_comp_type_summary"
+            android:entries="@array/entries_comp_type"
+            android:entryValues="@array/values_comp_type" />
+
         <CheckBoxPreference
             android:key="proximity_disable"
             android:title="@string/pref_proximity_disable_title"

@@ -722,6 +722,22 @@
         <item>Unsuccessful</item>
     </string-array>
 
+    <!-- Playground Panel Options Arrays -->
+
+    <string-array name="entries_comp_type" translatable="false">
+        <item>@string/pref_c2d_composition</item>
+        <item>@string/pref_dyn_composition</item>
+        <item>@string/pref_gpu_composition</item>
+        <item>@string/pref_mdp_composition</item>
+    </string-array>
+
+    <string-array name="values_comp_type" translatable="false">
+        <item>c2d</item>
+        <item>dyn</item>
+        <item>gpu</item>
+        <item>mdp</item>
+    </string-array>
+
     <!-- **** CYANOGENMOD EDITS START **** -->
     <!-- Arrays required by Automatic Backlight. -->
     <string-array name="entries_light_filter_window">

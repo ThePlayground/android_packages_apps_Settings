@@ -79,6 +79,10 @@ implements Preference.OnPreferenceChangeListener {
     private static final String BOOT_SOUND_PROP = "ro.config.play.bootsound";
     private static final String BOOT_SOUND_DEFAULT = "1";
 
+    private static final String COMP_TYPE_PREF = "composition_type";
+    private static final String COMP_TYPE_PROP = "debug.composition.type";
+    private static final String COMP_TYPE_DEFAULT = "gpu";
+
     private static final String KEY_EXTERNAL_CACHE = "external_cache";
     
     private static final String KEY_DUAL_PANE = "dual_pane";
@@ -92,6 +96,7 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mBootSoundPref;
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mDualPane;
+    private ListPreference mCompositionType;
     private Preference mExternalCache;
     private Preference mCarrier;
 
@@ -118,6 +123,11 @@ implements Preference.OnPreferenceChangeListener {
             } else {
                 prefSet.removePreference(mTiledRenderingPref);
             }
+
+            mCompositionType = (ListPreference) findPreference(COMP_TYPE_PREF);
+            mCompositionType.setOnPreferenceChangeListener(this);
+            mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
+            mCompositionType.setOnPreferenceChangeListener(this);
 
             mBootSoundPref = (CheckBoxPreference) findPreference(BOOT_SOUND_PREF);
             String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
@@ -263,7 +273,12 @@ implements Preference.OnPreferenceChangeListener {
     }
     
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        // Stub for future preferences
+        if (preference == mCompositionType) {
+            if (newValue != null) {
+                SystemProperties.set(COMP_TYPE_PROP, (String)newValue);
+                return true;
+            }
+        }
         return false;
     }
     
