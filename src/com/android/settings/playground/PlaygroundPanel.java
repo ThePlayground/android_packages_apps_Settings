@@ -115,7 +115,7 @@ implements Preference.OnPreferenceChangeListener {
             }
             
             mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATIBILITY_MODE);
-            mCompatibilityMode.setPersistent(true);
+            mCompatibilityMode.setPersistent(false);
             mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 1) != 0);
             
             mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
