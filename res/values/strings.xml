@@ -817,6 +817,9 @@
     <string name="pref_proximity_disable_title">Proximity detection</string>
     <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
 
+    <string name="pref_proximity_disable_title">Bootanimation Sound</string>
+    <string name="pref_proximity_disable_summary">Play the android_audio.mp3 stored with bootanimation</string>
+
     <string name="cache_external_title">External Cache</string>
     <string name="cache_external_summary">Google apps will store their related cache on the sdcard</string>
 

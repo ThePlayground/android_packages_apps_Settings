@@ -75,6 +75,10 @@ implements Preference.OnPreferenceChangeListener {
     
     private static final String KEY_COMPATIBILITY_MODE = "compatibility_mode";
 
+    private static final String BOOT_SOUND_PREF = "boot_sound";
+    private static final String BOOT_SOUND_PROP = "ro.config.play.bootsound";
+    private static final String BOOT_SOUND_DEFAULT = "1";
+
     private static final String KEY_EXTERNAL_CACHE = "external_cache";
     
     private static final String KEY_DUAL_PANE = "dual_pane";
@@ -85,6 +89,7 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mTiledRenderingPref;
     private CheckBoxPreference mNotificationCarrierText;
     private CheckBoxPreference mDisableProximityPref;
+    private CheckBoxPreference mBootSoundPref;
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mDualPane;
     private Preference mExternalCache;
@@ -113,6 +118,10 @@ implements Preference.OnPreferenceChangeListener {
             } else {
                 prefSet.removePreference(mTiledRenderingPref);
             }
+
+            mBootSoundPref = (CheckBoxPreference) findPreference(BOOT_SOUND_PREF);
+            String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
+            mBootSoundPref.setChecked("1".equals(bootSound));
             
             mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATIBILITY_MODE);
             mCompatibilityMode.setPersistent(false);
@@ -211,6 +220,9 @@ implements Preference.OnPreferenceChangeListener {
         } else if (preference == mDisableProximityPref) {
             SystemProperties.set(PROXIMITY_DISABLE_PROP,
                                  mDisableProximityPref.isChecked() ? "1" : "0");
+        } else if (preference == mBootSoundPref) {
+            SystemProperties.set(BOOT_SOUND_PROP,
+                                 mBootSoundPref.isChecked() ? "1" : "0");
         } else if (preference == mCompatibilityMode) {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
             return true;
