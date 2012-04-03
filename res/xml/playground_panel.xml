@@ -18,6 +18,10 @@
         android:title="@string/playground_panel"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+        <PreferenceCategory
+            android:key="display_hacking"
+            android:title="@string/display_hacking">
+
         <CheckBoxPreference
             android:key="compatibility_mode"
             android:title="@string/compatibility_mode_title"
@@ -42,9 +46,13 @@
             android:entryValues="@array/values_comp_type" />
 
         <CheckBoxPreference
-            android:key="proximity_disable"
-            android:title="@string/pref_proximity_disable_title"
-            android:summary="@string/pref_proximity_disable_summary" />
+            android:key="composition_bypass"
+            android:title="@string/pref_composition_bypass_title"
+            android:summary="@string/pref_composition_bypass_summary" />
+
+        <PreferenceCategory
+            android:key="system_hacking"
+            android:title="@string/system_hacking">
 
         <CheckBoxPreference
             android:key="boot_sound"
@@ -65,5 +73,14 @@
         <Preference
             android:key="custom_carrier_text"
             android:title="@string/carrier_text_heading" />
+
+        <PreferenceCategory
+            android:key="hardware_hacking"
+            android:title="@string/hardware_hacking">
+
+        <CheckBoxPreference
+            android:key="proximity_disable"
+            android:title="@string/pref_proximity_disable_title"
+            android:summary="@string/pref_proximity_disable_summary" />
 
 </PreferenceScreen>

@@ -83,6 +83,10 @@ implements Preference.OnPreferenceChangeListener {
     private static final String COMP_TYPE_PROP = "debug.composition.type";
     private static final String COMP_TYPE_DEFAULT = "gpu";
 
+    private static final String COMP_BYPASS_PREF = "composition_bypass";
+    private static final String COMP_BYPASS_PROP = "ro.sf.compbypass.enable";
+    private static final String COMP_BYPASS_DEFAULT = "1";
+
     private static final String KEY_EXTERNAL_CACHE = "external_cache";
     
     private static final String KEY_DUAL_PANE = "dual_pane";
@@ -93,6 +97,7 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mTiledRenderingPref;
     private CheckBoxPreference mNotificationCarrierText;
     private CheckBoxPreference mDisableProximityPref;
+    private CheckBoxPreference mCompositionBypass;
     private CheckBoxPreference mBootSoundPref;
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mDualPane;
@@ -128,6 +133,10 @@ implements Preference.OnPreferenceChangeListener {
             mCompositionType.setOnPreferenceChangeListener(this);
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
+
+            mCompositionBypass = (CheckBoxPreference) findPreference(COMP_BYPASS_PREF);
+            String compositionBypass = SystemProperties.get(COMP_BYPASS_PROP, COMP_BYPASS_DEFAULT);
+            mCompositionBypass.setChecked("1".equals(compositionBypass));
 
             mBootSoundPref = (CheckBoxPreference) findPreference(BOOT_SOUND_PREF);
             String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
@@ -230,9 +239,14 @@ implements Preference.OnPreferenceChangeListener {
         } else if (preference == mDisableProximityPref) {
             SystemProperties.set(PROXIMITY_DISABLE_PROP,
                                  mDisableProximityPref.isChecked() ? "1" : "0");
+        } else if (preference == mCompositionBypass) {
+            SystemProperties.set(COMP_BYPASS_PROP,
+                                 mCompositionBypass.isChecked() ? "1" : "0");
+            return true;
         } else if (preference == mBootSoundPref) {
             SystemProperties.set(BOOT_SOUND_PROP,
                                  mBootSoundPref.isChecked() ? "1" : "0");
+            return true;
         } else if (preference == mCompatibilityMode) {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
             return true;

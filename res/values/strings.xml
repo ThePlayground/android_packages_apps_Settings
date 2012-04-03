@@ -798,14 +798,12 @@
     
     <!-- Notification Drawer #CM -->
     <string name="notification_drawer_title">Notifications</string>
-    <string name="carrier_text_title">Modify Carrier Text</string>
-    <string name="carrier_text_heading">Custom Carrier Text</string>
-    <string name="carrier_text_summary">Change the carrier text in notification pulldown. Requires a reboot.</string>
-    <string name="carrier_text_message">Change carrier text to:</string>
 
     <!-- Playground Tweaks Panel -->
     <string name="playground_panel">Playground Tweaks Panel</string>
     <string name="playground_panel_title">Playground</string>
+
+    <string name="display_hacking">Display Modification</string>
 
     <string name="compatibility_mode_title">Compatibility Mode</string>
     <string name="compatibility_mode_summary_off">Run apps in Compatibility mode. This require rebooting.</string>
@@ -825,14 +823,26 @@
     <string name="pref_gpu_composition">Graphic Processor (gpu)</string>
     <string name="pref_mdp_composition">Markov Decision (mdp)</string>
 
-    <string name="pref_proximity_disable_title">Proximity detection</string>
-    <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
+    <string name="pref_composition_bypass_title">Composition Bypass</string>
+    <string name="pref_composition_bypass_summary">Prevent frame rate from being decoupled with vsync</string>
+
+    <string name="system_hacking">System Modification</string>
 
     <string name="pref_boot_sound_title">Bootanimation Sound</string>
     <string name="pref_boot_sound_summary">Play the android_audio.mp3 stored with bootanimation</string>
 
     <string name="cache_external_title">External Cache</string>
     <string name="cache_external_summary">Google apps will store their related cache on the sdcard</string>
+
+    <string name="carrier_text_title">Modify Carrier Text</string>
+    <string name="carrier_text_heading">Custom Carrier Text</string>
+    <string name="carrier_text_summary">Change the carrier text in notification pulldown. Requires a reboot.</string>
+    <string name="carrier_text_message">Change carrier text to:</string>
+
+    <string name="hardware_hacking">Hardware Modification</string>
+
+    <string name="pref_proximity_disable_title">Proximity detection</string>
+    <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
 
     <!-- Combined Bar #CM -->
     <string name="combined_bar_title">Combined bar</string>
