@@ -1,4 +1,4 @@
-package com.android.settings.cyanogenmod;
+package com.android.settings;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

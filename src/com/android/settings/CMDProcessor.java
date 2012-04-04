@@ -1,5 +1,5 @@
 
-package com.android.settings.cyanogenmod;
+package com.android.settings;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -41,6 +41,10 @@ public class CMDProcessor {
             exit_value = exit_value_in;
             stdout = stdout_in;
             stderr = stderr_in;
+        }
+
+        public String output() {
+            return stdout;
         }
 
         public boolean success() {

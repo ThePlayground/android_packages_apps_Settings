@@ -55,8 +55,8 @@ import android.widget.Toast;
 import com.android.settings.R;
 import com.android.settings.Utils;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.cyanogenmod.CMDProcessor;
-import com.android.settings.cyanogenmod.Helpers;
+import com.android.settings.CMDProcessor;
+import com.android.settings.Helpers;
 
 /**
  * Performance Settings
@@ -137,7 +137,7 @@ implements Preference.OnPreferenceChangeListener {
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
 
-            String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation");
+            String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation").output();
             mInstallLocation = (ListPreference) findPreference(INSTALL_LOCATION);
             mInstallLocation.setOnPreferenceChangeListener(this);
             mInstallLocation.setValue(currentInstall);
@@ -316,7 +316,7 @@ implements Preference.OnPreferenceChangeListener {
                 Helpers.getMount("rw");
                 new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_TYPE_PROP+"=.*|"+COMP_TYPE_PROP+"="+newValue+"|' "+"/system/build.prop");
                 Helpers.getMount("ro");
-                mCustomDensity.setSummary("Queued "+newValue+" composition");
+                mCompositionType.setSummary("Queued "+newValue+" composition");
                 return true;
             }
         }
