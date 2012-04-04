@@ -234,18 +234,28 @@ implements Preference.OnPreferenceChangeListener {
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
         if (preference == mTiledRenderingPref) {
-            SystemProperties.set(TILED_RENDERING_PROP,
-                                 mTiledRenderingPref.isChecked() ? "true" : "false");
+            //SystemProperties.set(TILED_RENDERING_PROP, mTiledRenderingPref.isChecked() ? "true" : "false");
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+TILED_RENDERING_PROP+"=.*|"+TILED_RENDERING_PROP+"="+(mTiledRenderingPref.isChecked() ? "true" : "false")+"|' "+"/system/build.prop");
+            Helpers.getMount("ro");
+            return true;
         } else if (preference == mDisableProximityPref) {
-            SystemProperties.set(PROXIMITY_DISABLE_PROP,
-                                 mDisableProximityPref.isChecked() ? "1" : "0");
+            //SystemProperties.set(PROXIMITY_DISABLE_PROP, mDisableProximityPref.isChecked() ? "1" : "0");
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+PROXIMITY_DISABLE_PROP+"=.*|"+PROXIMITY_DISABLE_PROP+"="+(mDisableProximityPref.isChecked() ? "1" : "0")+"|' "+"/system/build.prop");
+            Helpers.getMount("ro");
+            return true;
         } else if (preference == mCompositionBypass) {
-            SystemProperties.set(COMP_BYPASS_PROP,
-                                 mCompositionBypass.isChecked() ? "1" : "0");
+            //SystemProperties.set(COMP_BYPASS_PROP, mCompositionBypass.isChecked() ? "1" : "0");
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_BYPASS_PROP+"=.*|"+COMP_BYPASS_PROP+"="+(mCompositionBypass.isChecked() ? "1" : "0")+"|' "+"/system/build.prop");
+            Helpers.getMount("ro");
             return true;
         } else if (preference == mBootSoundPref) {
-            SystemProperties.set(BOOT_SOUND_PROP,
-                                 mBootSoundPref.isChecked() ? "1" : "0");
+            //SystemProperties.set(BOOT_SOUND_PROP, mBootSoundPref.isChecked() ? "1" : "0");
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+BOOT_SOUND_PROP+"=.*|"+BOOT_SOUND_PROP+"="+(mBootSoundPref.isChecked() ? "1" : "0")+"|' "+"/system/build.prop");
+            Helpers.getMount("ro");
             return true;
         } else if (preference == mCompatibilityMode) {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
@@ -289,7 +299,10 @@ implements Preference.OnPreferenceChangeListener {
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mCompositionType) {
             if (newValue != null) {
-                SystemProperties.set(COMP_TYPE_PROP, (String)newValue);
+                //SystemProperties.set(COMP_TYPE_PROP, (String)newValue);
+                Helpers.getMount("rw");
+                new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_TYPE_PROP+"=.*|"+COMP_TYPE_PROP+"="+newValue+"|' "+"/system/build.prop");
+                Helpers.getMount("ro");
                 return true;
             }
         }
