@@ -325,13 +325,13 @@ implements Preference.OnPreferenceChangeListener {
                 new CMDProcessor().su.runWaitFor("pm setInstallLocation "+newValue);
                 String summary = "default location";
                 if (newValue.equals("0")) {
-                    summary = "automatic location";
+                    summary = "package choice";
                 } else if (newValue.equals("1")) {
                     summary = "internal only";
                 } else if (newValue.equals("2")) {
                     summary = "external only";
                 }
-                mInstallLocation.setSummary("Install "+summary);
+                mInstallLocation.setSummary("Install to "+summary);
                 return true;
             }
         }

@@ -44,7 +44,7 @@ public class CMDProcessor {
         }
 
         public String output() {
-            return stdout;
+            return stderr;
         }
 
         public boolean success() {
