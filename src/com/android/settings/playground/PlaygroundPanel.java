@@ -152,7 +152,7 @@ implements Preference.OnPreferenceChangeListener {
             mBootSoundPref.setChecked("1".equals(bootSound));
             
             mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATIBILITY_MODE);
-            mCompatibilityMode.setPersistent(false);
+            mCompatibilityMode.setPersistent(true);
             mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 1) != 0);
             
             mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
