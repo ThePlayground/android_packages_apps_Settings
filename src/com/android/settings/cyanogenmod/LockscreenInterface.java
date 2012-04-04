@@ -40,9 +40,9 @@ import android.widget.Toast;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+import com.android.settings.CMDProcessor;
+import com.android.settings.Helpers;
 import com.android.settings.cyanogenmod.ShortcutPickerHelper;
-import com.android.settings.cyanogenmod.CMDProcessor;
-import com.android.settings.cyanogenmod.Helpers;
 
 public class LockscreenInterface extends SettingsPreferenceFragment implements ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
     

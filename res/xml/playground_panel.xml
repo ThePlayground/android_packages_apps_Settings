@@ -61,7 +61,7 @@
             android:title="@string/cache_external_title"
             android:summary="@string/cache_external_summary" />
 
-        <Preference
+        <ListPreference
             android:key="install_location"
             android:title="@string/install_location_title"
             android:summary="@string/install_location_summary"
