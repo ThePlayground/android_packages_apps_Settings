@@ -79,6 +79,8 @@ implements Preference.OnPreferenceChangeListener {
     private static final String BOOT_SOUND_PROP = "ro.config.play.bootsound";
     private static final String BOOT_SOUND_DEFAULT = "1";
 
+    private static final String INSTALL_LOCATION = "install_location";
+
     private static final String COMP_TYPE_PREF = "composition_type";
     private static final String COMP_TYPE_PROP = "debug.composition.type";
     private static final String COMP_TYPE_DEFAULT = "gpu";
@@ -102,6 +104,7 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mDualPane;
     private ListPreference mCompositionType;
+    private ListPreference mInstallLocation;
     private Preference mExternalCache;
     private Preference mCarrier;
 
@@ -133,6 +136,12 @@ implements Preference.OnPreferenceChangeListener {
             mCompositionType.setOnPreferenceChangeListener(this);
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
+
+            String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation");
+            mInstallLocation = (ListPreference) findPreference(INSTALL_LOCATION);
+            mInstallLocation.setOnPreferenceChangeListener(this);
+            mInstallLocation.setValue(currentInstall);
+            mInstallLocation.setOnPreferenceChangeListener(this);
 
             mCompositionBypass = (CheckBoxPreference) findPreference(COMP_BYPASS_PREF);
             String compositionBypass = SystemProperties.get(COMP_BYPASS_PROP, COMP_BYPASS_DEFAULT);
@@ -307,6 +316,22 @@ implements Preference.OnPreferenceChangeListener {
                 Helpers.getMount("rw");
                 new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_TYPE_PROP+"=.*|"+COMP_TYPE_PROP+"="+newValue+"|' "+"/system/build.prop");
                 Helpers.getMount("ro");
+                mCustomDensity.setSummary("Queued "+newValue+" composition");
+                return true;
+            }
+        }
+        if (preference == mInstallLocation) {
+            if (newValue != null) {
+                new CMDProcessor().su.runWaitFor("pm setInstallLocation "+newValue);
+                String summary = "default location";
+                if (newValue.equals("0")) {
+                    summary = "automatic location";
+                } else if (newValue.equals("1")) {
+                    summary = "internal only";
+                } else if (newValue.equals("2")) {
+                    summary = "external only";
+                }
+                mInstallLocation.setSummary("Install "+summary);
                 return true;
             }
         }

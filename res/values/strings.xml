@@ -826,13 +826,22 @@
     <string name="pref_composition_bypass_title">Composition Bypass</string>
     <string name="pref_composition_bypass_summary">Prevent frame rate from being decoupled with vsync</string>
 
+    <string name="application_hacking">Package Modification</string>
+
+    <string name="cache_external_title">External Cache</string>
+    <string name="cache_external_summary">Google apps will store their related cache on the sdcard</string>
+
+    <string name="install_location_title">Install Location</string>
+    <string name="install_location_summary">Choose install target for user applications</string>
+    
+    <string name="pref_automatic_loc">Automatic</string>
+    <string name="pref_internal_loc">Internal</string>
+    <string name="pref_external_loc">External</string>
+
     <string name="system_hacking">System Modification</string>
 
     <string name="pref_boot_sound_title">Bootanimation Sound</string>
     <string name="pref_boot_sound_summary">Play the android_audio.mp3 stored with bootanimation</string>
-
-    <string name="cache_external_title">External Cache</string>
-    <string name="cache_external_summary">Google apps will store their related cache on the sdcard</string>
 
     <string name="carrier_text_title">Modify Carrier Text</string>
     <string name="carrier_text_heading">Custom Carrier Text</string>
