@@ -806,7 +806,7 @@
     <string name="display_hacking">Display Modification</string>
 
     <string name="compatibility_mode_title">Compatibility Mode</string>
-    <string name="compatibility_mode_summary_off">Run apps in Compatibility mode. This require rebooting.</string>
+    <string name="compatibility_mode_summary_off">Run apps in Compatibility mode. (Requires reboot)</string>
     <string name="compatibility_mode_summary_on">Turn off compatibility mode to allow app layouts.</string>
     
     <string name="dual_pane_title">Dual-panel layout</string>
