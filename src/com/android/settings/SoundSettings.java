@@ -298,7 +298,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private String getVolumeOverlaySettingValue() {
         // Load from Settings
         int settingAsInt = Settings.System.getInt(getContentResolver(),Settings.System.MODE_VOLUME_OVERLAY, Settings.System.VOLUME_OVERLAY_SINGLE);
-        if (settingAsInt < volumeSubNames.length && volumeSubNames[settingAsInt] != null) {
+        if (settingAsInt != -1 && settingAsInt < volumeSubNames.length && volumeSubNames[settingAsInt] != null) {
             mVolumeOverlay.setSummary(volumeSubNames[settingAsInt]);
         }
 
@@ -312,9 +312,11 @@ public class SoundSettings extends SettingsPreferenceFragment implements
             case Settings.System.VOLUME_OVERLAY_NONE :
                 return "none";
         }
-	if (! getActivity().getResources().getBoolean(com.android.internal.R.bool.config_voice_capable)) {
-		return "expandable";
-	}
+        if (! getActivity().getResources().getBoolean(com.android.internal.R.bool.config_voice_capable)) {
+                mVolumeOverlay.setSummary(volumeSubNames[Settings.System.VOLUME_OVERLAY_EXPANDABLE]);
+                return "expandable";
+        }
+        mVolumeOverlay.setSummary(volumeSubNames[Settings.System.VOLUME_OVERLAY_SINGLE]);
         return "single";
     }
 
