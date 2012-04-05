@@ -17,16 +17,16 @@
 package com.android.settings.playground;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -36,21 +36,10 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.SystemProperties;
+import android.provider.SyncStateContract.Helpers;
+import android.content.res.Resources;
 import android.text.Spannable;
-import android.util.Log;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.settings.R;
 import com.android.settings.Utils;
@@ -59,7 +48,7 @@ import com.android.settings.CMDProcessor;
 import com.android.settings.Helpers;
 
 /**
- * Performance Settings
+ * Playground Panel Settings
  */
 public class PlaygroundPanel extends SettingsPreferenceFragment
 implements Preference.OnPreferenceChangeListener {
@@ -337,5 +326,10 @@ implements Preference.OnPreferenceChangeListener {
         }
         return false;
     }
+
+    @Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+	}
     
 }
