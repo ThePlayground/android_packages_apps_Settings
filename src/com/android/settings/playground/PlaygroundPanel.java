@@ -36,7 +36,6 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.provider.SyncStateContract.Helpers;
 import android.content.res.Resources;
 import android.text.Spannable;
 import android.widget.EditText;
