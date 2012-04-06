@@ -68,6 +68,12 @@
             android:entries="@array/entries_install_location"
             android:entryValues="@array/values_install_location" />
 
+        <CheckBoxPreference
+            android:key="shutter_sound"
+            android:title="@string/shutter_sound_title"
+            android:summaryOn="@string/shutter_sound_summary_on"
+            android:summaryOff="@string/shutter_sound_summary_off" />
+
         </PreferenceCategory>
 
         <PreferenceCategory

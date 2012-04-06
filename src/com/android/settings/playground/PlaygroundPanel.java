@@ -55,13 +55,15 @@ implements Preference.OnPreferenceChangeListener {
     
     private static final String PROXIMITY_DISABLE_PREF = "proximity_disable";
     private static final String PROXIMITY_DISABLE_PROP = "gsm.proximity.enable";
-    private static final String PROXIMITY_DISABLE_DEFAULT = "1";
+    private static final String PROXIMITY_DISABLE_DEFAULT = "true";
     
     private static final String TILED_RENDERING_PREF = "tiled_rendering";
     private static final String TILED_RENDERING_PROP = "debug.enabletr";
     private static final String TILED_RENDERING_DEFAULT = "false";
     
     private static final String KEY_COMPATIBILITY_MODE = "compatibility_mode";
+
+    private static final String KEY_SHUTTER_SOUND = "shutter_sound";
 
     private static final String BOOT_SOUND_PREF = "boot_sound";
     private static final String BOOT_SOUND_PROP = "ro.config.play.bootsound";
@@ -90,6 +92,7 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mCompositionBypass;
     private CheckBoxPreference mBootSoundPref;
     private CheckBoxPreference mCompatibilityMode;
+    private CheckBoxPreference mShutterSound;
     private CheckBoxPreference mDualPane;
     private ListPreference mCompositionType;
     private ListPreference mInstallLocation;
@@ -110,7 +113,7 @@ implements Preference.OnPreferenceChangeListener {
             
             mDisableProximityPref = (CheckBoxPreference) findPreference(PROXIMITY_DISABLE_PREF);
             String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
-            mDisableProximityPref.setChecked("1".equals(disableProximity));
+            mDisableProximityPref.setChecked("true".equals(disableProximity));
             
             mTiledRenderingPref = (CheckBoxPreference) prefSet.findPreference(TILED_RENDERING_PREF);
             String tiledRendering = SystemProperties.get(TILED_RENDERING_PROP, TILED_RENDERING_DEFAULT);
@@ -142,6 +145,10 @@ implements Preference.OnPreferenceChangeListener {
             mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATIBILITY_MODE);
             mCompatibilityMode.setPersistent(true);
             mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 1) != 0);
+
+            mShutterSound = (CheckBoxPreference) findPreference(KEY_SHUTTER_SOUND);
+            mShutterSound.setPersistent(true);
+            mShutterSound.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.SHUTTER_SOUND, 1) != 0);
             
             mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
             if (mDualPane != null) {
@@ -238,7 +245,7 @@ implements Preference.OnPreferenceChangeListener {
             Helpers.getMount("ro");
             return true;
         } else if (preference == mDisableProximityPref) {
-            String disableProximityCheck = mDisableProximityPref.isChecked() ? "1" : "0";
+            String disableProximityCheck = mDisableProximityPref.isChecked() ? "true" : "false";
             SystemProperties.set(PROXIMITY_DISABLE_PROP, disableProximityCheck);
             Helpers.getMount("rw");
             new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+PROXIMITY_DISABLE_PROP+"=.*|"+PROXIMITY_DISABLE_PROP+"="+disableProximityCheck+"|' "+"/system/build.prop");
@@ -260,6 +267,9 @@ implements Preference.OnPreferenceChangeListener {
             return true;
         } else if (preference == mCompatibilityMode) {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mShutterSound) {
+            Settings.System.putInt(getContentResolver(), Settings.System.SHUTTER_SOUND, mShutterSound.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mDualPane) {
             Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
