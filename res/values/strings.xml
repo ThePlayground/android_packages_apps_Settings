@@ -805,8 +805,8 @@
     <string name="display_hacking">Display Modification</string>
 
     <string name="compatibility_mode_title">Compatibility Mode</string>
-    <string name="compatibility_mode_summary_off">Run apps in Compatibility mode. (Requires reboot)</string>
-    <string name="compatibility_mode_summary_on">Turn off compatibility mode to allow app layouts.</string>
+    <string name="compatibility_mode_summary_on">Run apps in compatibility mode. (Requires reboot)</string>
+    <string name="compatibility_mode_summary_off">Turn off compatibility mode to allow app layouts.</string>
     
     <string name="dual_pane_title">Dual-panel layout</string>
     <string name="dual_pane_summary">Side-by-side display for apps that provide a dual-pane option</string>
@@ -815,7 +815,7 @@
     <string name="pref_tiled_rendering_summary">Process the screen as individual blocks running in async</string>
 
     <string name="pref_comp_type_title">Composition Type</string>
-    <string name="pref_comp_type_summary">Choose the rendering style for the qualcomm display composition</string>
+    <string name="pref_comp_type_summary">Choose the rendering style for the Qualcomm display composition</string>
 
     <string name="pref_c2d_composition">Core 2 Duo (c2d)</string>
     <string name="pref_dyn_composition">Dynamic (dyn)</string>
@@ -834,8 +834,8 @@
     <string name="install_location_summary">Choose install target for user applications</string>
 
     <string name="shutter_sound_title">Camera Sounds</string>
-    <string name="shutter_sound_summary_off">Allow shutter sounds in Camera / Camcorder</string>
-    <string name="shutter_sound_summary_on">Prevent shutter sounds in Camera / Camcorder</string>
+    <string name="shutter_sound_summary_on">Allow shutter sounds in Camera / Camcorder</string>
+    <string name="shutter_sound_summary_off">Prevent shutter sounds in Camera / Camcorder</string>
     
     <string name="pref_automatic_loc">Automatic</string>
     <string name="pref_internal_loc">Internal</string>
@@ -844,10 +844,12 @@
     <string name="system_hacking">System Modification</string>
 
     <string name="pref_navi_bar_title">Navigation Panel</string>
-    <string name="pref_navi_bar_summary">Force navigation bar functionality (Requires reboot)</string>
+    <string name="pref_navi_bar_summary_on">Force navigation bar functionality (Requires reboot)</string>
+    <string name="pref_navi_bar_summary_off">Disable navigation bar functionality (Requires reboot)</string>
 
     <string name="pref_boot_sound_title">Bootanimation Sound</string>
-    <string name="pref_boot_sound_summary">Play the android_audio.mp3 stored with bootanimation</string>
+    <string name="pref_boot_sound_summary_on">Play the android_audio.mp3 stored in system media</string>
+    <string name="pref_boot_sound_summary_off">Disable sound during the startup bootanimation</string>
 
     <string name="carrier_text_title">Modify Carrier Text</string>
     <string name="carrier_text_heading">Custom Carrier Text</string>

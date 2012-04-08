@@ -83,12 +83,14 @@
         <CheckBoxPreference
             android:key="forced_navi_bar"
             android:title="@string/pref_navi_bar_title"
-            android:summary="@string/pref_navi_bar_summary" />
+            android:summaryOn="@string/pref_navi_bar_summary_on"
+            android:summaryOff="@string/pref_navi_bar_summary_off" />
 
         <CheckBoxPreference
             android:key="boot_sound"
             android:title="@string/pref_boot_sound_title"
-            android:summary="@string/pref_boot_sound_summary" />
+            android:summaryOn="@string/pref_boot_sound_summary_on"
+            android:summaryOff="@string/pref_boot_sound_summary_off" />
 
         <CheckBoxPreference
             android:key="notification_drawer_carrier_text"

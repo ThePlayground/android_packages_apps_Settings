@@ -117,62 +117,69 @@ implements Preference.OnPreferenceChangeListener {
             mDisableProximityPref = (CheckBoxPreference) findPreference(PROXIMITY_DISABLE_PREF);
             String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
             mDisableProximityPref.setChecked("true".equals(disableProximity));
+            mDisableProximityPref.setOnPreferenceChangeListener(this);
             
             mTiledRenderingPref = (CheckBoxPreference) prefSet.findPreference(TILED_RENDERING_PREF);
             String tiledRendering = SystemProperties.get(TILED_RENDERING_PROP, TILED_RENDERING_DEFAULT);
             if (tiledRendering != null) {
                 mTiledRenderingPref.setChecked("true".equals(tiledRendering));
+                mTiledRenderingPref.setOnPreferenceChangeListener(this);
             } else {
                 prefSet.removePreference(mTiledRenderingPref);
             }
 
             mCompositionType = (ListPreference) findPreference(COMP_TYPE_PREF);
-            mCompositionType.setOnPreferenceChangeListener(this);
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
 
             String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation").output();
             mInstallLocation = (ListPreference) findPreference(INSTALL_LOCATION);
-            mInstallLocation.setOnPreferenceChangeListener(this);
+            mInstallLocation.setPersistent(true);
             mInstallLocation.setValue(currentInstall);
             mInstallLocation.setOnPreferenceChangeListener(this);
 
             mCompositionBypass = (CheckBoxPreference) findPreference(COMP_BYPASS_PREF);
             String compositionBypass = SystemProperties.get(COMP_BYPASS_PROP, COMP_BYPASS_DEFAULT);
             mCompositionBypass.setChecked("1".equals(compositionBypass));
+            mCompositionBypass.setOnPreferenceChangeListener(this);
 
             mNavigationBar = (CheckBoxPreference) findPreference(KEY_NAVIGATION_BAR);
             if(getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar) == true) {
                 getPreferenceScreen().removePreference(mNavigationBar);
             } else {
+                mNavigationBar.setPersistent(true);
                 mNavigationBar.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, 0) == 1);
-                    mNavigationBar.setOnPreferenceChangeListener(this);
+                mNavigationBar.setOnPreferenceChangeListener(this);
             }
 
             mBootSoundPref = (CheckBoxPreference) findPreference(BOOT_SOUND_PREF);
             String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
             mBootSoundPref.setChecked("1".equals(bootSound));
+            mBootSoundPref.setOnPreferenceChangeListener(this);
             
             mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATIBILITY_MODE);
             mCompatibilityMode.setPersistent(true);
             mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 1) != 0);
+            mCompatibilityMode.setOnPreferenceChangeListener(this);
 
             mShutterSound = (CheckBoxPreference) findPreference(KEY_SHUTTER_SOUND);
             mShutterSound.setPersistent(true);
             mShutterSound.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.SHUTTER_SOUND, 1) != 0);
+            mShutterSound.setOnPreferenceChangeListener(this);
             
             mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
-            if (mDualPane != null) {
-                mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
-            }
+            mDualPane.setPersistent(true);
+            mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
+            mDualPane.setOnPreferenceChangeListener(this);
 
             mExternalCache = findPreference(KEY_EXTERNAL_CACHE);
 
             mNotificationCarrierText = (CheckBoxPreference) prefSet.findPreference(MODIFY_CARRIER_TEXT);
-            
-            mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
-            
+            mNotificationCarrierText.setPersistent(true);
             mNotificationCarrierText.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, 0) == 1));
+            mNotificationCarrierText.setOnPreferenceChangeListener(this);
+
+             mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
             
             updateCarrierText();
             
@@ -227,7 +234,7 @@ implements Preference.OnPreferenceChangeListener {
                 new CMDProcessor().su.runWaitFor(rmCache.get(i));
                 new CMDProcessor().su.runWaitFor(lnCache.get(i));
             }
-            preference.setSummary("External Cache Active");
+            preference.setSummary("External Google cache enabled");
             Helpers.getMount("ro");
         }
     }
@@ -328,7 +335,7 @@ implements Preference.OnPreferenceChangeListener {
                 Helpers.getMount("rw");
                 new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_TYPE_PROP+"=.*|"+COMP_TYPE_PROP+"="+newValue+"|' "+"/system/build.prop");
                 Helpers.getMount("ro");
-                mCompositionType.setSummary("Queued "+newValue+" composition");
+                mCompositionType.setSummary("Set "+newValue+" composition (Requires reboot)");
                 return true;
             }
         }
@@ -337,13 +344,13 @@ implements Preference.OnPreferenceChangeListener {
                 new CMDProcessor().su.runWaitFor("pm setInstallLocation "+newValue);
                 String summary = "default location";
                 if (newValue.equals("0")) {
-                    summary = "package choice";
+                    summary = "app selection";
                 } else if (newValue.equals("1")) {
                     summary = "internal only";
                 } else if (newValue.equals("2")) {
                     summary = "external only";
                 }
-                mInstallLocation.setSummary("Install to "+summary);
+                mInstallLocation.setSummary("Install location is "+summary);
                 return true;
             }
         }
