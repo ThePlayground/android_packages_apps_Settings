@@ -83,6 +83,8 @@ implements Preference.OnPreferenceChangeListener {
     
     private static final String KEY_DUAL_PANE = "dual_pane";
 
+    private static final String KEY_NAVIGATION_BAR = "forced_navi_bar";
+
     private static final String PREF_CARRIER_TEXT = "custom_carrier_text";
     private static final String MODIFY_CARRIER_TEXT = "notification_drawer_carrier_text";
     
@@ -90,6 +92,7 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mNotificationCarrierText;
     private CheckBoxPreference mDisableProximityPref;
     private CheckBoxPreference mCompositionBypass;
+    private CheckBoxPreference mNavigationBar;
     private CheckBoxPreference mBootSoundPref;
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mShutterSound;
@@ -137,6 +140,14 @@ implements Preference.OnPreferenceChangeListener {
             mCompositionBypass = (CheckBoxPreference) findPreference(COMP_BYPASS_PREF);
             String compositionBypass = SystemProperties.get(COMP_BYPASS_PROP, COMP_BYPASS_DEFAULT);
             mCompositionBypass.setChecked("1".equals(compositionBypass));
+
+            mNavigationBar = (CheckBoxPreference) findPreference(KEY_NAVIGATION_BAR);
+            if(getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar) == true) {
+                getPreferenceScreen().removePreference(mNavigationBar);
+            } else {
+                mNavigationBar.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, 0) == 1);
+                    mNavigationBar.setOnPreferenceChangeListener(this);
+            }
 
             mBootSoundPref = (CheckBoxPreference) findPreference(BOOT_SOUND_PREF);
             String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
@@ -257,6 +268,9 @@ implements Preference.OnPreferenceChangeListener {
             Helpers.getMount("rw");
             new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_BYPASS_PROP+"=.*|"+COMP_BYPASS_PROP+"="+compositionBypassCheck+"|' "+"/system/build.prop");
             Helpers.getMount("ro");
+            return true;
+        } else if (preference == mNavigationBar) {
+            Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, mNavigationBar.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mBootSoundPref) {
             String bootSoundCheck = mBootSoundPref.isChecked() ? "1" : "0";

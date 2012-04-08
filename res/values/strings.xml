@@ -843,6 +843,9 @@
 
     <string name="system_hacking">System Modification</string>
 
+    <string name="pref_navi_bar_title">Navigation Panel</string>
+    <string name="pref_navi_bar_summary">Force navigation bar functionality (Requires reboot)</string>
+
     <string name="pref_boot_sound_title">Bootanimation Sound</string>
     <string name="pref_boot_sound_summary">Play the android_audio.mp3 stored with bootanimation</string>
 
