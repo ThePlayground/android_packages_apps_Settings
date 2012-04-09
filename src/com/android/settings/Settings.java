@@ -312,10 +312,10 @@ public class Settings extends PreferenceActivity implements ButtonBarHandler {
     @Override
     public void onBuildHeaders(List<Header> headers) {
         String buildUser = SystemProperties.get(BUILD_USER_PROP, BUILD_USER_DEFAULT);
-        if (!buildUser.equals(BUILD_USER_DEFAULT) {
-            loadHeadersFromResource(R.xml.settings_dynamic, headers);
-        } else {
+        if (buildUser.equals(BUILD_USER_DEFAULT)) {
             loadHeadersFromResource(R.xml.settings_headers, headers);
+        } else {
+            loadHeadersFromResource(R.xml.settings_dynamic, headers);
         }
 
         updateHeaderList(headers);

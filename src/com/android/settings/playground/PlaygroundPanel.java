@@ -52,42 +52,31 @@ import com.android.settings.Helpers;
 public class PlaygroundPanel extends SettingsPreferenceFragment
 implements Preference.OnPreferenceChangeListener {
     private static final String TAG = "Playground";
-    
+
     private static final String PROXIMITY_DISABLE_PREF = "proximity_disable";
     private static final String PROXIMITY_DISABLE_PROP = "gsm.proximity.enable";
     private static final String PROXIMITY_DISABLE_DEFAULT = "true";
-    
     private static final String TILED_RENDERING_PREF = "tiled_rendering";
     private static final String TILED_RENDERING_PROP = "debug.enabletr";
     private static final String TILED_RENDERING_DEFAULT = "false";
-    
     private static final String KEY_COMPATIBILITY_MODE = "compatibility_mode";
-
     private static final String KEY_SHUTTER_SOUND = "shutter_sound";
-
     private static final String BOOT_SOUND_PREF = "boot_sound";
     private static final String BOOT_SOUND_PROP = "ro.config.play.bootsound";
     private static final String BOOT_SOUND_DEFAULT = "1";
-
     private static final String INSTALL_LOCATION = "install_location";
-
     private static final String COMP_TYPE_PREF = "composition_type";
     private static final String COMP_TYPE_PROP = "debug.composition.type";
     private static final String COMP_TYPE_DEFAULT = "gpu";
-
     private static final String COMP_BYPASS_PREF = "composition_bypass";
     private static final String COMP_BYPASS_PROP = "ro.sf.compbypass.enable";
     private static final String COMP_BYPASS_DEFAULT = "1";
-
     private static final String KEY_EXTERNAL_CACHE = "external_cache";
-    
     private static final String KEY_DUAL_PANE = "dual_pane";
-
     private static final String KEY_NAVIGATION_BAR = "forced_navi_bar";
-
     private static final String PREF_CARRIER_TEXT = "custom_carrier_text";
     private static final String MODIFY_CARRIER_TEXT = "notification_drawer_carrier_text";
-    
+
     private CheckBoxPreference mTiledRenderingPref;
     private CheckBoxPreference mNotificationCarrierText;
     private CheckBoxPreference mDisableProximityPref;
@@ -103,97 +92,85 @@ implements Preference.OnPreferenceChangeListener {
     private Preference mCarrier;
 
     String mCarrierText = null;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         if (getPreferenceManager() != null) {
-            
+
             addPreferencesFromResource(R.xml.playground_panel);
-            
+
             PreferenceScreen prefSet = getPreferenceScreen();
-            
-            mDisableProximityPref = (CheckBoxPreference) findPreference(PROXIMITY_DISABLE_PREF);
+
+            mDisableProximityPref = (CheckBoxPreference) prefSet.findPreference(PROXIMITY_DISABLE_PREF);
+            mTiledRenderingPref = (CheckBoxPreference) prefSet.findPreference(TILED_RENDERING_PREF);
+            mCompositionBypass = (CheckBoxPreference) prefSet.findPreference(COMP_BYPASS_PREF);
+            mNavigationBar = (CheckBoxPreference) prefSet.findPreference(KEY_NAVIGATION_BAR);
+            mCompatibilityMode = (CheckBoxPreference) prefSet.findPreference(KEY_COMPATIBILITY_MODE);
+            mNotificationCarrierText = (CheckBoxPreference) prefSet.findPreference(MODIFY_CARRIER_TEXT);
+            mBootSoundPref = (CheckBoxPreference) prefSet.findPreference(BOOT_SOUND_PREF);
+            mShutterSound = (CheckBoxPreference) prefSet.findPreference(KEY_SHUTTER_SOUND);
+            mDualPane = (CheckBoxPreference) prefSet.findPreference(KEY_DUAL_PANE);
+            mCompositionType = (ListPreference) prefSet.findPreference(COMP_TYPE_PREF);
+            mInstallLocation = (ListPreference) prefSet.findPreference(INSTALL_LOCATION);
+            mExternalCache = prefSet.findPreference(KEY_EXTERNAL_CACHE);
+            mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
+
             String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
             mDisableProximityPref.setChecked("true".equals(disableProximity));
-            mDisableProximityPref.setOnPreferenceChangeListener(this);
-            
-            mTiledRenderingPref = (CheckBoxPreference) prefSet.findPreference(TILED_RENDERING_PREF);
-            String tiledRendering = SystemProperties.get(TILED_RENDERING_PROP, TILED_RENDERING_DEFAULT);
-            if (tiledRendering != null) {
-                mTiledRenderingPref.setChecked("true".equals(tiledRendering));
-                mTiledRenderingPref.setOnPreferenceChangeListener(this);
-            } else {
-                prefSet.removePreference(mTiledRenderingPref);
-            }
 
-            mCompositionType = (ListPreference) findPreference(COMP_TYPE_PREF);
+            String tiledRendering = SystemProperties.get(TILED_RENDERING_PROP, TILED_RENDERING_DEFAULT);
+            mTiledRenderingPref.setChecked("true".equals(tiledRendering));
+
+            String compositionBypass = SystemProperties.get(COMP_BYPASS_PROP, COMP_BYPASS_DEFAULT);
+            mDisableProximityPref.setChecked("1".equals(compositionBypass));
+
+            String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
+            mBootSoundPref.setChecked("1".equals(bootSound));
+
+            mCompositionType.setOnPreferenceChangeListener(this);
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
 
             String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation").output();
-            mInstallLocation = (ListPreference) findPreference(INSTALL_LOCATION);
-            mInstallLocation.setPersistent(true);
+            mInstallLocation.setOnPreferenceChangeListener(this);
             mInstallLocation.setValue(currentInstall);
             mInstallLocation.setOnPreferenceChangeListener(this);
 
-            mCompositionBypass = (CheckBoxPreference) findPreference(COMP_BYPASS_PREF);
-            String compositionBypass = SystemProperties.get(COMP_BYPASS_PROP, COMP_BYPASS_DEFAULT);
-            mCompositionBypass.setChecked("1".equals(compositionBypass));
-            mCompositionBypass.setOnPreferenceChangeListener(this);
-
-            mNavigationBar = (CheckBoxPreference) findPreference(KEY_NAVIGATION_BAR);
             if(getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar) == true) {
                 getPreferenceScreen().removePreference(mNavigationBar);
             } else {
                 mNavigationBar.setPersistent(true);
                 mNavigationBar.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, 0) == 1);
-                mNavigationBar.setOnPreferenceChangeListener(this);
             }
 
-            mBootSoundPref = (CheckBoxPreference) findPreference(BOOT_SOUND_PREF);
-            String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
-            mBootSoundPref.setChecked("1".equals(bootSound));
-            mBootSoundPref.setOnPreferenceChangeListener(this);
-            
-            mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATIBILITY_MODE);
             mCompatibilityMode.setPersistent(true);
             mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 1) != 0);
-            mCompatibilityMode.setOnPreferenceChangeListener(this);
 
-            mShutterSound = (CheckBoxPreference) findPreference(KEY_SHUTTER_SOUND);
             mShutterSound.setPersistent(true);
             mShutterSound.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.SHUTTER_SOUND, 1) != 0);
-            mShutterSound.setOnPreferenceChangeListener(this);
-            
-            mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
+
             mDualPane.setPersistent(true);
             mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
-            mDualPane.setOnPreferenceChangeListener(this);
 
-            mExternalCache = findPreference(KEY_EXTERNAL_CACHE);
-
-            mNotificationCarrierText = (CheckBoxPreference) prefSet.findPreference(MODIFY_CARRIER_TEXT);
             mNotificationCarrierText.setPersistent(true);
             mNotificationCarrierText.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, 0) == 1));
-            mNotificationCarrierText.setOnPreferenceChangeListener(this);
 
-             mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
-            
+            mCarrier.setPersistent(true);
+
             updateCarrierText();
-            
+
         }
     }
-
+    
     private void exportCache(Preference preference) {
-        Helpers.getMount("rw");
         if (!isSdPresent()) {
-            preference.setSummary("Sdcard Unavailable");
+            preference.setSummary("Sdcard unavailable");
         } else {
             String extCache = "/cache/files/maps/";
             File extDir = new File(Environment.getExternalStorageDirectory()
-                                      + extCache);
+                                   + extCache);
             if (!extDir.mkdirs()) {
                 extDir.mkdirs();
             }
@@ -205,17 +182,17 @@ implements Preference.OnPreferenceChangeListener {
             }
             String streetCache = "/cache/streetCache/";
             File extStreet = new File(Environment.getExternalStorageDirectory()
-                                   + streetCache);
+                                      + streetCache);
             if (!extStreet.mkdirs()) {
                 extStreet.mkdirs();
             }
             String marketCache = "/cache/marketCache/";
             File extMarket = new File(Environment.getExternalStorageDirectory()
-                                   + marketCache);
+                                      + marketCache);
             if (!extMarket.mkdirs()) {
                 extMarket.mkdirs();
             }
-
+            
             List<String> rmCache = new ArrayList<String>();
             List<String> lnCache = new ArrayList<String>();
             rmCache.add("busybox rm -rf /data/data/com.android.browser/cache/webviewCache");
@@ -234,8 +211,7 @@ implements Preference.OnPreferenceChangeListener {
                 new CMDProcessor().su.runWaitFor(rmCache.get(i));
                 new CMDProcessor().su.runWaitFor(lnCache.get(i));
             }
-            preference.setSummary("External Google cache enabled");
-            Helpers.getMount("ro");
+            preference.setSummary("Google cache set to external");
         }
     }
 
@@ -251,56 +227,34 @@ implements Preference.OnPreferenceChangeListener {
     public static boolean isSdPresent() {
 		return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
 	}
-    
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
         if (preference == mTiledRenderingPref) {
-            String tiledRenderingCheck = mTiledRenderingPref.isChecked() ? "true" : "false";
-            SystemProperties.set(TILED_RENDERING_PROP, tiledRenderingCheck);
-            Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+TILED_RENDERING_PROP+"=.*|"+TILED_RENDERING_PROP+"="+tiledRenderingCheck+"|' "+"/system/build.prop");
-            Helpers.getMount("ro");
-            return true;
+            String tiledRenderingCheck = mCompositionBypass.isChecked() ? "true" : "false";
+            SystemProperties.set(COMP_BYPASS_PROP, tiledRenderingCheck);
         } else if (preference == mDisableProximityPref) {
             String disableProximityCheck = mDisableProximityPref.isChecked() ? "true" : "false";
             SystemProperties.set(PROXIMITY_DISABLE_PROP, disableProximityCheck);
-            Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+PROXIMITY_DISABLE_PROP+"=.*|"+PROXIMITY_DISABLE_PROP+"="+disableProximityCheck+"|' "+"/system/build.prop");
-            Helpers.getMount("ro");
-            return true;
         } else if (preference == mCompositionBypass) {
             String compositionBypassCheck = mCompositionBypass.isChecked() ? "1" : "0";
             SystemProperties.set(COMP_BYPASS_PROP, compositionBypassCheck);
-            Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_BYPASS_PROP+"=.*|"+COMP_BYPASS_PROP+"="+compositionBypassCheck+"|' "+"/system/build.prop");
-            Helpers.getMount("ro");
-            return true;
         } else if (preference == mNavigationBar) {
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, mNavigationBar.isChecked() ? 1 : 0);
-            return true;
         } else if (preference == mBootSoundPref) {
             String bootSoundCheck = mBootSoundPref.isChecked() ? "1" : "0";
             SystemProperties.set(BOOT_SOUND_PROP, bootSoundCheck);
-            Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+BOOT_SOUND_PROP+"=.*|"+BOOT_SOUND_PROP+"="+bootSoundCheck+"|' "+"/system/build.prop");
-            Helpers.getMount("ro");
-            return true;
         } else if (preference == mCompatibilityMode) {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
-            return true;
         } else if (preference == mShutterSound) {
             Settings.System.putInt(getContentResolver(), Settings.System.SHUTTER_SOUND, mShutterSound.isChecked() ? 1 : 0);
-            return true;
         } else if (preference == mDualPane) {
             Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
-            return true;
         } else if (preference == mExternalCache) {
             exportCache(preference);
-            return true;
         } else if (preference == mNotificationCarrierText) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, mNotificationCarrierText.isChecked() ? 1 : 0);
-            return true;
         }  else if (preference == mCarrier) {
             AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
             ad.setTitle(R.string.carrier_text_title);
@@ -324,7 +278,7 @@ implements Preference.OnPreferenceChangeListener {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
-        
+
         return true;
     }
     
@@ -332,9 +286,6 @@ implements Preference.OnPreferenceChangeListener {
         if (preference == mCompositionType) {
             if (newValue != null) {
                 SystemProperties.set(COMP_TYPE_PROP, (String)newValue);
-                Helpers.getMount("rw");
-                new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+COMP_TYPE_PROP+"=.*|"+COMP_TYPE_PROP+"="+newValue+"|' "+"/system/build.prop");
-                Helpers.getMount("ro");
                 mCompositionType.setSummary("Set "+newValue+" composition (Requires reboot)");
                 return true;
             }
