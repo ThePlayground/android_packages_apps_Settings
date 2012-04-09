@@ -28,6 +28,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
@@ -62,6 +63,9 @@ public class Settings extends PreferenceActivity implements ButtonBarHandler {
         "com.android.settings.PARENT_FRAGMENT_TITLE";
     private static final String META_DATA_KEY_PARENT_FRAGMENT_CLASS =
         "com.android.settings.PARENT_FRAGMENT_CLASS";
+
+    private static final String BUILD_USER_PROP = "ro.build.user";
+    private static final String BUILD_USER_DEFAULT = "TwistedZero";
 
     private static final String EXTRA_CLEAR_UI_OPTIONS = "settings:remove_ui_options";
 
@@ -307,7 +311,12 @@ public class Settings extends PreferenceActivity implements ButtonBarHandler {
      */
     @Override
     public void onBuildHeaders(List<Header> headers) {
-        loadHeadersFromResource(R.xml.settings_headers, headers);
+        String buildUser = SystemProperties.get(BUILD_USER_PROP, BUILD_USER_DEFAULT);
+        if (!buildUser.equals(BUILD_USER_DEFAULT) {
+            loadHeadersFromResource(R.xml.settings_dynamic, headers);
+        } else {
+            loadHeadersFromResource(R.xml.settings_headers, headers);
+        }
 
         updateHeaderList(headers);
 
