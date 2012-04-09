@@ -28,7 +28,9 @@ import android.webkit.HttpAuthHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class AccessZero extends Activity {
+import com.android.settings.R;
+
+public class PlaygroundWebsite extends Activity {
 
 	private static final int MENU_BACKFORD = 0;
 	private static final int MENU_RELOAD = 2;
