@@ -802,6 +802,9 @@
     <string name="playground_panel">Playground Tweaks Panel</string>
     <string name="playground_panel_title">Playground</string>
 
+    <string name="playground_website">Mainframe Access</string>
+    <string name="playground_website_summary">Access the mainframe for issue reports and updates</string>
+
     <string name="display_hacking">Display Modification</string>
 
     <string name="compatibility_mode_title">Compatibility Mode</string>

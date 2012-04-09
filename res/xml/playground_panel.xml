@@ -115,4 +115,13 @@
 
         </PreferenceCategory>
 
+        <PreferenceScreen
+            android:key="playground_mainframe"
+            android:title="@string/playground_website"
+            android:summary="@string/playground_website_summary">
+            <intent
+                android:targetPackage="com.android.settings.playground"
+                android:targetClass="com.android.settings.playground.PlaygroundWebsite" />
+        </PreferenceScreen>
+
 </PreferenceScreen>
