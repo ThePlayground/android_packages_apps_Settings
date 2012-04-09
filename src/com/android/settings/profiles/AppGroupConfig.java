@@ -422,9 +422,6 @@ public class AppGroupConfig extends SettingsPreferenceFragment
             if (holder.icon != null) {
                 Drawable loadIcon = applicationInfo.icon;
                 holder.icon.setImageDrawable(loadIcon);
-                holder.icon.setAdjustViewBounds(true);
-                holder.icon.setMaxHeight(72);
-                holder.icon.setMaxWidth(72);
             }
             return convertView;
         }
