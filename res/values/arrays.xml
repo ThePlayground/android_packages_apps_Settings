@@ -992,6 +992,7 @@
         <item>32m</item>
         <item>48m</item>
         <item>64m</item>
+        <item>128m</item>
     </string-array>
 
     <string-array name="values_heapsize" translatable="false">
@@ -1001,6 +1002,7 @@
         <item>32m</item>
         <item>48m</item>
         <item>64m</item>
+        <item>128m</item>
     </string-array>
 
     <string-array name="entries_ksm_sleep">

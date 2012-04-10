@@ -43,10 +43,6 @@ public class CMDProcessor {
             stderr = stderr_in;
         }
 
-        public String output() {
-            return stderr;
-        }
-
         public boolean success() {
             return exit_value != null && exit_value == 0;
         }

@@ -133,7 +133,8 @@ implements Preference.OnPreferenceChangeListener {
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
 
-            String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation").output();
+            //String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation").stderr();
+            String currentInstall = "0";
             mInstallLocation.setOnPreferenceChangeListener(this);
             mInstallLocation.setValue(currentInstall);
             mInstallLocation.setOnPreferenceChangeListener(this);

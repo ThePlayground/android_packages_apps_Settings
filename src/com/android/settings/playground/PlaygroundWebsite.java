@@ -58,11 +58,6 @@ public class PlaygroundWebsite extends Activity {
 				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 		setContentView(R.layout.playground_webview);
 
-		firstRunPreferences();
-
-		android_id = Secure.getString(this.getContentResolver(),
-				Secure.ANDROID_ID);
-
 		mWebView = (WebView) findViewById(R.id.webview);
 		if (savedInstanceState != null)
 			((WebView) findViewById(R.id.webview))

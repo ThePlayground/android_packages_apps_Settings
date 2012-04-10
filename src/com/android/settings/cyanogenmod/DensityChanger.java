@@ -26,6 +26,7 @@ import android.widget.EditText;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.CMDProcessor;
+import com.android.settings.CMDProcessor.CommandResult;
 import com.android.settings.Helpers;
 
 public class DensityChanger extends SettingsPreferenceFragment implements
