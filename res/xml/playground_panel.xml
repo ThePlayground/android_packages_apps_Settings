@@ -18,6 +18,15 @@
         android:title="@string/playground_panel"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+        <PreferenceScreen
+            android:key="playground_mainframe"
+            android:title="@string/playground_website"
+            android:summary="@string/playground_website_summary">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://twistedumbrella.github.com/Twisted-Playground" />
+        </PreferenceScreen>
+
         <PreferenceCategory
             android:key="display_hacking"
             android:title="@string/display_hacking">
@@ -114,14 +123,5 @@
             android:summary="@string/pref_proximity_disable_summary" />
 
         </PreferenceCategory>
-
-        <PreferenceScreen
-            android:key="playground_mainframe"
-            android:title="@string/playground_website"
-            android:summary="@string/playground_website_summary">
-            <intent
-                android:targetPackage="com.android.settings.playground"
-                android:targetClass="com.android.settings.playground.PlaygroundWebsite" />
-        </PreferenceScreen>
 
 </PreferenceScreen>

@@ -1361,8 +1361,6 @@
                 <category android:name="com.android.settings.SHORTCUT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccessZero" 
-            android:configChanges="orientation|keyboard|keyboardHidden" />
 
         <!-- CyanogenMod activities Start -->
         <activity android:name=".cyanogenmod.LightLevelsActivity" />
