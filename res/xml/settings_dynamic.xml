@@ -74,7 +74,7 @@
     <!-- System -->
     <header
         android:id="@+id/playground_settings"
-        android:icon="@drawable/ic_playground_system"
+        android:icon="@drawable/ic_playground_dynamic"
         android:fragment="com.android.settings.playground.PlaygroundPanel"
         android:title="@string/playground_panel_title" />
 
