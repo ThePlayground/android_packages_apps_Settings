@@ -16,20 +16,42 @@
 
 package com.android.settings.playground;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemProperties;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.content.res.Resources;
+import android.text.Spannable;
+import android.widget.EditText;
 
 import com.android.settings.R;
+import com.android.settings.Utils;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.CMDProcessor;
+import com.android.settings.Helpers;
 
 public class PlaygroundThemes extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "ThemesSettings";
 
     private static final String KEY_LCD_DENSITY = "lcd_density";
+
+    private static final String KEY_DUAL_PANE = "dual_pane";
+
+    private CheckBoxPreference mDualPane;
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -39,6 +61,13 @@ public class PlaygroundThemes extends SettingsPreferenceFragment implements
         ContentResolver resolver = getActivity().getContentResolver();
 
         addPreferencesFromResource(R.xml.playground_themes);
+
+        PreferenceScreen prefSet = getPreferenceScreen();
+
+        mDualPane = (CheckBoxPreference) prefSet.findPreference(KEY_DUAL_PANE);
+
+        mDualPane.setPersistent(true);
+        mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
     }
 
     @Override
@@ -58,7 +87,13 @@ public class PlaygroundThemes extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        if (preference == mDualPane) {
+            Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
+        } else {
+            // If we didn't handle it, let preferences handle it.
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+        return true;
     }
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {

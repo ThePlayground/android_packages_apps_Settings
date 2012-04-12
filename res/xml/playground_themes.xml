@@ -26,4 +26,9 @@
         android:fragment="com.android.settings.playground.DensityChanger"
         android:title="@string/lcd_density_wizard" />
 
+    <CheckBoxPreference
+        android:key="dual_pane"
+        android:title="@string/dual_pane_title"
+        android:summary="@string/dual_pane_summary" />
+
 </PreferenceScreen>

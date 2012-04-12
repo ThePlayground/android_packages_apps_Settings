@@ -6,24 +6,32 @@ import android.app.Dialog;
 import android.content.res.CompatibilityInfo;
 import android.content.ComponentName;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.IPackageDataObserver;
-import android.os.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.SystemProperties;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.util.DisplayMetrics;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.android.settings.R;
@@ -161,20 +169,19 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                             }
                         }).create();
             case TABLET_DENSITY:
-                final View textEntryView = factory.inflate(
-                R.layout.alert_dialog_lcd, null);
                 return new AlertDialog.Builder(getActivity())
-                    .setTitle("Set tablet density")
-                    .setView(textEntryView)
-                    .setPositiveButton("Set", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            determineTablet();
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }
-                    }).create();
+                        .setTitle("Set tablet density")
+                        .setMessage(R.string.density_warning)
+                        .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                determineTablet();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }).create();
             case DIALOG_WARN_DENSITY:
                 return new AlertDialog.Builder(getActivity())
                         .setTitle("WARNING!")
@@ -236,11 +243,10 @@ public class DensityChanger extends SettingsPreferenceFragment implements
     }
 
     private void determineTablet() {
-        Display display = getWindowManager().getDefaultDisplay();
-        display.getSize(size);
-        int width = size.x;
+        Display display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
         int requiredDpi = width * DisplayMetrics.DENSITY_DEFAULT / 600;
-        setLcdDensity(requiredDpi, true);
+        setLcdDensity(requiredDpi, false);
         mStockDensity.setSummary("Density set to: " + requiredDpi);
     }
 

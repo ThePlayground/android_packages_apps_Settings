@@ -72,7 +72,6 @@ implements Preference.OnPreferenceChangeListener {
     private static final String COMP_BYPASS_PROP = "ro.sf.compbypass.enable";
     private static final String COMP_BYPASS_DEFAULT = "1";
     private static final String KEY_EXTERNAL_CACHE = "external_cache";
-    private static final String KEY_DUAL_PANE = "dual_pane";
     private static final String KEY_NAVIGATION_BAR = "forced_navi_bar";
     private static final String PREF_CARRIER_TEXT = "custom_carrier_text";
     private static final String MODIFY_CARRIER_TEXT = "notification_drawer_carrier_text";
@@ -85,7 +84,6 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mBootSoundPref;
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mShutterSound;
-    private CheckBoxPreference mDualPane;
     private ListPreference mCompositionType;
     private ListPreference mInstallLocation;
     private Preference mExternalCache;
@@ -111,7 +109,6 @@ implements Preference.OnPreferenceChangeListener {
             mNotificationCarrierText = (CheckBoxPreference) prefSet.findPreference(MODIFY_CARRIER_TEXT);
             mBootSoundPref = (CheckBoxPreference) prefSet.findPreference(BOOT_SOUND_PREF);
             mShutterSound = (CheckBoxPreference) prefSet.findPreference(KEY_SHUTTER_SOUND);
-            mDualPane = (CheckBoxPreference) prefSet.findPreference(KEY_DUAL_PANE);
             mCompositionType = (ListPreference) prefSet.findPreference(COMP_TYPE_PREF);
             mInstallLocation = (ListPreference) prefSet.findPreference(INSTALL_LOCATION);
             mExternalCache = prefSet.findPreference(KEY_EXTERNAL_CACHE);
@@ -151,9 +148,6 @@ implements Preference.OnPreferenceChangeListener {
 
             mShutterSound.setPersistent(true);
             mShutterSound.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.SHUTTER_SOUND, 1) != 0);
-
-            mDualPane.setPersistent(true);
-            mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
 
             mNotificationCarrierText.setPersistent(true);
             mNotificationCarrierText.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, 0) == 1));
@@ -250,8 +244,6 @@ implements Preference.OnPreferenceChangeListener {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
         } else if (preference == mShutterSound) {
             Settings.System.putInt(getContentResolver(), Settings.System.SHUTTER_SOUND, mShutterSound.isChecked() ? 1 : 0);
-        } else if (preference == mDualPane) {
-            Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
         } else if (preference == mExternalCache) {
             exportCache(preference);
         } else if (preference == mNotificationCarrierText) {

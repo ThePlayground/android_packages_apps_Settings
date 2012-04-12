@@ -38,11 +38,6 @@
             android:summaryOff="@string/compatibility_mode_summary_off" />
 
         <CheckBoxPreference
-            android:key="dual_pane"
-            android:title="@string/dual_pane_title"
-            android:summary="@string/dual_pane_summary" />
-
-        <CheckBoxPreference
             android:key="tiled_rendering"
             android:title="@string/pref_tiled_rendering_title"
             android:summary="@string/pref_tiled_rendering_summary" />

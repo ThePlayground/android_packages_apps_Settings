@@ -873,7 +873,7 @@
     <string name="tablet_density_title">5b. Configure tablet-mode</string>
     <string name="tablet_density_summary">This selection will set the density at which tablet mode is activated</string>
     <string name="dpi">DPI</string>
-    <string name="density_google_play">Couldn't open Google Play! Please open the application manually</string>
+    <string name="density_google_play">Couldn\'t open Google Play! Please open the application manually</string>
     <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please restart the process</string>
 
     <string name="cyanogenmod_themes">CyanogenMod Themes</string>

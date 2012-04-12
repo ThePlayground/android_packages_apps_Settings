@@ -27,7 +27,8 @@
         android:key="playground_themes"
         android:fragment="com.android.settings.playground.PlaygroundThemes"
         android:title="@string/playground_themes_panel" />
+    </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/cyanogenmod_themes">
+        android:title="@string/cyanogenmod_themes" />
 
 </PreferenceScreen>
