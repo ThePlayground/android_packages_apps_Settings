@@ -18,16 +18,13 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/themes_settings_title"
+    android:title="@string/playground_themes_panel"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <PreferenceCategory
-        android:title="@string/playground_themes">
-    <PreferenceScreen
-        android:key="playground_themes"
-        android:fragment="com.android.settings.playground.PlaygroundThemes"
-        android:title="@string/playground_themes_panel" />
-    <PreferenceCategory
-        android:title="@string/cyanogenmod_themes">
+    <!-- Temporary - Preference stub -->
+    <Preference android:key="stubbed"
+            style="?android:preferenceInformationStyle"
+            android:title="@string/stubbed"
+            android:summary="@string/stubbed_summary" />
 
 </PreferenceScreen>

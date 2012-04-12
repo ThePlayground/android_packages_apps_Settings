@@ -868,6 +868,11 @@
     <string name="pref_proximity_disable_title">Proximity detection</string>
     <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
 
+    <string name="playground_themes">Playground Themes</string>
+    <string name="playground_themes_panel">Playground Theme Panel</string>
+
+    <string name="cyanogenmod_themes">CyanogenMod Themes</string>
+
     <!-- Combined Bar #CM -->
     <string name="combined_bar_title">Combined bar</string>
     <string name="combined_bar_auto_hide_title">Auto hide</string>

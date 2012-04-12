@@ -14,29 +14,20 @@
  * limitations under the License.
  */
 
-package com.android.settings.cyanogenmod;
+package com.android.settings.playground;
 
 import android.content.ContentResolver;
-import android.app.ActivityManagerNative;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.SystemProperties;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
-import android.util.Log;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.Utils;
 
-public class ThemesSettings extends SettingsPreferenceFragment implements
+public class PlaygroundThemes extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "ThemesSettings";
-
-    private static final String KEY_PLAYGROUND_THEMES = "playground_themes";
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -45,7 +36,7 @@ public class ThemesSettings extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
         ContentResolver resolver = getActivity().getContentResolver();
 
-        addPreferencesFromResource(R.xml.themes_settings);
+        addPreferencesFromResource(R.xml.playground_themes);
     }
 
     @Override
