@@ -76,20 +76,21 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.lcd_density);
 
-        String currentDensity = SystemProperties.get("ro.sf.lcd_density");
         PreferenceScreen prefs = getPreferenceScreen();
+
+        String currentDensity = SystemProperties.get("ro.sf.lcd_density");
 
         mStockDensity = (ListPreference) findPreference("stock_density");
         mStockDensity.setOnPreferenceChangeListener(this);
 
-        mReboot = findPreference("reboot");
+        mReboot = (Preference) findPreference("reboot");
         mClearMarketData = findPreference("clear_market_data");
         mOpenMarket = findPreference("open_market");
 
         mCustomDensity = (ListPreference) findPreference("lcd_density");
         mCustomDensity.setOnPreferenceChangeListener(this);
 
-        mTabletDensity = (ListPreference) findPreference("tablet_density");
+        mTabletDensity = (Preference) findPreference("tablet_density");
         mTabletDensity.setOnPreferenceChangeListener(this);
     }
 
