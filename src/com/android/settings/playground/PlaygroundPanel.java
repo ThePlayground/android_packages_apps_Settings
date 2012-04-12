@@ -227,7 +227,7 @@ implements Preference.OnPreferenceChangeListener {
 	}
 
     private void enableFastCharge(int configuredSetting) {
-		new CMDProcessor().su.runWaitFor("echo " + configuredSetting + " > /sys/kernel/fast_charge/force_fast_charge);
+		new CMDProcessor().su.runWaitFor("echo " + configuredSetting + " > /sys/kernel/fast_charge/force_fast_charge");
 	}
 
     @Override
@@ -256,7 +256,7 @@ implements Preference.OnPreferenceChangeListener {
         } else if (preference == mNotificationCarrierText) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, mNotificationCarrierText.isChecked() ? 1 : 0);
         } else if (preference == mFastCharge) {
-            int fastCharge = mFastCharge.isChecked() ? 1 : 0
+            int fastCharge = mFastCharge.isChecked() ? 1 : 0;
             Settings.System.putInt(getContentResolver(), Settings.System.FAST_CHARGE, fastCharge);
             enableFastCharge(fastCharge);
         }  else if (preference == mCarrier) {
