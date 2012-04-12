@@ -177,7 +177,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 return new AlertDialog.Builder(getActivity())
                         .setTitle("Tablet density: " + tabletValue)
                         .setMessage(R.string.density_warning)
-                        .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        .setNeutralButton("Continue", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 configureTablet(tabletValue, false);
