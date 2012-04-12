@@ -113,6 +113,11 @@
             android:title="@string/hardware_hacking">
 
         <CheckBoxPreference
+            android:key="force_fast_charge"
+            android:title="@string/fast_charge_title"
+            android:summary="@string/fast_charge_summary" />
+
+        <CheckBoxPreference
             android:key="proximity_disable"
             android:title="@string/pref_proximity_disable_title"
             android:summary="@string/pref_proximity_disable_summary" />

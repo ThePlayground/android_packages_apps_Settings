@@ -75,6 +75,7 @@ implements Preference.OnPreferenceChangeListener {
     private static final String KEY_NAVIGATION_BAR = "forced_navi_bar";
     private static final String PREF_CARRIER_TEXT = "custom_carrier_text";
     private static final String MODIFY_CARRIER_TEXT = "notification_drawer_carrier_text";
+    private static final String FAST_CHARGE_PREF = "force_fast_charge";
 
     private CheckBoxPreference mTiledRenderingPref;
     private CheckBoxPreference mNotificationCarrierText;
@@ -84,6 +85,7 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mBootSoundPref;
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mShutterSound;
+    private CheckBoxPreference mFastCharge;
     private ListPreference mCompositionType;
     private ListPreference mInstallLocation;
     private Preference mExternalCache;
@@ -113,6 +115,7 @@ implements Preference.OnPreferenceChangeListener {
             mInstallLocation = (ListPreference) prefSet.findPreference(INSTALL_LOCATION);
             mExternalCache = prefSet.findPreference(KEY_EXTERNAL_CACHE);
             mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
+            mFastCharge = (CheckBoxPreference) prefSet.findPreference(FAST_CHARGE_PREF);
 
             String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
             mDisableProximityPref.setChecked("true".equals(disableProximity));
@@ -223,6 +226,10 @@ implements Preference.OnPreferenceChangeListener {
 		return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
 	}
 
+    private void enableFastCharge(int configuredSetting) {
+		new CMDProcessor().su.runWaitFor("echo " + configuredSetting + " > /sys/kernel/fast_charge/force_fast_charge);
+	}
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
@@ -248,6 +255,10 @@ implements Preference.OnPreferenceChangeListener {
             exportCache(preference);
         } else if (preference == mNotificationCarrierText) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, mNotificationCarrierText.isChecked() ? 1 : 0);
+        } else if (preference == mFastCharge) {
+            int fastCharge = mFastCharge.isChecked() ? 1 : 0
+            Settings.System.putInt(getContentResolver(), Settings.System.FAST_CHARGE, fastCharge);
+            enableFastCharge(fastCharge);
         }  else if (preference == mCarrier) {
             AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
             ad.setTitle(R.string.carrier_text_title);

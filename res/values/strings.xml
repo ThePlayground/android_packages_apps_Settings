@@ -845,6 +845,9 @@
 
     <string name="hardware_hacking">Hardware Modification</string>
 
+    <string name="fast_charge_title">Force fast charge</string>
+    <string name="fast_charge_summary">Force AC charging for any charger that is detected as USB (Non-persistent)</string>
+
     <string name="pref_proximity_disable_title">Proximity detection</string>
     <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
 
@@ -870,7 +873,7 @@
     <string name="tablet_density_summary">This selection will set the density at which tablet mode is activated</string>
     <string name="dpi">DPI</string>
     <string name="density_google_play">Couldn\'t open Google Play! Please open the application manually</string>
-    <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please return to 1 and proceed</string>
+    <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please return to step 1 and proceed</string>
 
     <string name="cyanogenmod_themes">CyanogenMod Themes</string>
 
