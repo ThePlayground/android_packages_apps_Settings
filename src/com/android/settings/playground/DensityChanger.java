@@ -51,6 +51,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
     Preference mOpenMarket;
     ListPreference mCustomDensity;
     Preference mTabletDensity;
+    int tabletValue = 192;
 
     private static final int MSG_DATA_CLEARED = 500;
 
@@ -117,6 +118,9 @@ public class DensityChanger extends SettingsPreferenceFragment implements
             new ClearMarketDataTask().execute("");
             return true;
         } else if (preference == mTabletDensity) {
+            Display display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+            int width = display.getWidth();
+            tabletValue = width * DisplayMetrics.DENSITY_DEFAULT / 600;
             showDialog(TABLET_DENSITY);
             return true;
         } else if (preference == mOpenMarket) {
@@ -171,19 +175,19 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                         }).create();
             case TABLET_DENSITY:
                 return new AlertDialog.Builder(getActivity())
-                        .setTitle("Set tablet density")
+                        .setTitle("Tablet density: " + tabletValue)
                         .setMessage(R.string.density_warning)
                         .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                configureTablet(false);
+                                configureTablet(tabletValue, false);
                             }
                         })
                         .setPositiveButton("Reboot now", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                configureTablet(true);
+                                configureTablet(tabletValue, true);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -248,15 +252,12 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         return false;
     }
 
-    private void configureTablet(boolean reboot) {
-        Display display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int width = display.getWidth();
-        int requiredDpi = width * DisplayMetrics.DENSITY_DEFAULT / 600;
-        if (reboot){
-            setLcdDensity(requiredDpi, true);
-        } else
-            setLcdDensity(requiredDpi, false);
-            mStockDensity.setSummary("Density set to: " + requiredDpi);
+    private void configureTablet(int calculatedValue, boolean restart) {
+        if (restart) {
+            setLcdDensity(calculatedValue, true);
+        } else {
+            setLcdDensity(calculatedValue, false);
+            mStockDensity.setSummary("Density set to: " + calculatedValue);
         }
     }
 
