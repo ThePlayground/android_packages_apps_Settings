@@ -29,6 +29,8 @@ public class PlaygroundThemes extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "ThemesSettings";
 
+    private static final String KEY_LCD_DENSITY = "lcd_density";
+
     private final Configuration mCurConfig = new Configuration();
     
     @Override

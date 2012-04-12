@@ -1,13 +1,16 @@
 
-package com.android.settings.cyanogenmod;
+package com.android.settings.playground;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.res.CompatibilityInfo;
 import android.content.ComponentName;
+import android.content.res.Configuration;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.IPackageDataObserver;
+import android.os.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,11 +42,13 @@ public class DensityChanger extends SettingsPreferenceFragment implements
     Preference mClearMarketData;
     Preference mOpenMarket;
     ListPreference mCustomDensity;
+    Preference mTabletDensity;
 
     private static final int MSG_DATA_CLEARED = 500;
 
     private static final int DIALOG_DENSITY = 101;
-    private static final int DIALOG_WARN_DENSITY = 102;
+    private static final int TABLET_DENSITY = 102;
+    private static final int DIALOG_WARN_DENSITY = 103;
 
     int newDensityValue;
 
@@ -75,6 +80,9 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
         mCustomDensity = (ListPreference) findPreference("lcd_density");
         mCustomDensity.setOnPreferenceChangeListener(this);
+
+        mTabletDensity = (ListPreference) findPreference("tablet_density");
+        mTabletDensity.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -111,7 +119,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
             if (activityName != null) {
                 mContext.startActivity(openMarket);
             } else {
-                preference.setSummary("Couldn't open Google Play! If you're sure it's installed, open it from the launcher.");
+                preference.setSummary(R.string.density_google_play);
             }
             return true;
 
@@ -152,11 +160,25 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                                 dialog.dismiss();
                             }
                         }).create();
+            case TABLET_DENSITY:
+                final View textEntryView = factory.inflate(
+                R.layout.alert_dialog_lcd, null);
+                return new AlertDialog.Builder(getActivity())
+                    .setTitle("Set tablet density")
+                    .setView(textEntryView)
+                    .setPositiveButton("Set", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            determineTablet();
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                    }).create();
             case DIALOG_WARN_DENSITY:
                 return new AlertDialog.Builder(getActivity())
                         .setTitle("WARNING!")
-                        .setMessage(
-                                "Changing your LCD density can cause unexpected app behavior. If you encounter market app incompatibility please return here and restart the process from step 1.")
+                        .setMessage(R.string.density_warning)
                         .setCancelable(false)
                         .setNeutralButton("Got it!", new DialogInterface.OnClickListener() {
 
@@ -200,6 +222,9 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 showDialog(DIALOG_WARN_DENSITY);
                 return true;
             }
+        } else if (preference == mTabletDensity) {
+            showDialog(TABLET_DENSITY);
+            return true;
         } else if (preference == mStockDensity) {
             newDensityValue = Integer.parseInt((String) newValue);
             setLcdDensity(newDensityValue, false);
@@ -208,6 +233,15 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         }
 
         return false;
+    }
+
+    private void determineTablet() {
+        Display display = getWindowManager().getDefaultDisplay();
+        display.getSize(size);
+        int width = size.x;
+        int requiredDpi = width * DisplayMetrics.DENSITY_DEFAULT / 600;
+        setLcdDensity(requiredDpi, true);
+        mStockDensity.setSummary("Density set to: " + requiredDpi);
     }
 
     private void setLcdDensity(int newDensity, boolean reboot) {

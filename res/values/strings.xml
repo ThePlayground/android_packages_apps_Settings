@@ -722,22 +722,6 @@
     <!-- Display settings screen, battery light repeat pulsing title -->
     <string name="battery_pulse_title">Pulse low battery light</string>
 
-    <!-- LCD Density -->
-	<string name="lcd_density_wizard">LCD Density</string>
-	<string name="follow_through_title">Follow through!</string>
-	<string name="follow_through_summary">Make sure you follow the steps one-by-one and complete each one before proceeding to the next.</string>
-	<string name="stock_density_title">1. Change LCD Density to stock value</string>
-	<string name="stock_density_summary">Tablets and older phones use 160. Most phones use 240. Galaxy Nexus uses 320 by default.</string>
-	<string name="reboot_title">2. Reboot!</string>
-	<string name="reboot_summary">Come back here after the reboot and complete the rest of the steps!</string>
-	<string name="clear_market_data_title">3. Clear market data</string>
-	<string name="clear_market_data_cleared">Market data cleared</string>
-	<string name="open_market_title">4. Open Market and hit accept</string>
-	<string name="open_market_summary">Press back when done to return here.</string>
-	<string name="custom_density_title">5. Change density to whatever you like!</string>
-	<string name="custom_density_summary">If you ever have compatibility issues with the market, be sure to return here and repeat the process.</string>
-    <string name="dpi">DPI</string>
-
     <!-- Backlight #CM -->
     <string name="backlight_title">Automatic backlight</string>
     <string name="backlight_summary">Tweak levels and filtering</string>
@@ -868,8 +852,29 @@
     <string name="pref_proximity_disable_title">Proximity detection</string>
     <string name="pref_proximity_disable_summary">Automatically turn screen off when sensors are covered, usually during a standard call</string>
 
+    <!-- Playground Themes Panel -->
     <string name="playground_themes">Playground Themes</string>
     <string name="playground_themes_panel">Playground Theme Panel</string>
+
+    <!-- LCD Density -->
+	<string name="lcd_density_wizard">LCD Density</string>
+	<string name="follow_through_title">Full wipe: Proceed to 5a/5b</string>
+	<string name="follow_through_summary">If a full wipe was not done, please follow the entire procedure</string>
+	<string name="stock_density_title">1. Set a stock LCD density</string>
+	<string name="stock_density_summary">160 is for tablets and small screens. 240 is the most common default. 320 is for larger screen phones, such as Galaxy Nexus.</string>
+	<string name="reboot_title">2. Reboot the device</string>
+	<string name="reboot_summary">Return after boot completes and continue at step 3</string>
+	<string name="clear_market_data_title">3. Clear market data</string>
+	<string name="clear_market_data_cleared">Market data cleared</string>
+	<string name="open_market_title">4. Open Market and hit accept</string>
+	<string name="open_market_summary">Press back when done to return here.</string>
+	<string name="custom_density_title">5a. Change density value</string>
+    <string name="custom_density_summary">This selection offers common choices or custom density setting entry</string>
+    <string name="tablet_density_title">5b. Configure tablet-mode</string>
+    <string name="tablet_density_summary">This selection will set the density at which tablet mode is activated</string>
+    <string name="dpi">DPI</string>
+    <string name="density_google_play">Couldn't open Google Play! Please open the application manually</string>
+    <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please restart the process</string>
 
     <string name="cyanogenmod_themes">CyanogenMod Themes</string>
 

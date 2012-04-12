@@ -34,4 +34,9 @@
 		android:title="@string/custom_density_title"
 		android:summary="@string/custom_density_summary" />
 
+    <Preference
+        android:key="tablet_density"
+        android:title="@string/tablet_density_title"
+        android:summary="@string/tablet_density_summary" />
+
 </PreferenceScreen>

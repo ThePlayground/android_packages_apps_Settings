@@ -21,10 +21,9 @@
     android:title="@string/playground_themes_panel"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <!-- Temporary - Preference stub -->
-    <Preference android:key="stubbed"
-            style="?android:preferenceInformationStyle"
-            android:title="@string/stubbed"
-            android:summary="@string/stubbed_summary" />
+    <PreferenceScreen
+        android:key="lcd_density"
+        android:fragment="com.android.settings.playground.DensityChanger"
+        android:title="@string/lcd_density_wizard" />
 
 </PreferenceScreen>
