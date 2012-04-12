@@ -113,12 +113,12 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                     .getSystemService(Context.POWER_SERVICE);
             pm.reboot("Resetting density");
             return true;
-
         } else if (preference == mClearMarketData) {
-
             new ClearMarketDataTask().execute("");
             return true;
-
+        } else if (preference == mTabletDensity) {
+            showDialog(TABLET_DENSITY);
+            return true;
         } else if (preference == mOpenMarket) {
             Intent openMarket = new Intent(Intent.ACTION_MAIN)
                     .addCategory(Intent.CATEGORY_APP_MARKET)
@@ -230,9 +230,6 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 showDialog(DIALOG_WARN_DENSITY);
                 return true;
             }
-        } else if (preference == mTabletDensity) {
-            showDialog(TABLET_DENSITY);
-            return true;
         } else if (preference == mStockDensity) {
             newDensityValue = Integer.parseInt((String) newValue);
             setLcdDensity(newDensityValue, false);
