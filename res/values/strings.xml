@@ -789,10 +789,6 @@
     <string name="playground_website">Mainframe Access</string>
     <string name="playground_website_summary">Visit the Playground website for issue reporting, downloads, and information</string>
 
-    <string name="str_Backward">Back</string>
-    <string name="str_Reload">Refresh</string>
-    <string name="str_Forward">Forward</string>
-
     <string name="display_hacking">Display Modification</string>
 
     <string name="compatibility_mode_title">Compatibility Mode</string>
@@ -874,7 +870,7 @@
     <string name="tablet_density_summary">This selection will set the density at which tablet mode is activated</string>
     <string name="dpi">DPI</string>
     <string name="density_google_play">Couldn\'t open Google Play! Please open the application manually</string>
-    <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please restart the process</string>
+    <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please return to 1 and proceed</string>
 
     <string name="cyanogenmod_themes">CyanogenMod Themes</string>
 

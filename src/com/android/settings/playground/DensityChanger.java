@@ -148,7 +148,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 return new AlertDialog.Builder(getActivity())
                         .setTitle("Set custom density")
                         .setView(textEntryView)
-                        .setPositiveButton("Set", new DialogInterface.OnClickListener() {
+                        .setNeutralButton("Proceed", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 EditText dpi = (EditText) textEntryView.findViewById(R.id.dpi_edit);
                                 Editable text = dpi.getText();
@@ -174,8 +174,16 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                         .setTitle("Set tablet density")
                         .setMessage(R.string.density_warning)
                         .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                determineTablet();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                configureTablet(false);
+                            }
+                        })
+                        .setPositiveButton("Reboot now", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                configureTablet(true);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -188,7 +196,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                         .setTitle("WARNING!")
                         .setMessage(R.string.density_warning)
                         .setCancelable(false)
-                        .setNeutralButton("Got it!", new DialogInterface.OnClickListener() {
+                        .setNeutralButton("Proceed", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -240,12 +248,16 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         return false;
     }
 
-    private void determineTablet() {
+    private void configureTablet(boolean reboot) {
         Display display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int width = display.getWidth();
         int requiredDpi = width * DisplayMetrics.DENSITY_DEFAULT / 600;
-        setLcdDensity(requiredDpi, false);
-        mStockDensity.setSummary("Density set to: " + requiredDpi);
+        if (reboot){
+            setLcdDensity(requiredDpi, true);
+        } else
+            setLcdDensity(requiredDpi, false);
+            mStockDensity.setSummary("Density set to: " + requiredDpi);
+        }
     }
 
     private void setLcdDensity(int newDensity, boolean reboot) {
