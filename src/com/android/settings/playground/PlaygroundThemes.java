@@ -51,7 +51,12 @@ public class PlaygroundThemes extends SettingsPreferenceFragment implements
 
     private static final String KEY_DUAL_PANE = "dual_pane";
 
+    private static final String KEY_STATUSBAR_OVERRIDE = "statusbar_override";
+    private static final String STATUSBAR_OVERRIDE_PROP = "ro.config.statusbar";
+    private static final String STATUSBAR_OVERRIDE_DEFAULT = "1";
+
     private CheckBoxPreference mDualPane;
+    private CheckBoxPreference mStatusbarOverride;
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -65,9 +70,13 @@ public class PlaygroundThemes extends SettingsPreferenceFragment implements
         PreferenceScreen prefSet = getPreferenceScreen();
 
         mDualPane = (CheckBoxPreference) prefSet.findPreference(KEY_DUAL_PANE);
+        mStatusbarOverride = (CheckBoxPreference) prefSet.findPreference(KEY_STATUSBAR_OVERRIDE);
 
         mDualPane.setPersistent(true);
         mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
+
+        String statusbarOverride = SystemProperties.get(STATUSBAR_OVERRIDE_PROP, STATUSBAR_OVERRIDE_DEFAULT);
+        mStatusbarOverride.setChecked("1".equals(statusbarOverride));
     }
 
     @Override
@@ -89,6 +98,9 @@ public class PlaygroundThemes extends SettingsPreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mDualPane) {
             Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
+        } else if (preference == mStatusbarOverride) {
+            String statusbarOverrideCheck = mStatusbarOverride.isChecked() ? "1" : "0";
+            SystemProperties.set(STATUSBAR_OVERRIDE_PROP, statusbarOverrideCheck);
         } else {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);

@@ -31,4 +31,9 @@
         android:title="@string/dual_pane_title"
         android:summary="@string/dual_pane_summary" />
 
+    <CheckBoxPreference
+        android:key="statusbar_override"
+        android:title="@string/statusbar_override_title"
+        android:summary="@string/statusbar_override_summary" />
+
 </PreferenceScreen>
