@@ -783,8 +783,8 @@
     <string name="notification_drawer_title">Notifications</string>
 
     <!-- Playground Tweaks Panel -->
-    <string name="playground_panel">Playground Tweaks Panel</string>
-    <string name="playground_panel_title">Playground</string>
+    <string name="playground_panel">Playground</string>
+    <string name="playground_panel_title">Playground Tweaks</string>
 
     <string name="playground_website">Mainframe Access</string>
     <string name="playground_website_summary">Visit the Playground website for issue reporting, downloads, and information</string>
@@ -878,7 +878,6 @@
 
     <!-- Playground Themes Panel -->
     <string name="playground_themes">Playground Themes</string>
-    <string name="playground_themes_panel">Playground Theme Panel</string>
 
     <string name="cyanogenmod_themes">CyanogenMod Themes</string>
 

@@ -21,13 +21,10 @@
     android:title="@string/themes_settings_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <PreferenceCategory
-        android:title="@string/playground_themes">
     <PreferenceScreen
         android:key="playground_themes"
         android:fragment="com.android.settings.playground.PlaygroundThemes"
         android:title="@string/playground_themes_panel" />
-    </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/cyanogenmod_themes" />
 
