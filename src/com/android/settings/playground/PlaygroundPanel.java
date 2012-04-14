@@ -249,19 +249,15 @@ implements Preference.OnPreferenceChangeListener {
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
         if (preference == mTiledRenderingPref) {
-            String tiledRenderingCheck = mCompositionBypass.isChecked() ? "true" : "false";
-            SystemProperties.set(COMP_BYPASS_PROP, tiledRenderingCheck);
+            SystemProperties.set(COMP_BYPASS_PROP, mCompositionBypass.isChecked() ? "true" : "false");
         } else if (preference == mDisableProximityPref) {
-            String disableProximityCheck = mDisableProximityPref.isChecked() ? "true" : "false";
-            SystemProperties.set(PROXIMITY_DISABLE_PROP, disableProximityCheck);
+            SystemProperties.set(PROXIMITY_DISABLE_PROP, mDisableProximityPref.isChecked() ? "true" : "false");
         } else if (preference == mCompositionBypass) {
-            String compositionBypassCheck = mCompositionBypass.isChecked() ? "1" : "0";
-            SystemProperties.set(COMP_BYPASS_PROP, compositionBypassCheck);
+            SystemProperties.set(COMP_BYPASS_PROP, mCompositionBypass.isChecked() ? "1" : "0");
         } else if (preference == mNavigationBar) {
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, mNavigationBar.isChecked() ? 1 : 0);
         } else if (preference == mBootSoundPref) {
-            String bootSoundCheck = mBootSoundPref.isChecked() ? "1" : "0";
-            SystemProperties.set(BOOT_SOUND_PROP, bootSoundCheck);
+            SystemProperties.set(BOOT_SOUND_PROP, mBootSoundPref.isChecked() ? "1" : "0");
         } else if (preference == mCompatibilityMode) {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
         } else if (preference == mShutterSound) {
@@ -273,12 +269,10 @@ implements Preference.OnPreferenceChangeListener {
         } else if (preference == mFastCharge) {
             int fastCharge = mFastCharge.isChecked() ? 1 : 0;
             Settings.System.putInt(getContentResolver(), Settings.System.FAST_CHARGE, fastCharge);
-            enableFastCharge(fastCharge);
         } else if (preference == mDualPane) {
             Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
         } else if (preference == mStatusbarOverride) {
-            String statusbarOverrideCheck = mStatusbarOverride.isChecked() ? "1" : "0";
-            SystemProperties.set(STATUSBAR_OVERRIDE_PROP, statusbarOverrideCheck);
+            SystemProperties.set(STATUSBAR_OVERRIDE_PROP, mStatusbarOverride.isChecked() ? "1" : "0");
         } else if (preference == mCarrier) {
             AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
             ad.setTitle(R.string.carrier_text_title);
