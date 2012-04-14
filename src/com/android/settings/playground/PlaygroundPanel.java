@@ -76,6 +76,11 @@ implements Preference.OnPreferenceChangeListener {
     private static final String PREF_CARRIER_TEXT = "custom_carrier_text";
     private static final String MODIFY_CARRIER_TEXT = "notification_drawer_carrier_text";
     private static final String FAST_CHARGE_PREF = "force_fast_charge";
+    private static final String KEY_LCD_DENSITY = "lcd_density";
+    private static final String KEY_DUAL_PANE = "dual_pane";
+    private static final String KEY_STATUSBAR_OVERRIDE = "statusbar_override";
+    private static final String STATUSBAR_OVERRIDE_PROP = "ro.config.statusbar";
+    private static final String STATUSBAR_OVERRIDE_DEFAULT = "1";
 
     private CheckBoxPreference mTiledRenderingPref;
     private CheckBoxPreference mNotificationCarrierText;
@@ -86,6 +91,8 @@ implements Preference.OnPreferenceChangeListener {
     private CheckBoxPreference mCompatibilityMode;
     private CheckBoxPreference mShutterSound;
     private CheckBoxPreference mFastCharge;
+    private CheckBoxPreference mDualPane;
+    private CheckBoxPreference mStatusbarOverride;
     private ListPreference mCompositionType;
     private ListPreference mInstallLocation;
     private Preference mExternalCache;
@@ -116,6 +123,8 @@ implements Preference.OnPreferenceChangeListener {
             mExternalCache = prefSet.findPreference(KEY_EXTERNAL_CACHE);
             mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
             mFastCharge = (CheckBoxPreference) prefSet.findPreference(FAST_CHARGE_PREF);
+            mDualPane = (CheckBoxPreference) prefSet.findPreference(KEY_DUAL_PANE);
+            mStatusbarOverride = (CheckBoxPreference) prefSet.findPreference(KEY_STATUSBAR_OVERRIDE);
 
             String disableProximity = SystemProperties.get(PROXIMITY_DISABLE_PROP, PROXIMITY_DISABLE_DEFAULT);
             mDisableProximityPref.setChecked("true".equals(disableProximity));
@@ -132,6 +141,9 @@ implements Preference.OnPreferenceChangeListener {
             mCompositionType.setOnPreferenceChangeListener(this);
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
+
+            String statusbarOverride = SystemProperties.get(STATUSBAR_OVERRIDE_PROP, STATUSBAR_OVERRIDE_DEFAULT);
+            mStatusbarOverride.setChecked("1".equals(statusbarOverride));
 
             //String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation").stderr();
             String currentInstall = "0";
@@ -154,6 +166,9 @@ implements Preference.OnPreferenceChangeListener {
 
             mNotificationCarrierText.setPersistent(true);
             mNotificationCarrierText.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, 0) == 1));
+
+            mDualPane.setPersistent(true);
+            mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
 
             mCarrier.setPersistent(true);
 
@@ -259,7 +274,12 @@ implements Preference.OnPreferenceChangeListener {
             int fastCharge = mFastCharge.isChecked() ? 1 : 0;
             Settings.System.putInt(getContentResolver(), Settings.System.FAST_CHARGE, fastCharge);
             enableFastCharge(fastCharge);
-        }  else if (preference == mCarrier) {
+        } else if (preference == mDualPane) {
+            Settings.System.putInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, mDualPane.isChecked() ? 1 : 0);
+        } else if (preference == mStatusbarOverride) {
+            String statusbarOverrideCheck = mStatusbarOverride.isChecked() ? "1" : "0";
+            SystemProperties.set(STATUSBAR_OVERRIDE_PROP, statusbarOverrideCheck);
+        } else if (preference == mCarrier) {
             AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
             ad.setTitle(R.string.carrier_text_title);
             ad.setMessage(R.string.carrier_text_message);

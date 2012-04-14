@@ -36,8 +36,6 @@ public class ThemesSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "ThemesSettings";
 
-    private static final String KEY_PLAYGROUND_THEMES = "playground_themes";
-
     private final Configuration mCurConfig = new Configuration();
     
     @Override

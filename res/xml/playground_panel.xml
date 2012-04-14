@@ -28,6 +28,27 @@
         </PreferenceScreen>
 
         <PreferenceCategory
+            android:key="density_hacking"
+            android:title="@string/density_hacking">
+
+        <PreferenceScreen
+            android:key="lcd_density"
+            android:fragment="com.android.settings.playground.DensityChanger"
+            android:title="@string/lcd_density_wizard" />
+        
+        <CheckBoxPreference
+            android:key="dual_pane"
+            android:title="@string/dual_pane_title"
+            android:summary="@string/dual_pane_summary" />
+        
+        <CheckBoxPreference
+            android:key="statusbar_override"
+            android:title="@string/statusbar_override_title"
+            android:summary="@string/statusbar_override_summary" />
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
             android:key="display_hacking"
             android:title="@string/display_hacking">
 

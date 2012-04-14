@@ -789,6 +789,34 @@
     <string name="playground_website">Mainframe Access</string>
     <string name="playground_website_summary">Visit the Playground website for issue reporting, downloads, and information</string>
 
+    <string name="density_hacking">Density Modification</string>
+
+    <!-- LCD Density -->
+	<string name="lcd_density_wizard">LCD Density</string>
+	<string name="follow_through_title">Full wipe: Proceed to 5a/5b</string>
+	<string name="follow_through_summary">If a full wipe was not done, please follow the entire procedure</string>
+	<string name="stock_density_title">1. Set a stock LCD density</string>
+	<string name="stock_density_summary">160 is for tablets and small screens. 240 is the most common default. 320 is for larger screen phones, such as Galaxy Nexus.</string>
+	<string name="reboot_title">2. Reboot the device</string>
+	<string name="reboot_summary">Return after boot completes and continue at step 3</string>
+	<string name="clear_market_data_title">3. Clear market data</string>
+	<string name="clear_market_data_cleared">Market data cleared</string>
+	<string name="open_market_title">4. Open Market and hit accept</string>
+	<string name="open_market_summary">Press back when done to return here.</string>
+	<string name="custom_density_title">5a. Change density value</string>
+    <string name="custom_density_summary">This selection offers common choices or custom density setting entry</string>
+    <string name="tablet_density_title">5b. Configure tablet-mode</string>
+    <string name="tablet_density_summary">This selection will set the density at which tablet mode is activated</string>
+    <string name="dpi">DPI</string>
+    <string name="density_google_play">Couldn\'t open Google Play! Please open the application manually</string>
+    <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please return to step 1 and proceed</string>
+    
+    <string name="dual_pane_title">Dual-panel layout</string>
+    <string name="dual_pane_summary">Side-by-side display for apps that provide a dual-pane option</string>
+    
+    <string name="statusbar_override_title">Override statusbar</string>
+    <string name="statusbar_override_summary">Keep default statusbar visible, even at lower density values</string>
+
     <string name="display_hacking">Display Modification</string>
 
     <string name="compatibility_mode_title">Compatibility Mode</string>
@@ -851,32 +879,6 @@
     <!-- Playground Themes Panel -->
     <string name="playground_themes">Playground Themes</string>
     <string name="playground_themes_panel">Playground Theme Panel</string>
-
-    <!-- LCD Density -->
-	<string name="lcd_density_wizard">LCD Density</string>
-	<string name="follow_through_title">Full wipe: Proceed to 5a/5b</string>
-	<string name="follow_through_summary">If a full wipe was not done, please follow the entire procedure</string>
-	<string name="stock_density_title">1. Set a stock LCD density</string>
-	<string name="stock_density_summary">160 is for tablets and small screens. 240 is the most common default. 320 is for larger screen phones, such as Galaxy Nexus.</string>
-	<string name="reboot_title">2. Reboot the device</string>
-	<string name="reboot_summary">Return after boot completes and continue at step 3</string>
-	<string name="clear_market_data_title">3. Clear market data</string>
-	<string name="clear_market_data_cleared">Market data cleared</string>
-	<string name="open_market_title">4. Open Market and hit accept</string>
-	<string name="open_market_summary">Press back when done to return here.</string>
-	<string name="custom_density_title">5a. Change density value</string>
-    <string name="custom_density_summary">This selection offers common choices or custom density setting entry</string>
-    <string name="tablet_density_title">5b. Configure tablet-mode</string>
-    <string name="tablet_density_summary">This selection will set the density at which tablet mode is activated</string>
-    <string name="dpi">DPI</string>
-    <string name="density_google_play">Couldn\'t open Google Play! Please open the application manually</string>
-    <string name="density_warning">Changing density can cause adverse results. If issues are encountered, please return to step 1 and proceed</string>
-
-    <string name="dual_pane_title">Dual-panel layout</string>
-    <string name="dual_pane_summary">Side-by-side display for apps that provide a dual-pane option</string>
-
-    <string name="statusbar_override_title">Override statusbar</string>
-    <string name="statusbar_override_summary">Keep statusbar visible, even at lower density values</string>
 
     <string name="cyanogenmod_themes">CyanogenMod Themes</string>
 
