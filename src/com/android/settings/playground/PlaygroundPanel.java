@@ -241,6 +241,7 @@ implements Preference.OnPreferenceChangeListener {
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
+        Helpers.getMount("rw");
         if (preference == mTiledRenderingPref) {
             SystemProperties.set(COMP_BYPASS_PROP, mCompositionBypass.isChecked() ? "true" : "false");
         } else if (preference == mDisableProximityPref) {
@@ -287,11 +288,12 @@ implements Preference.OnPreferenceChangeListener {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
-
+        Helpers.getMount("ro");
         return true;
     }
     
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        Helpers.getMount("rw");
         if (preference == mCompositionType) {
             if (newValue != null) {
                 SystemProperties.set(COMP_TYPE_PROP, (String)newValue);
@@ -314,6 +316,7 @@ implements Preference.OnPreferenceChangeListener {
                 return true;
             }
         }
+        Helpers.getMount("ro");
         return false;
     }
 
