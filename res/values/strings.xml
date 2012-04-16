@@ -813,9 +813,6 @@
     
     <string name="dual_pane_title">Dual-panel layout</string>
     <string name="dual_pane_summary">Side-by-side display for apps that provide a dual-pane option</string>
-    
-    <string name="statusbar_override_title">Override statusbar</string>
-    <string name="statusbar_override_summary">Keep default statusbar visible, even at lower density values</string>
 
     <string name="display_hacking">Display Modification</string>
 
