@@ -1827,7 +1827,7 @@
     <string name="kill_app_longpress_back_summary">Gedrückt halten der Zurück-Taste beendet die Anwendung im Vordergrund.</string>
 
     <!-- About device screen, version of modification of Android. #CM -->
-    <string name="mod_version">CyanogenMod-Version</string>
+    <string name="mod_version">Mod-Version</string>
     <string name="cpu_info">Prozessor</string>
     <string name="mem_info">Hauptspeicher</string>
     <string name="build_date">Build-Datum</string>

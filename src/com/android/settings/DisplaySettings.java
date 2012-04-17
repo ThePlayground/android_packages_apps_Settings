@@ -20,20 +20,28 @@ import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
 
 import java.util.ArrayList;
 
+import android.app.ActivityManagerNative;
 import android.app.admin.DevicePolicyManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
+import android.view.IWindowManager;
+import android.view.Surface;
 
+import com.android.settings.R;
 import com.android.settings.cyanogenmod.DisplayRotation;
 
 public class DisplaySettings extends SettingsPreferenceFragment implements
@@ -63,10 +71,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mVolumeWake;
     private CheckBoxPreference mAccelerometer;
-    private CheckBoxPreference mNotificationPulse;
     private CheckBoxPreference mBatteryPulse;
     private CheckBoxPreference mElectronBeamAnimationOn;
     private CheckBoxPreference mElectronBeamAnimationOff;
+    private PreferenceScreen mNotificationPulse;
 
     private final Configuration mCurConfig = new Configuration();
 
@@ -297,11 +305,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             } catch (RemoteException exc) {
                 Log.w(TAG, "Unable to save auto-rotate setting");
             }
-        } else if (preference == mNotificationPulse) {
-            boolean value = mNotificationPulse.isChecked();
-            Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,
-                    value ? 1 : 0);
-            return true;
         } else if (preference == mBatteryPulse) {
             boolean value = mBatteryPulse.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.BATTERY_LIGHT_PULSE,
