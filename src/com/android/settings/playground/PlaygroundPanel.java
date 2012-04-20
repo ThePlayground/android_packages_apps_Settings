@@ -129,7 +129,7 @@ implements Preference.OnPreferenceChangeListener {
             mTiledRenderingPref.setChecked("true".equals(tiledRendering));
 
             String compositionBypass = SystemProperties.get(COMP_BYPASS_PROP, COMP_BYPASS_DEFAULT);
-            mDisableProximityPref.setChecked("1".equals(compositionBypass));
+            mCompositionBypass.setChecked("1".equals(compositionBypass));
 
             String bootSound = SystemProperties.get(BOOT_SOUND_PROP, BOOT_SOUND_DEFAULT);
             mBootSoundPref.setChecked("1".equals(bootSound));
@@ -253,11 +253,11 @@ implements Preference.OnPreferenceChangeListener {
             Helpers.getMount("ro");
         } else if (preference == mCompositionBypass) {
             Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ COMP_BYPASS_PROP +"=.*|" + COMP_BYPASS_PROP + "=" + (String)(mCompositionBypass.isChecked() ? "true" : "false") + "|' " + "/system/build.prop");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ COMP_BYPASS_PROP +"=.*|" + COMP_BYPASS_PROP + "=" + (String)(mCompositionBypass.isChecked() ? "1" : "0") + "|' " + "/system/build.prop");
             Helpers.getMount("ro");
         } else if (preference == mBootSoundPref) {
             Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ BOOT_SOUND_PROP +"=.*|" + BOOT_SOUND_PROP + "=" + (String)(mBootSoundPref.isChecked() ? "true" : "false") + "|' " + "/system/build.prop");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ BOOT_SOUND_PROP +"=.*|" + BOOT_SOUND_PROP + "=" + (String)(mBootSoundPref.isChecked() ? "1" : "0") + "|' " + "/system/build.prop");
             Helpers.getMount("ro");
         } else if (preference == mNavigationBar) {
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, mNavigationBar.isChecked() ? 1 : 0);
