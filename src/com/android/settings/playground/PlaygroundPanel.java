@@ -243,7 +243,6 @@ implements Preference.OnPreferenceChangeListener {
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
-        Helpers.getMount("rw");
         if (preference == mTiledRenderingPref) {
             Helpers.getMount("rw");
             new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ TILED_RENDERING_PROP +"=.*|" + TILED_RENDERING_PROP + "=" + (String)(mTiledRenderingPref.isChecked() ? "true" : "false") + "|' " + "/system/build.prop");
@@ -298,7 +297,6 @@ implements Preference.OnPreferenceChangeListener {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
-        Helpers.getMount("ro");
         return true;
     }
     
