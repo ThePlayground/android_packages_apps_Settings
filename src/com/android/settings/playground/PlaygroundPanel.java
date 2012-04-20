@@ -246,19 +246,19 @@ implements Preference.OnPreferenceChangeListener {
         Helpers.getMount("rw");
         if (preference == mTiledRenderingPref) {
             Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ TILED_RENDERING_PROP +"=.*|" + TILED_RENDERING_PROP + "=" + mTiledRenderingPref.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ TILED_RENDERING_PROP +"=.*|" + TILED_RENDERING_PROP + "=" + (String)(mTiledRenderingPref.isChecked() ? "true" : "false") + "|' " + "/system/build.prop");
             Helpers.getMount("ro");
         } else if (preference == mDisableProximityPref) {
             Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ PROXIMITY_DISABLE_PROP +"=.*|" + PROXIMITY_DISABLE_PROP + "=" + mDisableProximityPref.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ PROXIMITY_DISABLE_PROP +"=.*|" + PROXIMITY_DISABLE_PROP + "=" + (String)(mDisableProximityPref.isChecked() ? "true" : "false") + "|' " + "/system/build.prop");
             Helpers.getMount("ro");
         } else if (preference == mCompositionBypass) {
             Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ COMP_BYPASS_PROP +"=.*|" + COMP_BYPASS_PROP + "=" + mCompositionBypass.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ COMP_BYPASS_PROP +"=.*|" + COMP_BYPASS_PROP + "=" + (String)(mCompositionBypass.isChecked() ? "true" : "false") + "|' " + "/system/build.prop");
             Helpers.getMount("ro");
         } else if (preference == mBootSoundPref) {
             Helpers.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ BOOT_SOUND_PROP +"=.*|" + BOOT_SOUND_PROP + "=" + mBootSoundPref.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ BOOT_SOUND_PROP +"=.*|" + BOOT_SOUND_PROP + "=" + (String)(mBootSoundPref.isChecked() ? "true" : "false") + "|' " + "/system/build.prop");
             Helpers.getMount("ro");
         } else if (preference == mNavigationBar) {
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, mNavigationBar.isChecked() ? 1 : 0);
