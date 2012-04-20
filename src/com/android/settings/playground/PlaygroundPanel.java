@@ -174,6 +174,7 @@ implements Preference.OnPreferenceChangeListener {
         if (!isSdPresent()) {
             preference.setSummary("Sdcard unavailable");
         } else {
+            Helpers.getMount("rw");
             String extCache = "/cache/files/maps/";
             File extDir = new File(Environment.getExternalStorageDirectory()
                                    + extCache);
@@ -217,6 +218,7 @@ implements Preference.OnPreferenceChangeListener {
                 new CMDProcessor().su.runWaitFor(rmCache.get(i));
                 new CMDProcessor().su.runWaitFor(lnCache.get(i));
             }
+            Helpers.getMount("ro");
             preference.setSummary("Google cache set to external");
         }
     }
@@ -243,15 +245,23 @@ implements Preference.OnPreferenceChangeListener {
         boolean value;
         Helpers.getMount("rw");
         if (preference == mTiledRenderingPref) {
-            SystemProperties.set(COMP_BYPASS_PROP, mCompositionBypass.isChecked() ? "true" : "false");
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ TILED_RENDERING_PROP +"=.*|" + TILED_RENDERING_PROP + "=" + mTiledRenderingPref.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            Helpers.getMount("ro");
         } else if (preference == mDisableProximityPref) {
-            SystemProperties.set(PROXIMITY_DISABLE_PROP, mDisableProximityPref.isChecked() ? "true" : "false");
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ PROXIMITY_DISABLE_PROP +"=.*|" + PROXIMITY_DISABLE_PROP + "=" + mDisableProximityPref.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            Helpers.getMount("ro");
         } else if (preference == mCompositionBypass) {
-            SystemProperties.set(COMP_BYPASS_PROP, mCompositionBypass.isChecked() ? "1" : "0");
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ COMP_BYPASS_PROP +"=.*|" + COMP_BYPASS_PROP + "=" + mCompositionBypass.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            Helpers.getMount("ro");
+        } else if (preference == mBootSoundPref) {
+            Helpers.getMount("rw");
+            new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ BOOT_SOUND_PROP +"=.*|" + BOOT_SOUND_PROP + "=" + mBootSoundPref.isChecked() ? "true" : "false" + "|' " + "/system/build.prop");
+            Helpers.getMount("ro");
         } else if (preference == mNavigationBar) {
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, mNavigationBar.isChecked() ? 1 : 0);
-        } else if (preference == mBootSoundPref) {
-            SystemProperties.set(BOOT_SOUND_PROP, mBootSoundPref.isChecked() ? "1" : "0");
         } else if (preference == mCompatibilityMode) {
             Settings.System.putInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, mCompatibilityMode.isChecked() ? 1 : 0);
         } else if (preference == mShutterSound) {
@@ -296,7 +306,9 @@ implements Preference.OnPreferenceChangeListener {
         Helpers.getMount("rw");
         if (preference == mCompositionType) {
             if (newValue != null) {
-                SystemProperties.set(COMP_TYPE_PROP, (String)newValue);
+                Helpers.getMount("rw");
+                new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ COMP_TYPE_PROP +"=.*|" + COMP_TYPE_PROP + "=" + (String)newValue + "|' " + "/system/build.prop");
+                Helpers.getMount("ro");
                 mCompositionType.setSummary("Set "+newValue+" composition (Requires reboot)");
                 return true;
             }
