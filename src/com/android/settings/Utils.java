@@ -133,7 +133,7 @@ public class Utils {
         // Did not find a matching activity, so remove the preference
         parentPreferenceGroup.removePreference(preference);
 
-        return true;
+        return false;
     }
 
     /**
