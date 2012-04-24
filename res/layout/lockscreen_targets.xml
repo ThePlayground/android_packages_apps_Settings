@@ -34,8 +34,8 @@
         prvandroid:snapMargin="@*android:dimen/multiwaveview_snap_margin"
         prvandroid:hitRadius="@*android:dimen/multiwaveview_hit_radius"
         prvandroid:rightChevronDrawable="@*android:drawable/ic_lockscreen_chevron_right"
-        prvandroid:horizontalOffset="0dip"
-        prvandroid:verticalOffset="60dip"
+        prvandroid:horizontalOffset="0dp"
+        prvandroid:verticalOffset="55dp"
         prvandroid:feedbackCount="3"
         prvandroid:vibrationDuration="20" />
 </LinearLayout>
