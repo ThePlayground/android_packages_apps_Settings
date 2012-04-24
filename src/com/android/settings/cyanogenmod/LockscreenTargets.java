@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 The CyanogenMod Project
+ * Copyright (C) 2012 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,9 @@ package com.android.settings.cyanogenmod;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
 import android.content.pm.ActivityInfo;
@@ -33,8 +35,12 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.internal.widget.multiwaveview.MultiWaveView;
 import com.android.internal.widget.multiwaveview.TargetDrawable;
@@ -48,6 +54,9 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
     private ArrayList<TargetInfo> mTargetStore = new ArrayList<TargetInfo>();
     private int mTargetOffset;
     private boolean isLandscape;
+    private static final int MENU_RESET = Menu.FIRST;
+    private static final int MENU_SAVE = Menu.FIRST + 1;
+    ViewGroup mContainer;
 
     class TargetInfo {
         String uri;
@@ -61,34 +70,15 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        container.setPadding(0, 0, 0, 0);
+        mContainer = container;
         View view = inflater.inflate(R.layout.lockscreen_targets, container, false);
+        setHasOptionsMenu(true);
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StringBuilder tString = new StringBuilder();
-                final int maxTargets = Utils.isScreenLarge() ? MultiWaveView.MAX_TABLET_TARGETS : MultiWaveView.MAX_PHONE_TARGETS;
-                for (int i = mTargetOffset + 1; i <= mTargetOffset + maxTargets; i++) {
-                    String uri = mTargetStore.get(i).uri;
-                    tString.append(uri);
-                    tString.append("|");
-                }
-                tString.deleteCharAt(tString.length() - 1);
-                Settings.System.putString(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_TARGETS, tString.toString());
-            }
-        });
-        getActivity().findViewById(R.id.reset).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initializeView(MultiWaveView.DEFAULT_TARGETS);
-            }
-        });
         initializeView(Settings.System.getString(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_TARGETS));
     }
 
@@ -141,8 +131,8 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
                 continue;
             }
             if (activelayer[1] == null || inactivelayer[1] == null) {
-                inactivelayer[1] = new InsetDrawable(getResources().getDrawable(android.R.drawable.ic_delete), targetInset, targetInset, targetInset, targetInset);
-                activelayer[1] = new InsetDrawable(getResources().getDrawable(android.R.drawable.ic_delete), targetInset, targetInset, targetInset, targetInset);
+                inactivelayer[1] = new InsetDrawable(getResources().getDrawable(R.drawable.ic_empty), targetInset, targetInset, targetInset, targetInset);
+                activelayer[1] = new InsetDrawable(getResources().getDrawable(R.drawable.ic_empty), targetInset, targetInset, targetInset, targetInset);
             }
             LayerDrawable aa = new LayerDrawable(inactivelayer);
             aa.setId(0, 0);
@@ -160,13 +150,82 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
         ArrayList<TargetDrawable> tDraw = new ArrayList<TargetDrawable>();
         for (TargetInfo i : mTargetStore) {
             if (i != null) {
-                tDraw.add(new TargetDrawable(res,i.icon));
+                tDraw.add(new TargetDrawable(res, i.icon));
             } else {
-                tDraw.add(new TargetDrawable(res,null));
+                tDraw.add(new TargetDrawable(res, null));
             }
         }
         mWaveView.setTargetResources(tDraw);
         mWaveView.setTag(null);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // If running on a phone, remove padding around container
+        if (!Utils.isScreenLarge()) {
+            mContainer.setPadding(0, 0, 0, 0);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        menu.add(0, MENU_RESET, 0, R.string.profile_reset_title)
+                .setIcon(R.drawable.ic_settings_backup) // use the backup icon
+                .setAlphabeticShortcut('r')
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+        menu.add(0, MENU_SAVE, 0, R.string.wifi_save)
+                .setIcon(R.drawable.ic_menu_save)
+                .setAlphabeticShortcut('s')
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_RESET:
+                resetAll();
+                return true;
+            case MENU_SAVE:
+                saveAll();
+                Toast.makeText(getActivity(), R.string.lockscreen_target_save, Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void resetAll() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle(R.string.lockscreen_target_reset_title);
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        alert.setMessage(R.string.lockscreen_target_reset_message);
+        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                initializeView(MultiWaveView.DEFAULT_TARGETS);
+                saveAll();
+                Toast.makeText(getActivity(), R.string.lockscreen_target_reset, Toast.LENGTH_LONG).show();
+            }
+        });
+        alert.setNegativeButton(R.string.cancel, null);
+        alert.create().show();
+    }
+
+    private void saveAll() {
+        StringBuilder tString = new StringBuilder();
+        final int maxTargets = Utils.isScreenLarge() ? MultiWaveView.MAX_TABLET_TARGETS : MultiWaveView.MAX_PHONE_TARGETS;
+        for (int i = mTargetOffset + 1; i <= mTargetOffset + maxTargets; i++) {
+            String uri = mTargetStore.get(i).uri;
+            tString.append(uri);
+            tString.append("|");
+        }
+        tString.deleteCharAt(tString.length() - 1);
+        Settings.System.putString(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_TARGETS, tString.toString());
     }
 
     private void setTarget(int cTarget, String uri, Drawable pD) {
@@ -184,7 +243,7 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
             ActivityInfo aInfo = i.resolveActivityInfo(pm, PackageManager.GET_ACTIVITIES);
             Drawable icon = null;
             if (aInfo != null) {
-                icon = aInfo.loadIcon(pm);
+                icon = aInfo.loadIcon(pm).mutate();
             } else {
                 icon = getResources().getDrawable(android.R.drawable.sym_def_app_icon);
             }
@@ -201,7 +260,8 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
         if (data != null && data.getStringExtra(Intent.EXTRA_SHORTCUT_NAME) != null &&
                 data.getStringExtra(Intent.EXTRA_SHORTCUT_NAME).equals(MultiWaveView.EMPTY_TARGET)) {
             Integer cTarget = (Integer) mWaveView.getTag();
-            InsetDrawable pD = new InsetDrawable(getResources().getDrawable(android.R.drawable.ic_delete), 60, 60, 60, 60);
+            final int targetInset = Utils.isScreenLarge() ? MultiWaveView.TABLET_TARGET_INSET : MultiWaveView.PHONE_TARGET_INSET;
+            InsetDrawable pD = new InsetDrawable(getResources().getDrawable(R.drawable.ic_empty), targetInset, targetInset, targetInset, targetInset);
             setTarget(cTarget, MultiWaveView.EMPTY_TARGET.toLowerCase(), pD);
             mWaveView.setTag(null);
         } else if (requestCode == Activity.RESULT_CANCELED || resultCode == Activity.RESULT_CANCELED) {
@@ -217,7 +277,6 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
 
     @Override
     public void onReleased(View v, int handle) {
-
     }
 
     @Override

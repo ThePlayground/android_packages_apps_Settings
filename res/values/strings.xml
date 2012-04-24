@@ -1031,8 +1031,13 @@
     <string name="lock_screen_title">Lock screen</string>
 
     <!-- Lock Screen -->
-    <string name="lockscreen_target_info">Note : Drag to targets to assign</string>
-    <string name="lockscreen_target_title">Lockscreen target</string>
+    <string name="lockscreen_target_info">Drag slider to shortcuts to assign an activity</string>
+    <string name="lockscreen_target_title">Lock screen shortcuts</string>
+    <string name="lockscreen_target_summary">Add or configure custom lock screen activities</string>
+    <string name="lockscreen_target_reset">Lock screen target activities reset to default</string>
+    <string name="lockscreen_target_save">Lock screen target activities saved</string>
+    <string name="lockscreen_target_reset_title">Reset</string>
+    <string name="lockscreen_target_reset_message">Delete all user created Lock screen shortcuts and restore to default?</string>
 
     <!-- Lock Screen #AOKP-->
     <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>
@@ -1068,7 +1073,7 @@
 
     <!-- Rename Dialog  -->
     <string name="rename_dialog_title">Rename</string>
-    <string name="rename_dialog_message">Enter a new name for the selected item</string>
+    <string name="rename_dialog_message">Enter a new name</string>
     <string name="duplicate_profile_name">Duplicate profile name!</string>
     <string name="duplicate_appgroup_name">Duplicate application group name!</string>
 
@@ -1133,7 +1138,7 @@
     <string name="profile_lockmode_disabled">Disabled</string>
     <string name="profile_lockmode_default_summary">Use system default</string>
     <string name="profile_lockmode_insecure_summary">Use insecure lock screen</string>
-    <string name="profile_lockmode_disabled_summary">Lockscreen is disabled</string>
+    <string name="profile_lockmode_disabled_summary">Lock screen is disabled</string>
 
     <string name="profile_disable_screen_lock_summary">Disable lock screen security while this profile is active</string>
 

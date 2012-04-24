@@ -10,24 +10,11 @@
         android:layout_height="wrap_content"
         android:background="#3691b4"
         android:gravity="center_horizontal"
+        android:layout_margin="8dip"
+        android:padding="4dip"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/lockscreen_target_info" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/save"
-            android:text="@string/wifi_save"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/reset"
-            android:text="@string/profile_reset_title"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+
     <com.android.internal.widget.multiwaveview.MultiWaveView
         android:id="@+id/lock_target"
         android:layout_width="match_parent"

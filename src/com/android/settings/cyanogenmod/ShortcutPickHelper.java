@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
@@ -136,7 +137,7 @@ public class ShortcutPickHelper {
         } else if (application2name != null && application2name.equals(shortcutName)){
             final List<PackageInfo> pInfos = mPackageManager.getInstalledPackages(PackageManager.GET_ACTIVITIES);
             ExpandableListView appListView = new ExpandableListView(mParent);
-            AppExpandableAdapter appAdapter = new AppExpandableAdapter(pInfos);
+            AppExpandableAdapter appAdapter = new AppExpandableAdapter(pInfos, mParent);
             appListView.setAdapter(appAdapter);
             appListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
                 @Override
@@ -172,13 +173,14 @@ public class ShortcutPickHelper {
     public class AppExpandableAdapter extends BaseExpandableListAdapter {
 
         ArrayList<GroupInfo> allList = new ArrayList<GroupInfo>();
+        final int groupPadding;
 
         public class LabelCompare implements Comparator<GroupInfo>{
             @Override
             public int compare(GroupInfo item1, GroupInfo item2) {
                 String rank1 = item1.label.toLowerCase();
                 String rank2 = item2.label.toLowerCase();
-                int result = rank1.compareTo(rank2);  
+                int result = rank1.compareTo(rank2);
                 if(result == 0) {
                     return 0;
                 } else if(result < 0) {
@@ -198,11 +200,12 @@ public class ShortcutPickHelper {
             }
         }
 
-        public AppExpandableAdapter(List<PackageInfo> pInfos) {
+        public AppExpandableAdapter(List<PackageInfo> pInfos, Context context) {
             for (PackageInfo i : pInfos) {
                 allList.add(new GroupInfo(i.applicationInfo.loadLabel(mPackageManager).toString(), i));
             }
             Collections.sort(allList, new LabelCompare());
+            groupPadding = context.getResources().getDimensionPixelSize(R.dimen.shortcut_picker_left_padding);
         }
 
         public String getChild(int groupPosition, int childPosition) {
@@ -214,7 +217,11 @@ public class ShortcutPickHelper {
         }
 
         public int getChildrenCount(int groupPosition) {
-            return allList.get(groupPosition).info.activities.length;
+            if (allList.get(groupPosition).info.activities != null) {
+                return allList.get(groupPosition).info.activities.length;
+            } else {
+                return 0;
+            }
         }
 
 
@@ -222,7 +229,7 @@ public class ShortcutPickHelper {
                 View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = View.inflate(mParent, android.R.layout.simple_list_item_1, null);
-                convertView.setPadding(70, 0, 0, 0);
+                convertView.setPadding(groupPadding, 0, 0, 0);
 
             }
             TextView textView = (TextView)convertView.findViewById(android.R.id.text1);
