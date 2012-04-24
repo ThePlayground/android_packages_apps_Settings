@@ -51,20 +51,13 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     private static final String PREF_LOCKSCREEN_LAYOUT = "pref_lockscreen_layout";
     
     public static final int REQUEST_PICK_WALLPAPER = 199;
-    public static final int SELECT_ACTIVITY = 2;
     public static final int SELECT_WALLPAPER = 3;
     
     private static final String WALLPAPER_NAME = "lockscreen_wallpaper.jpg";
-    
-    ListPreference mLockscreenOption;
+
     CheckBoxPreference mLockscreenLandscape;
     
     Preference mLockscreenWallpaper;
-
-    private Preference mCurrentCustomActivityPreference;
-    private String mCurrentCustomActivityString;
-    
-    private ShortcutPickerHelper mPicker;
     
     ArrayList<String> keys = new ArrayList<String>();
     
@@ -76,35 +69,28 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
-        
-        mLockscreenOption = (ListPreference) findPreference(PREF_LOCKSCREEN_LAYOUT);
-        mLockscreenOption.setOnPreferenceChangeListener(this);
-        mLockscreenOption.setValue(Settings.System.getInt(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_LAYOUT, 0) + "");
-        
+
         mLockscreenWallpaper = findPreference("wallpaper");
-        
-        mPicker = new ShortcutPickerHelper(this, this);
-        
+
         for (String key : keys) {
             try {
                 ((CheckBoxPreference) findPreference(key)).setChecked(Settings.System.getInt(getActivity().getContentResolver(), key) == 1);
             } catch (SettingNotFoundException e) {
             }
         }
-        
-        refreshSettings();
+
         setHasOptionsMenu(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        
+
         Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
         if (!isSDPresent) {
             mLockscreenWallpaper.setEnabled(false);
             mLockscreenWallpaper.setSummary("Sdcard Unavailable");
-            
+
         }
         refreshSettings();
     }
@@ -112,13 +98,13 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mLockscreenWallpaper) {
-            
+
             int width = getActivity().getWallpaperDesiredMinimumWidth();
             int height = getActivity().getWallpaperDesiredMinimumHeight();
             Display display = getActivity().getWindowManager().getDefaultDisplay();
             float spotlightX = (float) display.getWidth() / width;
             float spotlightY = (float) display.getHeight() / height;
-            
+
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             intent.putExtra("crop", "true");
@@ -132,12 +118,12 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             intent.putExtra("spotlightY", spotlightY);
             startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
             return true;
-            
+
         } else if (keys.contains(preference.getKey())) {
             Log.e("RC_Lockscreens", "key: " + preference.getKey());
             return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(), ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
         }
-        
+
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
     
@@ -166,78 +152,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     private Uri getLockscreenExternalUri() {
         File dir = mContext.getExternalCacheDir();
         File wallpaper = new File(dir, WALLPAPER_NAME);
-        
+
         return Uri.fromFile(wallpaper);
-    }
-    
-    public void refreshSettings() {
-        
-        int lockscreenTargets = Settings.System.getInt(getContentResolver(), Settings.System.LOCKSCREEN_LAYOUT, 2);
-        
-        PreferenceGroup targetGroup = (PreferenceGroup) findPreference("lockscreen_targets");
-        targetGroup.removeAll();
-        
-        // quad only uses first 4, but we make the system think there's 6 for
-        // the alternate layout
-        // so only show 4
-        if (lockscreenTargets == 6) {
-            Settings.System.putString(getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[4], "**null**");
-            Settings.System.putString(getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[5], "**null**");
-            lockscreenTargets = 4;
-        }
-        
-        for (int i = 0; i < lockscreenTargets; i++) {
-            ListPreference p = new ListPreference(getActivity());
-            String dialogTitle = String.format(getResources().getString(R.string.custom_app_n_dialog_title), i + 1);
-            ;
-            p.setDialogTitle(dialogTitle);
-            p.setEntries(R.array.lockscreen_choice_entries);
-            p.setEntryValues(R.array.lockscreen_choice_values);
-            String title = String.format(getResources().getString(R.string.custom_app_n), i + 1);
-            p.setTitle(title);
-            p.setKey("lockscreen_target_" + i);
-            p.setSummary(getProperSummary(i));
-            p.setOnPreferenceChangeListener(this);
-            targetGroup.addPreference(p);
-
-        }
-        
-    }
-    
-    private String getProperSummary(int i) {
-        String uri = Settings.System.getString(getActivity().getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[i]);
-        
-        if (uri == null)
-            return getResources().getString(R.string.lockscreen_action_none);
-        
-        if (uri.startsWith("**")) {
-            if (uri.equals("**unlock**"))
-                return getResources().getString(R.string.lockscreen_action_unlock);
-            else if (uri.equals("**sound**"))
-                return getResources().getString(R.string.lockscreen_action_sound);
-            else if (uri.equals("**camera**"))
-                return getResources().getString(R.string.lockscreen_action_camera);
-            else if (uri.equals("**phone**"))
-                return getResources().getString(R.string.lockscreen_action_phone);
-            else if (uri.equals("**mms**"))
-                return getResources().getString(R.string.lockscreen_action_mms);
-            else if (uri.equals("**torch**"))
-                return getResources().getString(R.string.lockscreen_action_torch);
-            else if (uri.equals("**null**"))
-                return getResources().getString(R.string.lockscreen_action_none);
-        } else {
-            return mPicker.getFriendlyNameForUri(uri);
-        }
-        return null;
-    }
-    
-    @Override
-    public void shortcutPicked(String uri, String friendlyName, boolean isApplication) {
-        if (Settings.System.putString(getActivity().getContentResolver(),
-                                      mCurrentCustomActivityString, uri)) {
-            mCurrentCustomActivityPreference.setSummary(friendlyName);
-
-        }
     }
     
     @Override
@@ -245,23 +161,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         if (preference == mLockscreenOption) {
             int val = Integer.parseInt((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),Settings.System.LOCKSCREEN_LAYOUT, val);
-            refreshSettings();
             return true;
-            
-        } else if (preference.getKey().startsWith("lockscreen_target")) {
-            int index = Integer.parseInt(preference.getKey().substring(preference.getKey().lastIndexOf("_") + 1));
-            
-            if (newValue.equals("**app**")) {
-                mCurrentCustomActivityPreference = preference;
-                mCurrentCustomActivityString = Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index];
-                mPicker.pickShortcut();
-            } else {
-                Settings.System.putString(getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[index], (String) newValue);
-                refreshSettings();
-            }
-            return true;
+
         }
-        
+
         return false;
     }
     
@@ -276,7 +179,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                 } catch (FileNotFoundException e) {
                     return; // NOOOOO
                 }
-                
+
                 Uri selectedImageUri = data.getData();
                 Log.d(TAG, "Selected image uri: " + selectedImageUri);
                 try {
@@ -293,8 +196,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
                 }
                 Helpers.getMount("ro");
 
-            } else if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
-                mPicker.onActivityResult(requestCode, resultCode, data);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -303,7 +204,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     public void copy(File src, File dst) throws IOException {
         InputStream in = new FileInputStream(src);
         FileOutputStream out = new FileOutputStream(dst);
-        
+
         // Transfer bytes from in to out
         byte[] buf = new byte[1024];
         int len;
@@ -313,5 +214,5 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
         in.close();
         out.close();
     }
-    
+
 }

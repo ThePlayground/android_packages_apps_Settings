@@ -15,6 +15,12 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- String for ShortcutPickHelper -->
+    <string name="picker_activities">Activities</string>
+    <string name="select_custom_app_title">Select custom application</string>
+    <string name="select_custom_activity_title">Select custom activity</string>
+
     <!-- Strings for Dialog yes button -->
     <string name="yes">"Yes"</string>
 
@@ -1022,37 +1028,19 @@
     <string name="status_bar_signal_text_hidden">Hidden</string>
 
     <!-- Lock screen #CM -->
-    <string name="lock_screen_title">Lockscreen</string>
+    <string name="lock_screen_title">Lock screen</string>
+
+    <!-- Lock Screen -->
+    <string name="lockscreen_target_info">Note : Drag to targets to assign</string>
+    <string name="lockscreen_target_title">Lockscreen target</string>
 
     <!-- Lock Screen #AOKP-->
-    <string name="pref_lockscreen_layout_title">Lockscreen style</string>
-    <string name="pref_lockscreen_layout_summary">Remember to scroll down and change your targets after changing styles</string>
-    <string name="title_pref_lockscreen_quad_targets">Quad Targets</string>	
-    <string name="summary_pref_lockscreen_quad_targets">Adds Phone and Messaging shortcuts on the lock screen</string>
-    <string name="title_pref_lockscreen_octo_targets">Octo Targets</string>
-    <string name="summary_pref_lockscreen_octo_targets">Adds too many shortcuts on the lock screen</string>
-    <string name="custom_app_n_dialog_title">Choose action for target %1$s</string>
-    <string name="custom_app_n">Custom app %1$s</string>
-    <string name="lockscreen_targets">Lockscreen targets</string>
-    <string name="lockscreen_action_unlock">Unlock</string>
-    <string name="lockscreen_action_sound">Sound toggle</string>
-    <string name="lockscreen_action_camera">Camera</string>
-    <string name="lockscreen_action_mms">SMS</string>
-    <string name="lockscreen_action_phone">Phone</string>
-    <string name="lockscreen_action_torch">Torch</string>
-    <string name="lockscreen_action_none">Empty</string>
     <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>
     <string name="lockscreen_wallpaper_summary">You can remove the wallpaper from the menu in this window</string>
     <string name="lockscreen_landscape_title">Horizontal lockscreen</string>
     <string name="lockscreen_landscape_summary">Whether horizontal lockscreen orientation will be enabled</string>
 
     <string name="lockscreen_security_title">System security</string>
-
-    <!-- Shortcut picker -->
-    <string name="use_custom_app_title">Use custom application</string>
-    <string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>
-    <string name="select_custom_app_title">Select custom application</string>
-    <string name="group_applications">Applications</string>
 
     <!-- Wallpaper settings title [CHAR LIMIT=30] -->
     <string name="wallpaper_settings_title">Wallpaper</string>
@@ -1818,16 +1806,16 @@
 
     <!-- About device screen, model of device. -->
     <string name="model_number">Model number</string>
-    <!-- About device screen, version of Android. -->
+    <!-- About device screen, Cpu info. -->
+    <string name="cpu_info">CPU</string>
+    <!-- About phone screen, Free memory info -->
+    <string name="mem_info">Memory</string>
+    <!-- About phone screen, status item label -->
     <string name="firmware_version">Android version</string>
     <!-- About device screen, verison of radio. -->
     <string name="baseband_version">Baseband version</string>
     <!-- About device screen, version of kernel. -->
     <string name="kernel_version">Kernel version</string>
-    <!-- About device screen, version of kernel. -->
-    <string name="cpu_info">CPU model</string>
-    <!-- About device screen, version of kernel. -->
-    <string name="mem_info">RAM total</string>
     <!-- About device screen, version of modification of Android. -->
     <string name="mod_version">Playground ICS version</string>
     <string name="mod_version_default">Undefined</string>
@@ -2362,10 +2350,6 @@
     <string name="sd_card_settings_label" product="default">SD card</string>
     <!-- The title of the activity to adjust proxy settings -->
     <string name="proxy_settings_label">Proxy settings</string>
-
-    <!-- ======================================================================================= -->
-    <!-- NEW STUFF -->
-    <!-- ======================================================================================= -->
 
     <!-- Button label for generic cancel action -->
     <string name="cancel">Cancel</string>

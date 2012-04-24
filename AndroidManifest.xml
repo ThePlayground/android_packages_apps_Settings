@@ -1372,6 +1372,8 @@
 
         <activity android:name=".cyanogenmod.PerformanceSettings" />
 
+        <activity android:name=".cyanogenmod.LockscreenTargets" />
+
         <activity android:name=".profiles.ProfilesSettings" />
 
         <activity android:name=".profiles.ProfileConfig" />
