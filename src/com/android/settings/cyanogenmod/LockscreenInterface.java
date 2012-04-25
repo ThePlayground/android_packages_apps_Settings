@@ -42,13 +42,10 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.android.settings.CMDProcessor;
 import com.android.settings.Helpers;
-import com.android.settings.cyanogenmod.ShortcutPickerHelper;
 
-public class LockscreenInterface extends SettingsPreferenceFragment implements ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
+public class LockscreenInterface extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
     
     private static final String TAG = "Lockscreens";
-    
-    private static final String PREF_LOCKSCREEN_LAYOUT = "pref_lockscreen_layout";
     
     public static final int REQUEST_PICK_WALLPAPER = 199;
     public static final int SELECT_WALLPAPER = 3;
@@ -92,7 +89,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
             mLockscreenWallpaper.setSummary("Sdcard Unavailable");
 
         }
-        refreshSettings();
     }
     
     @Override
@@ -158,13 +154,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements S
     
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mLockscreenOption) {
-            int val = Integer.parseInt((String) newValue);
-            Settings.System.putInt(getActivity().getContentResolver(),Settings.System.LOCKSCREEN_LAYOUT, val);
-            return true;
-
-        }
-
+        // Stub for future preference options
         return false;
     }
     
