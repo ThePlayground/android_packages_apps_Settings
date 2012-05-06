@@ -301,6 +301,7 @@ implements Preference.OnPreferenceChangeListener {
         Helpers.getMount("rw");
         if (preference == mCompositionType) {
             if (newValue != null) {
+                SystemProperties.set(COMP_TYPE_PROP, (String)newValue);
                 Helpers.getMount("rw");
                 new CMDProcessor().su.runWaitFor("busybox sed -i 's|"+ COMP_TYPE_PROP +"=.*|" + COMP_TYPE_PROP + "=" + (String)newValue + "|' " + "/system/build.prop");
                 Helpers.getMount("ro");
