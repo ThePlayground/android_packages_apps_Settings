@@ -24,7 +24,7 @@
             android:summary="@string/playground_website_summary">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="http://twistedumbrella.github.com/Twisted-Playground" />
+                android:data="http://theplayground.github.com/Twisted-Playground" />
         </PreferenceScreen>
 
         <PreferenceCategory
