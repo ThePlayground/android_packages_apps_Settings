@@ -905,7 +905,7 @@
     <string name="application_hacking">Package Modification</string>
 
     <string name="cache_external_title">External Cache</string>
-    <string name="cache_external_summary">Google apps will store their related cache on the sdcard</string>
+    <string name="cache_external_summary">Choose whether Google Apps store cache files in external or internal storage</string>
 
     <string name="install_location_title">Install Location</string>
     <string name="install_location_summary">Choose install target for user applications</string>

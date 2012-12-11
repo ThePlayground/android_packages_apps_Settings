@@ -117,7 +117,6 @@ implements Preference.OnPreferenceChangeListener {
             mShutterSound = (CheckBoxPreference) prefSet.findPreference(KEY_SHUTTER_SOUND);
             mCompositionType = (ListPreference) prefSet.findPreference(COMP_TYPE_PREF);
             mInstallLocation = (ListPreference) prefSet.findPreference(INSTALL_LOCATION);
-            mExternalCache = prefSet.findPreference(KEY_EXTERNAL_CACHE);
             mCarrier = (Preference) prefSet.findPreference(PREF_CARRIER_TEXT);
             mFastCharge = (CheckBoxPreference) prefSet.findPreference(FAST_CHARGE_PREF);
             mDualPane = (CheckBoxPreference) prefSet.findPreference(KEY_DUAL_PANE);
@@ -138,8 +137,12 @@ implements Preference.OnPreferenceChangeListener {
             mCompositionType.setValue(SystemProperties.get(COMP_TYPE_PROP, SystemProperties.get(COMP_TYPE_PROP, COMP_TYPE_DEFAULT)));
             mCompositionType.setOnPreferenceChangeListener(this);
 
-            //String currentInstall = new CMDProcessor().su.runWaitFor("pm getInstallLocation").stderr();
             String currentInstall = "0";
+            CommandResult installCheck = new CMDProcessor().su.runWaitFor("pm get-install-location");
+            if (installCheck.success()) {
+                currentInstall =  (installCheck.stdout).substring(0,1);
+            }
+            mInstallLocation = (ListPreference) findPreference(INSTALL_LOCATION);
             mInstallLocation.setOnPreferenceChangeListener(this);
             mInstallLocation.setValue(currentInstall);
             mInstallLocation.setOnPreferenceChangeListener(this);
@@ -151,8 +154,9 @@ implements Preference.OnPreferenceChangeListener {
                 mNavigationBar.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, 0) == 1);
             }
 
-            mCompatibilityMode.setPersistent(true);
-            mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 1) != 0);
+            mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATBILITY_MODE);
+            mCompatibilityMode.setPersistent(false);
+            mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 0) != 0);
 
             mShutterSound.setPersistent(true);
             mShutterSound.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.SHUTTER_SOUND, 1) != 0);
@@ -167,6 +171,14 @@ implements Preference.OnPreferenceChangeListener {
 
             mDualPane.setPersistent(true);
             mDualPane.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.DUAL_PANE_SETTINGS, 0) == 1);
+            
+            mExternalCache = findPreference(KEY_EXTERNAL_CACHE);
+            File cacheDir = new File(Environment.getExternalStorageDirectory() + "/cache/");
+            if (cacheDir.exists()) {
+                mExternalCache.setTitle("Disable External Cache");
+            } else {
+                mExternalCache.setTitle("Enable External Cache");
+            }
 
             mCarrier.setPersistent(true);
 
@@ -175,48 +187,77 @@ implements Preference.OnPreferenceChangeListener {
         }
     }
     
-    private void exportCache(Preference preference) {
+    private void exportCache(Preference preference, boolean export) {
+        Helpers.getMount("rw");
         if (!isSdPresent()) {
-            preference.setSummary("Sdcard unavailable");
+            preference.setSummary("Sdcard Unavailable");
         } else {
-            Helpers.getMount("rw");
-            File extDir = new File(Environment.getExternalStorageDirectory() + "/cache/files/maps/");
+            String extCache = "/cache/files/maps/";
+            File extDir = new File(Environment.getExternalStorageDirectory()
+                                   + extCache);
             if (!extDir.mkdirs()) {
                 extDir.mkdirs();
             }
-            File extWeb = new File(Environment.getExternalStorageDirectory() + "/cache/webviewCache/");
+            String webCache = "/cache/webviewCache/";
+            File extWeb = new File(Environment.getExternalStorageDirectory()
+                                   + webCache);
             if (!extWeb.mkdirs()) {
                 extWeb.mkdirs();
             }
-            File extStreet = new File(Environment.getExternalStorageDirectory() + "/cache/streetCache/");
+            String streetCache = "/cache/streetCache/";
+            File extStreet = new File(Environment.getExternalStorageDirectory()
+                                      + streetCache);
             if (!extStreet.mkdirs()) {
                 extStreet.mkdirs();
             }
-            File extMarket = new File(Environment.getExternalStorageDirectory() + "/cache/marketCache/");
+            String marketCache = "/cache/marketCache/";
+            File extMarket = new File(Environment.getExternalStorageDirectory()
+                                      + marketCache);
             if (!extMarket.mkdirs()) {
                 extMarket.mkdirs();
             }
-            
-            List<String> rmCache = new ArrayList<String>();
-            List<String> lnCache = new ArrayList<String>();
-            rmCache.add("busybox rm -rf /data/data/com.android.browser/cache/webviewCache");
-            lnCache.add("busybox ln -s "+Environment.getExternalStorageDirectory()+"/cache/webviewCache /data/data/com.android.browser/cache/webviewCache");
-            rmCache.add("busybox rm -rf /data/data/com.google.android.gm/cache/webviewCache");
-            lnCache.add("busybox ln -s "+Environment.getExternalStorageDirectory()+"/cache/webviewCache /data/data/com.google.android.gm/cache/webviewCache");
-            rmCache.add("busybox rm -rf /data/data/com.google.android.voicesearch/cache/webviewCache");
-            lnCache.add("busybox ln -s "+Environment.getExternalStorageDirectory()+"/cache/webviewCache /data/data/com.google.android.voicesearch/cache/webviewCache");
-            rmCache.add("busybox rm -rf /data/data/com.google.android.apps.maps/files");
-            lnCache.add("busybox ln -s "+Environment.getExternalStorageDirectory()+"/cache/files/maps /data/data/com.google.android.apps.maps/files");
-            rmCache.add("busybox rm -rf /data/data/com.google.android.street/cache");
-            lnCache.add("busybox ln -s "+Environment.getExternalStorageDirectory()+"/cache/streetCache/data/data/com.google.android.street/cache");
-            rmCache.add("busybox rm -rf /data/data/com.android.vending/cache");
-            lnCache.add("busybox ln -s "+Environment.getExternalStorageDirectory()+"/cache/marketCache /data/data/com.android.vending/cache");
-            for (int i = 0; i < rmCache.size(); i++) {
-                new CMDProcessor().su.runWaitFor(rmCache.get(i));
-                new CMDProcessor().su.runWaitFor(lnCache.get(i));
+            if (export) {
+                cacheDir.mkdirs();
+                List<String> rmCache = new ArrayList<String>();
+                List<String> lnCache = new ArrayList<String>();
+                rmCache.add("busybox rm -rf /data/data/com.android.browser/cache/webviewCache");
+                lnCache.add("busybox ln -s /sdcard/cache/webviewCache /data/data/com.android.browser/cache/webviewCache");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.gm/cache/webviewCache");
+                lnCache.add("busybox ln -s /sdcard/cache/webviewCache /data/data/com.google.android.gm/cache/webviewCache");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.voicesearch/cache/webviewCache");
+                lnCache.add("busybox ln -s /sdcard/cache/webviewCache /data/data/com.google.android.voicesearch/cache/webviewCache");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.apps.maps/files");
+                lnCache.add("busybox ln -s /sdcard/cache/files/maps /data/data/com.google.android.apps.maps/files");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.street/cache");
+                lnCache.add("busybox ln -s /sdcard/cache/streetCache /data/data/com.google.android.street/cache");
+                rmCache.add("busybox rm -rf /data/data/com.android.vending/cache");
+                lnCache.add("busybox ln -s /sdcard/cache/marketCache /data/data/com.android.vending/cache");
+                for (int i = 0; i < rmCache.size(); i++) {
+                    new CMDProcessor().su.runWaitFor(rmCache.get(i));
+                    new CMDProcessor().su.runWaitFor(lnCache.get(i));
+                }
+                preference.setTitle("Disable External Cache");
+                preference.setSummary("Google Apps now store their related cache in external sdcard");
+            } else {
+                List<String> rmCache = new ArrayList<String>();
+                rmCache.add("busybox rm -rf /data/data/com.android.browser/cache/webviewCache");
+                rmCache.add("busybox rm -rf /sdcard/cache/webviewCache");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.gm/cache/webviewCache");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.voicesearch/cache/webviewCache");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.apps.maps/files");
+                rmCache.add("busybox rm -rf /sdcard/cache/files/maps");
+                rmCache.add("busybox rm -rf /data/data/com.google.android.street/cache");
+                rmCache.add("busybox rm -rf /sdcard/cache/streetCache");
+                rmCache.add("busybox rm -rf /data/data/com.android.vending/cache");
+                rmCache.add("busybox rm -rf /sdcard/cache/marketCache");
+                rmCache.add("busybox rm -rf /sdcard/cache");
+                for (int i = 0; i < rmCache.size(); i++) {
+                    new CMDProcessor().su.runWaitFor(rmCache.get(i));
+                }
+                preference.setTitle("Enable External Cache");
+                preference.setSummary("Google Apps now store their related cache in internal data");
             }
             Helpers.getMount("ro");
-            preference.setSummary("Google cache set to external");
         }
     }
 
@@ -263,7 +304,11 @@ implements Preference.OnPreferenceChangeListener {
         } else if (preference == mShutterSound) {
             Settings.System.putInt(getContentResolver(), Settings.System.SHUTTER_SOUND, mShutterSound.isChecked() ? 1 : 0);
         } else if (preference == mExternalCache) {
-            exportCache(preference);
+            if (cacheDir.exists()) {
+                exportCache(preference, false);
+            } else {
+                exportCache(preference, true);
+            }
         } else if (preference == mNotificationCarrierText) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(), Settings.System.MODIFY_CARRIER_TEXT, mNotificationCarrierText.isChecked() ? 1 : 0);
         } else if (preference == mFastCharge) {
@@ -311,16 +356,16 @@ implements Preference.OnPreferenceChangeListener {
         }
         if (preference == mInstallLocation) {
             if (newValue != null) {
-                new CMDProcessor().su.runWaitFor("pm setInstallLocation "+newValue);
+                new CMDProcessor().su.runWaitFor("pm set-install-location "+newValue);
                 String summary = "default location";
                 if (newValue.equals("0")) {
-                    summary = "app selection";
+                    summary = "automatic location";
                 } else if (newValue.equals("1")) {
                     summary = "internal only";
                 } else if (newValue.equals("2")) {
                     summary = "external only";
                 }
-                mInstallLocation.setSummary("Install location is "+summary);
+                mInstallLocation.setSummary("Install to "+summary);
                 return true;
             }
         }
