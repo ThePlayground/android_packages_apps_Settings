@@ -127,6 +127,7 @@ implements Preference.OnPreferenceChangeListener {
             mTiledRenderingPref = (CheckBoxPreference) prefSet.findPreference(TILED_RENDERING_PREF);
             mCompositionBypass = (CheckBoxPreference) prefSet.findPreference(COMP_BYPASS_PREF);
             mNavigationBar = (CheckBoxPreference) prefSet.findPreference(KEY_NAVIGATION_BAR);
+            mInstallLocation = (ListPreference) findPreference(INSTALL_LOCATION);
             mCompatibilityMode = (CheckBoxPreference) prefSet.findPreference(KEY_COMPATIBILITY_MODE);
             mNotificationCarrierText = (CheckBoxPreference) prefSet.findPreference(MODIFY_CARRIER_TEXT);
             mBootSoundPref = (CheckBoxPreference) prefSet.findPreference(BOOT_SOUND_PREF);
@@ -158,7 +159,7 @@ implements Preference.OnPreferenceChangeListener {
             if (installCheck.success()) {
                 currentInstall =  (installCheck.stdout).substring(0,1);
             }
-            mInstallLocation = (ListPreference) findPreference(INSTALL_LOCATION);
+
             mInstallLocation.setOnPreferenceChangeListener(this);
             mInstallLocation.setValue(currentInstall);
             mInstallLocation.setOnPreferenceChangeListener(this);
@@ -170,7 +171,6 @@ implements Preference.OnPreferenceChangeListener {
                 mNavigationBar.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.NAVIGATION_BAR_VISIBLE, 0) == 1);
             }
 
-            mCompatibilityMode = (CheckBoxPreference) findPreference(KEY_COMPATBILITY_MODE);
             mCompatibilityMode.setPersistent(false);
             mCompatibilityMode.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.COMPATIBILITY_MODE, 0) != 0);
 
