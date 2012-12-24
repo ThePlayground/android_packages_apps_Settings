@@ -1565,6 +1565,13 @@
     </string-array>
 
     <string-array name="entries_lcd_density" translatable="false">
+        <item>120</item>
+        <item>128</item>
+        <item>132</item>
+        <item>136</item>
+        <item>144</item>
+        <item>160</item>
+        <item>192</item>
         <item>240</item>
         <item>242</item>
         <item>244</item>
@@ -2208,12 +2215,42 @@
     </integer-array>
 
     <string-array name="lockscreen_background_entries" translatable="false">
+        <item>@string/lockscreen_background_transparent</item>
         <item>@string/lockscreen_background_color_fill</item>
         <item>@string/lockscreen_background_custom_image</item>
         <item>@string/lockscreen_background_default_wallpaper</item>
     </string-array>
 
     <string-array name="lockscreen_background_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+     <!-- Playground Panel Options Arrays -->
+
+    <string-array name="entries_comp_type" translatable="false">
+        <item>@string/pref_c2d_composition</item>
+        <item>@string/pref_dyn_composition</item>
+        <item>@string/pref_gpu_composition</item>
+        <item>@string/pref_mdp_composition</item>
+    </string-array>
+
+    <string-array name="values_comp_type" translatable="false">
+        <item>c2d</item>
+        <item>dyn</item>
+        <item>gpu</item>
+        <item>mdp</item>
+    </string-array>
+
+    <string-array name="entries_install_location" translatable="false">
+        <item>@string/pref_automatic_loc</item>
+        <item>@string/pref_internal_loc</item>
+        <item>@string/pref_external_loc</item>
+    </string-array>
+
+    <string-array name="values_install_location" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>

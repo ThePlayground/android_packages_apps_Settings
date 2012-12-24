@@ -21,18 +21,18 @@
     <PreferenceScreen
         android:key="@+id/open_recovery"
         android:title="@string/open_recovery_title"
-        android:fragment="com.android.settings.liquid.installer.OpenRecoveryScriptSupport" />
+        android:fragment="com.android.settings.advanced.installer.OpenRecoveryScriptSupport" />
     <PreferenceScreen
         android:key="@+id/performance"
         android:title="@string/pt_performance"
-        android:fragment="com.android.settings.liquid.fragments.Performance" />
+        android:fragment="com.android.settings.advanced.fragments.Performance" />
     <PreferenceScreen
         android:key="@+id/propmodder"
         android:title="@string/propmodder_title"
-        android:fragment="com.android.settings.liquid.fragments.PropModder" />
+        android:fragment="com.android.settings.advanced.fragments.PropModder" />
     <PreferenceScreen
         android:key="@+id/power_saver"
         android:title="@string/power_saver"
-        android:fragment="com.android.settings.liquid.fragments.PowerSaver" />
+        android:fragment="com.android.settings.advanced.fragments.PowerSaver" />
     </PreferenceCategory>
 </PreferenceScreen>

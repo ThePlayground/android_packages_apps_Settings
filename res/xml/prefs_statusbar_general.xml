@@ -19,7 +19,7 @@
     <PreferenceCategory
         android:title="@string/statusbar_expanded_title"
         android:key="statusbar_expanded_cat">
-
+        
         <Preference
             android:key="user_background"
             android:title="@string/user_background_title"

@@ -332,7 +332,7 @@ public class Settings extends PreferenceActivity implements ButtonBarHandler {
                 launcherIntent.addCategory(Intent.CATEGORY_DEFAULT);
 
                 Intent launcherPreferencesIntent = new Intent(Intent.ACTION_MAIN);
-                launcherPreferencesIntent.addCategory("com.liquid.category.LAUNCHER_PREFERENCES");
+                launcherPreferencesIntent.addCategory("com.advanced.category.LAUNCHER_PREFERENCES");
 
                 ActivityInfo defaultLauncher = getPackageManager().resolveActivity(launcherIntent, PackageManager.MATCH_DEFAULT_ONLY).activityInfo;
                 launcherPreferencesIntent.setPackage(defaultLauncher.packageName);

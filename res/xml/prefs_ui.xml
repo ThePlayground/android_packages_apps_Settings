@@ -101,5 +101,9 @@
             *        android:summary="@string/longpress_app_tasker_summary"
             *        android:visible="false" />
             *-->
+        <CheckBoxPreference
+            android:key="dual_pane"
+            android:title="@string/dual_pane_title"
+            android:summary="@string/dual_pane_summary" />
     </PreferenceCategory>
 </PreferenceScreen>

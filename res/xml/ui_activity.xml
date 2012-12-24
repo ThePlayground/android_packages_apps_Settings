@@ -21,18 +21,18 @@
 	<PreferenceScreen
             android:id="@+id/user_interface"
             android:title="@string/general_ui"
-            android:fragment="com.android.settings.liquid.fragments.UserInterface" />
+            android:fragment="com.android.settings.advanced.fragments.UserInterface" />
 	<PreferenceScreen
             android:id="@+id/nav_bar"
             android:title="@string/nav_bar"
-            android:fragment="com.android.settings.liquid.fragments.Navbar" />
+            android:fragment="com.android.settings.advanced.fragments.Navbar" />
 	<PreferenceScreen
             android:id="@+id/power_menu"
             android:title="@string/power_menu_optons"
-            android:fragment="com.android.settings.liquid.fragments.PowerMenu" />
+            android:fragment="com.android.settings.advanced.fragments.PowerMenu" />
 	<PreferenceScreen
             android:id="@+id/statusbar_main"
             android:title="@string/statusbar_activity"
-            android:fragment="com.android.settings.liquid.fragments.StatusBarActivity" />
+            android:fragment="com.android.settings.advanced.fragments.StatusBarActivity" />
         </PreferenceCategory>
 </PreferenceScreen>

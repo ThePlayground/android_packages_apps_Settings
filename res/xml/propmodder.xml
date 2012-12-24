@@ -30,22 +30,69 @@
                 android:targetPackage="com.android.settings"
                 android:targetClass="com.android.settings.util.ShowBuildProp" />
         </PreferenceScreen>
+        
+        <EditTextPreference android:key="pref_mod_version"
+        android:dialogTitle="@string/pref_mod_version_title"
+        android:title="@string/pref_mod_version_title"
+        android:summary="@string/pref_mod_version_summary"
+        android:singleLine="true"
+        android:hint="@string/pref_mod_version_default"
+        android:persistent="true" />
+        
+        </PreferenceCategory>
 
-        <ListPreference android:key="pref_wifi_scan_interval"
-            android:dialogTitle="@string/pref_wifi_scan_interval_title"
-            android:title="@string/pref_wifi_scan_interval_title"
-            android:summary="@string/pref_wifi_scan_interval_summary"
-            android:entries="@array/entries_wifi_scan"
-            android:entryValues="@array/entries_wifi_scan"
-            android:persistent="true" />
-
-        <ListPreference android:key="pref_lcd_density"
+        <PreferenceCategory
+            android:key="display_hacking"
+            android:title="@string/display_hacking">
+            
+            <ListPreference android:key="pref_lcd_density"
             android:dialogTitle="@string/pref_lcd_density_title"
             android:title="@string/pref_lcd_density_title"
             android:summary="@string/pref_lcd_density_summary"
             android:entries="@array/entries_lcd_density"
             android:entryValues="@array/entries_lcd_density"
             android:persistent="true" />
+            
+            <CheckBoxPreference
+            android:key="compatibility_mode"
+            android:title="@string/compatibility_mode_title"
+            android:summaryOn="@string/compatibility_mode_summary_on"
+            android:summaryOff="@string/compatibility_mode_summary_off" />
+            
+            <CheckBoxPreference
+            android:key="tiled_rendering"
+            android:title="@string/pref_tiled_rendering_title"
+            android:summary="@string/pref_tiled_rendering_summary" />
+            
+            <ListPreference
+            android:key="composition_type"
+            android:title="@string/pref_comp_type_title"
+            android:summary="@string/pref_comp_type_summary"
+            android:entries="@array/entries_comp_type"
+            android:entryValues="@array/values_comp_type" />
+            
+            <CheckBoxPreference
+            android:key="composition_bypass"
+            android:title="@string/pref_composition_bypass_title"
+            android:summary="@string/pref_composition_bypass_summary" />
+            
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:key="application_hacking"
+            android:title="@string/application_hacking">
+            
+            <Preference
+            android:key="external_cache"
+            android:title="@string/cache_external_title"
+            android:summary="@string/cache_external_summary" />
+            
+            <ListPreference
+            android:key="install_location"
+            android:title="@string/install_location_title"
+            android:summary="@string/install_location_summary"
+            android:entries="@array/entries_install_location"
+            android:entryValues="@array/values_install_location" />
 
         <ListPreference android:key="pref_max_events"
             android:dialogTitle="@string/pref_max_events_title"
@@ -54,6 +101,20 @@
             android:entries="@array/entries_max_events"
             android:entryValues="@array/entries_max_events"
             android:persistent="true" />
+            
+        </PreferenceCategory>
+        
+        <PreferenceCategory
+            android:key="system_hacking"
+            android:title="@string/system_hacking">
+        
+        <ListPreference android:key="pref_wifi_scan_interval"
+        android:dialogTitle="@string/pref_wifi_scan_interval_title"
+        android:title="@string/pref_wifi_scan_interval_title"
+        android:summary="@string/pref_wifi_scan_interval_summary"
+        android:entries="@array/entries_wifi_scan"
+        android:entryValues="@array/entries_wifi_scan"
+        android:persistent="true" />
 
         <ListPreference android:key="pref_ring_delay"
             android:dialogTitle="@string/pref_ring_delay_title"
@@ -85,14 +146,6 @@
             android:summary="@string/pref_prox_delay_summary"
             android:entries="@array/entries_prox_delay_explain"
             android:entryValues="@array/entries_prox_delay"
-            android:persistent="true" />
-
-        <EditTextPreference android:key="pref_mod_version"
-            android:dialogTitle="@string/pref_mod_version_title"
-            android:title="@string/pref_mod_version_title"
-            android:summary="@string/pref_mod_version_summary"
-            android:singleLine="true"
-            android:hint="@string/pref_mod_version_default"
             android:persistent="true" />
 
         <ListPreference android:key="pref_sleep"
@@ -140,6 +193,11 @@
             android:entries="@array/entries_sdcard_buffer_explain"
             android:entryValues="@array/entries_sdcard_buffer"
             android:persistent="true" />
+        
+        <CheckBoxPreference
+        android:key="boot_sound"
+        android:title="@string/pref_boot_sound_title"
+        android:summary="@string/pref_boot_sound_summary" />
 
     </PreferenceCategory>
 

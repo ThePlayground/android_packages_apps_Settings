@@ -8,24 +8,32 @@
         android:title="@string/learn_more_title">
 
         <Preference
-            android:key="liquid_website"
-            android:title="@string/liquid_website_title"
-            android:summary="@string/liquid_website_summary" />
+            android:key="playground_website"
+            android:title="@string/playground_website_title"
+            android:summary="@string/playground_website_summary" />
 
         <Preference
-            android:key="liquid_source"
-            android:title="@string/liquid_source_title"
-            android:summary="@string/liquid_source_summary" />
+            android:key="playground_source"
+            android:title="@string/playground_source_title"
+            android:summary="@string/playground_source_summary" />
 
-        <Preference
-            android:key="liquid_irc"
-            android:title="@string/liquid_irc_title"
-            android:summary="@string/liquid_irc_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="devs"
         android:title="@string/devs">
+        
+        <com.android.settings.widget.DeveloperPreference
+        android:title="@string/dev_twisted_title"
+        liquid:twitterHandle="@string/dev_twisted_twitter"
+        liquid:donateLink="@string/dev_twisted_donate"
+        liquid:avatar="@drawable/avatar_twisted" />
+        
+        <com.android.settings.widget.DeveloperPreference
+        android:title="@string/dev_jester_title"
+        liquid:twitterHandle="@string/dev_jester_twitter"
+        liquid:donateLink="@string/dev_jester_donate"
+        liquid:avatar="@drawable/avatar_spjester" />
 
         <com.android.settings.widget.DeveloperPreference
             android:title="@string/dev_liquid_title"
@@ -34,40 +42,10 @@
             liquid:avatar="@drawable/avatar_liquid" />
 
         <com.android.settings.widget.DeveloperPreference
-            android:title="@string/dev_liquidzgrl_title"
-            liquid:twitterHandle="@string/dev_liquidzgrl_twitter"
-            liquid:donateLink="@string/dev_liquidzgrl_donate"
-            liquid:avatar="@drawable/avatar_liquidzgrl" />
-
-        <com.android.settings.widget.DeveloperPreference
             android:title="@string/dev_jbird_title"
             liquid:twitterHandle="@string/dev_jbird_twitter"
             liquid:donateLink="@string/dev_jbird_donate"
             liquid:avatar="@drawable/avatar_jbirdvegas" />
-
-        <com.android.settings.widget.DeveloperPreference
-            android:title="@string/dev_n0coast_title"
-            liquid:twitterHandle="@string/dev_n0coast_twitter"
-            liquid:donateLink="@string/dev_n0coast_donate"
-            liquid:avatar="@drawable/avatar_n0coast" />
-
-        <com.android.settings.widget.DeveloperPreference
-            android:title="@string/dev_amplified_title"
-            liquid:twitterHandle="@string/dev_amplified_twitter"
-            liquid:donateLink="@string/dev_amplified_donate"
-            liquid:avatar="@drawable/avatar_amplified" />
-	
-	    <com.android.settings.widget.DeveloperPreference
-            android:title="@string/dev_blueharford_title"
-            liquid:twitterHandle="@string/dev_blueharford_twitter"
-            liquid:donateLink="@string/dev_blueharford_donate"
-            liquid:avatar="@drawable/avatar_blueharford" />
-
-	    <com.android.settings.widget.DeveloperPreference
-            android:title="@string/dev_winner00_title"
-            liquid:twitterHandle="@string/dev_winner00_twitter"
-            liquid:donateLink="@string/dev_winner00_donate"
-            liquid:avatar="@drawable/avatar_winner00" />
 
     </PreferenceCategory>
 

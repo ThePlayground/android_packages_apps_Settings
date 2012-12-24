@@ -23,7 +23,7 @@
                 android:key="@+id/backup"
                 android:title="@string/backup_string"
 		android:summary="@string/backup_summary"
-                android:fragment="com.android.settings.liquid.fragments.BackupRestore" />
+                android:fragment="com.android.settings.advanced.fragments.BackupRestore" />
 	</PreferenceCategory>
 
     <PreferenceCategory android:key="backup_category"

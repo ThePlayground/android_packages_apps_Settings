@@ -133,7 +133,7 @@
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:clearTaskOnLaunch="true">
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
-                android:value="com.android.settings.liquid.stats.AnonymousStats" />
+                android:value="com.android.settings.advanced.stats.AnonymousStats" />
         </activity>
 
         <!-- Keep compatibility with old shortcuts. -->
@@ -919,7 +919,7 @@
         <activity android:name="ChooseLockPatternTutorial" android:exported="false"/>
 
         <!-- Anonymous Statistics -->
-        <receiver android:name=".liquid.stats.ReportingServiceManager"
+        <receiver android:name=".advanced.stats.ReportingServiceManager"
             android:enabled="true"
             android:exported="false"
             android:label="ReportingServiceManager">
@@ -932,7 +932,7 @@
         <service android:label="ReportingService"
             android:enabled="true"
             android:exported="false"
-            android:name=".liquid.stats.ReportingService">
+            android:name=".advanced.stats.ReportingService">
         </service>
 
         <!-- Runs in the phone process since it needs access to the Phone object -->
@@ -1385,13 +1385,13 @@
 
         <activity android:name=".profiles.NFCProfileWriter" />
 
-        <activity android:name=".liquid.fragments.LockscreenTargets" />
+        <activity android:name=".advanced.fragments.LockscreenTargets" />
 
-        <activity android:name=".liquid.fragments.LockscreenInterface" />
+        <activity android:name=".advanced.fragments.LockscreenInterface" />
 
-        <activity android:name=".liquid.fragments.Weather" />
+        <activity android:name=".advanced.fragments.Weather" />
 
-        <activity android:name=".liquid.fragments.Calendar" />
+        <activity android:name=".advanced.fragments.Calendar" />
 
         <activity android:name=".profiles.NFCProfile"
                 android:theme="@android:style/Theme.NoDisplay">
@@ -1435,7 +1435,7 @@
             <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
                 android:resource="@id/wireless_settings" />
         </activity>
-	<activity android:name=".liquid.fragments.StatusBarGeneral"
+	<activity android:name=".advanced.fragments.StatusBarGeneral"
             android:label="General" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -1443,14 +1443,14 @@
         </activity>
 	 <activity
             android:label="@string/advanced_settings_title"
-            android:name=".liquid.fragments.AdvancedSettings">
+            android:name=".advanced.fragments.AdvancedSettings">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
          <activity
             android:label="@string/ui_activity"
-            android:name=".liquid.fragments.UIActivity">
+            android:name=".advanced.fragments.UIActivity">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -1461,7 +1461,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".liquid.installer.OpenRecoveryScriptSupport"
+        <activity android:name=".advanced.installer.OpenRecoveryScriptSupport"
             android:label="OpenRecoveryScript Support" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -1484,14 +1484,14 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".liquid.installer.GooImSupport"
+        <activity android:name=".advanced.installer.GooImSupport"
             android:label="goo.im Suppport" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".liquid.fragments.PropModder"
+        <activity android:name=".advanced.fragments.PropModder"
             android:label="Propmodder" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

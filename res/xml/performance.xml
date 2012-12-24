@@ -92,12 +92,12 @@
         android:key="kernel"
         android:title="@string/kernel">
 
-         <com.android.settings.liquid.fragments.ColorTuningPreference
+         <com.android.settings.advanced.fragments.ColorTuningPreference
              android:key="color_tuning"
              android:title="@string/color_tuning_title_head"
              android:summary="@string/color_tuning_summary_head" />
 
-        <com.android.settings.liquid.fragments.GammaTuningPreference
+        <com.android.settings.advanced.fragments.GammaTuningPreference
             android:key="gamma_tuning"
             android:title="@string/gamma_tuning_title_head"
             android:summary="@string/gamma_tuning_summary_head" />

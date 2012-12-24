@@ -21,27 +21,27 @@
         <PreferenceScreen
             android:id="@+id/statusbar_general"
             android:title="@string/general"
-            android:fragment="com.android.settings.liquid.fragments.StatusBarGeneral" />
+            android:fragment="com.android.settings.advanced.fragments.StatusBarGeneral" />
 
         <PreferenceScreen
             android:id="@+id/statusbar_toggles"
             android:title="@string/toggles_layout"
-            android:fragment="com.android.settings.liquid.fragments.StatusBarToggles" />
+            android:fragment="com.android.settings.advanced.fragments.StatusBarToggles" />
 
         <PreferenceScreen
             android:id="@+id/statusbar_clock"
             android:title="@string/clock"
-            android:fragment="com.android.settings.liquid.fragments.StatusBarClock" />
+            android:fragment="com.android.settings.advanced.fragments.StatusBarClock" />
 
         <PreferenceScreen
             android:id="@+id/statusbar_battery"
             android:title="@string/battery"
-            android:fragment="com.android.settings.liquid.fragments.StatusBarBattery" />
+            android:fragment="com.android.settings.advanced.fragments.StatusBarBattery" />
 
         <PreferenceScreen
             android:id="@+id/statusbar_singal"
             android:title="@string/signal"
-            android:fragment="com.android.settings.liquid.fragments.StatusBarSignal" />
+            android:fragment="com.android.settings.advanced.fragments.StatusBarSignal" />
 		
         </PreferenceCategory>
 </PreferenceScreen>
