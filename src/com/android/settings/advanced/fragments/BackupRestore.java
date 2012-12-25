@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2012 The LiquidSmoothROMs Project
  * author JBirdVegas@gmail.com 2012
+ * Copyright (C) 2012 Lounge Cat Entertainment
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +51,8 @@ import android.widget.Toast;
 
 import com.android.settings.R;
 import com.android.settings.advanced.SettingsPreferenceFragment;
+import com.android.settings.util.CMDProcessor;
+import com.android.settings.util.CMDProcessor.CommandResult;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -97,6 +100,8 @@ public class BackupRestore extends SettingsPreferenceFragment {
     // Dialogs
     private static final int THEME_INFO_DIALOG = 100;
     private static final int SAVE_CONFIG_DIALOG = 101;
+    
+    private final CMDProcessor cmd = new CMDProcessor();
 
     // to hold our lists
     String[] array;
@@ -113,6 +118,8 @@ public class BackupRestore extends SettingsPreferenceFragment {
     @Override
     public void onCreate(Bundle didOrientationChange) {
         super.onCreate(didOrientationChange);
+        
+        Log.i(TAG, "asking for SU premission " + cmd.su.runWaitFor("echo BACKUPRESTORE").success());
 
         addPreferencesFromResource(R.xml.backup_restore);
         prefs = getPreferenceScreen();
@@ -124,20 +131,21 @@ public class BackupRestore extends SettingsPreferenceFragment {
         mThemeCat.setOrderingAsAdded(false);
 
         setupArrays();
+        
         // make required dirs and disable themes if unavailable
         // be sure we have the directories we need or everything fails
-        File makeDirs = new File(PATH_TO_CONFIGS);
-        File themersDirs = new File(PATH_TO_THEMES);
+        File makeDirs = new File(PATH_TO_CONFIGS + "/");
+        File themersDirs = new File(PATH_TO_THEMES + "/");
 
         if (!makeDirs.exists()) {
             if (!makeDirs.mkdirs()) {
-                Log.d(TAG, "failed to create the required directories");
+                makeDirs.mkdirs();
             }
         }
 
         if (!themersDirs.exists()) {
             if (!themersDirs.mkdirs()) {
-                Log.d(TAG, "failed to create theme directory");
+                themersDirs.mkdirs();
             }
         }
 
@@ -166,12 +174,13 @@ public class BackupRestore extends SettingsPreferenceFragment {
         mThemeCat.removeAll();
         prefs.removePreference(mThemeCat);
 
-        File themerDirs = new File(PATH_TO_THEMES);
+        File themerDirs = new File(PATH_TO_THEMES + "/");
 
         // verify we have the file structure
         if (!themerDirs.exists()) {
-            // try to make the path; if we fail drop the method instead of the app
-            if(!themerDirs.mkdirs()) return;
+            if(!themerDirs.mkdirs()) {
+                themerDirs.mkdirs();
+            }
         }
 
         String[] allThemesFound = themerDirs.list();
@@ -238,34 +247,46 @@ public class BackupRestore extends SettingsPreferenceFragment {
 
     private void wantToDeleteOrApply(final String filename, final boolean thisATheme) {
         try {
-            // TODO fix so we don't need this path absolut we should inhearit from filename
             final File dialogFile;
             if (thisATheme) {
                 dialogFile = new File(PATH_TO_THEMES, filename);
             } else {
-                dialogFile = new File(filename);
+                String userFile = filename;
+                if (filename.endsWith("/")) {
+                    userFile = filename + "BuildBack.prop";
+                }
+                File testFile = new File(userFile);
+                if (!testFile.exists()) {
+                    dialogFile = new File(getActivity().getFilesDir(), "BuildBack.prop");
+                } else {
+                    dialogFile = new File(userFile);
+                }
             }
-            FileReader fr = new FileReader(dialogFile);
-            Properties dialogProps = new Properties();
-            dialogProps.load(fr);
-
-            AlertDialog.Builder shouldDelete = new AlertDialog.Builder(getActivity());
-            shouldDelete.setTitle(getString(R.string.delete_or_apply));
-            // complex but looks good TODO would be to simplify this setMessage()
-            shouldDelete.setMessage(String.format("Theme title: %s", ((String) dialogProps.get("title")))
-                    + RETURN + ((String) dialogProps.get("summary")));
-            shouldDelete.setPositiveButton(getString(R.string.apply_button), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    restore(filename, thisATheme);
-                }
-            });
-            shouldDelete.setNegativeButton(getString(R.string.delete_button), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    dialogFile.delete();
-                    findThemes();
-                }
-            });
-            shouldDelete.show();
+            if (dialogFile.exists()) {
+                FileReader fr = new FileReader(dialogFile);
+                Properties dialogProps = new Properties();
+                dialogProps.load(fr);
+                AlertDialog.Builder shouldDelete = new AlertDialog.Builder(getActivity());
+                shouldDelete.setTitle(getString(R.string.delete_or_apply));
+                // complex but looks good TODO would be to simplify this setMessage()
+                shouldDelete.setMessage(String.format("Theme title: %s", ((String) dialogProps.get("title")))
+                                        + RETURN + ((String) dialogProps.get("summary")));
+                shouldDelete.setPositiveButton(getString(R.string.apply_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        restore(filename, thisATheme);
+                    }
+                });
+                shouldDelete.setNegativeButton(getString(R.string.delete_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialogFile.delete();
+                        findThemes();
+                    }
+                });
+                shouldDelete.show();
+            } else {
+                Toast.makeText(mContext, "We encountered a problem, backup not restored",
+                               Toast.LENGTH_SHORT).show();
+            }
         } catch (FileNotFoundException fnfe) {
             // we should have already coverd this
         } catch (IOException io) {
@@ -402,7 +423,7 @@ public class BackupRestore extends SettingsPreferenceFragment {
                     }
                 }
 
-                // TODO can strings handle everything?!?! ...for saving only of coarse
+                // TODO can strings handle everything?!?! No
                 for (final String liquid_string_setting : stringArray) {
                     try {
                         string_setting = Settings.System.getString(getActivity().getContentResolver(), liquid_string_setting);
@@ -478,15 +499,23 @@ public class BackupRestore extends SettingsPreferenceFragment {
                     if (DEBUG) Log.d(TAG, "Unresolved Property: " + notFoundIt);
                 }
                 info.append(LINE_SPACE);
+                
+                String fileName = bkname;
 
                 if (mProperties != null) {
                     try {
-                        // TODO fix paths
-                        File storeFile = new File(bkname);
-                        mProperties.store(new FileOutputStream(storeFile.getAbsolutePath()), MESSAAGE_TO_HEAD_FILE);
-                        if (DEBUG) Log.d(TAG, "Does storeFile exist? " + storeFile.exists() + "	AbsolutPath: " + storeFile.getAbsolutePath());
+                        File storeFile = new File(getActivity().getFilesDir(), "BuildBack.prop");
+                        FileOutputStream fos = new FileOutputStream(storeFile);
+                        mProperties.store(fos, MESSAAGE_TO_HEAD_FILE);
+                        fos.close();
+                        if (bkname.endsWith("/")) {
+                            fileName = bkname + "BuildBack.prop";
+                        }
+                        File userFile = new File(fileName);
+                        new CMDProcessor().su.runWaitFor("busybox cp -R " + storeFile.toString() + " " + fileName);
+                        if (DEBUG) Log.d(TAG, "Internal storeFile? " + storeFile.exists() + " External storeFile? " + userFile.exists());
                         success = true;
-                        info.append("Saved file: " + bkname + RETURN);
+                        info.append("Saved file: " + fileName + RETURN);
                         mShowInfo.setText(info.toString());
                     } catch (FileNotFoundException fnfe) {
                         fnfe.printStackTrace();
@@ -498,11 +527,11 @@ public class BackupRestore extends SettingsPreferenceFragment {
                 }
 
                 // Notify user if files were created correctly
-                if (checkConfigFiles(bkname)) {
+                if (checkConfigFiles(fileName)) {
                      Toast.makeText(mContext, String.format(CONFIG_CHECK_PASS,
-                            bkname), Toast.LENGTH_SHORT).show();
+                            fileName.substring(0, fileName.lastIndexOf("/"))), Toast.LENGTH_SHORT).show();
                     info.append(LINE_SPACE);
-                    info.append(String.format("Settings saved!	%s", bkname) + RETURN);
+                    info.append(String.format("Settings saved!	%s", fileName) + RETURN);
                     info.append(RETURN);
                     mShowInfo.setText(info.toString());
                     //handleStringArrays();
@@ -511,7 +540,7 @@ public class BackupRestore extends SettingsPreferenceFragment {
                     Toast.makeText(mContext, "We encountered a problem, restore not created",
                             Toast.LENGTH_SHORT).show();
                     info.append(LINE_SPACE);
-                    info.append(String.format("$#!+ we couldn't save to %s", bkname) + RETURN);
+                    info.append(String.format("$#!+ we couldn't save to %s", fileName) + RETURN);
                     mShowInfo.setText(info.toString());
                 }
 
@@ -558,7 +587,19 @@ public class BackupRestore extends SettingsPreferenceFragment {
         } else if (requestCode == 2) {
             // save
             try {
-                String supplied = data.getStringExtra(SAVE_FILENAME);
+                String supplied = PATH_TO_CONFIGS + "/";
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    supplied = data.getStringExtra(SAVE_FILENAME);
+                    String dirCheck = supplied;
+                    if (supplied.endsWith("/")) {
+                        dirCheck = supplied.substring(0,supplied.lastIndexOf("/") + 1);
+                    }
+                    File userDirs = new File(dirCheck);
+                    if(!userDirs.mkdirs()) {
+                        userDirs.mkdirs();
+                    }
+                }
                 runBackup(supplied, null, null);
             } catch (NullPointerException np) {
                 // user backed out of filepicker nothing to see here
@@ -581,17 +622,14 @@ public class BackupRestore extends SettingsPreferenceFragment {
     }
 
     private void runRestore() {
-        // call the file picker then apply in the result
-        Intent open_file = new Intent(mContext, com.android.settings.tools.FilePicker.class);
+        /*Intent open_file = new Intent(mContext, com.android.settings.tools.FilePicker.class);
         open_file.putExtra(OPEN_FILENAME, BLANK);
-        // false because we are not saving
         open_file.putExtra("action", false);
-        // provide a path to start the user off on
         open_file.putExtra("path", PATH_TO_CONFIGS);
-        // let users go where ever they want
         open_file.putExtra("lock_dir", false);
-        // result code can be whatever but must match requestCode in onActivityResult
-        startActivityForResult(open_file, 1);
+        startActivityForResult(open_file, 1);*/
+        String supplied = getActivity().getFilesDir().toString() + "/BuildBack.prop";
+        wantToDeleteOrApply(supplied, false);
     }
 
     private boolean restore(final String open_data_string, final boolean isTheme) {
@@ -1071,17 +1109,14 @@ public class BackupRestore extends SettingsPreferenceFragment {
                 });
                 askTheme.setNegativeButton(getString(R.string.negative_theme_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // just run a normal backup
-                        Intent save_file = new Intent(mContext, com.android.settings.tools.FilePicker.class);
+                        /*Intent save_file = new Intent(mContext, com.android.settings.tools.FilePicker.class);
                         save_file.putExtra(SAVE_FILENAME, BLANK);
-                        // true because we are saving
                         save_file.putExtra("action", true);
-                        // provide a path to start the user off on
                         save_file.putExtra("path", PATH_TO_CONFIGS);
-                        // let users go where ever they want
                         save_file.putExtra("lock_dir", false);
-                        // result code can be whatever but must match requestCode in onActivityResult
-                        startActivityForResult(save_file, 2);
+                        startActivityForResult(save_file, 2);*/
+                        String supplied = getActivity().getFilesDir().toString() + "/BuildBack.prop";
+                        runBackup(supplied, null, null);
                     }
                 });
                 AlertDialog ad_theme = askTheme.create();
