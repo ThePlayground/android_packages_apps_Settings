@@ -159,7 +159,7 @@ public class PropModder extends PreferenceFragment implements
     private static final String SDCARD_BUFFER_PRESIST_PROP = "persist_sdcard_buffer";
     private static final String THREE_G_PREF = "pref_g_speed";
     private static final String THREE_G_PERSIST_PROP = "persist_3g_speed";
-    private static final String THREE_G_PROP_0 = "ro.ril.hsxpa";
+    private static final String THREE_G_PROP_0 = FAST_UP_PROP;
     private static final String THREE_G_PROP_1 = "ro.ril.gprsclass";
     private static final String THREE_G_PROP_2 = "ro.ril.hep";
     private static final String THREE_G_PROP_3 = "ro.ril.hsdpa.category";
@@ -517,7 +517,22 @@ public class PropModder extends PreferenceFragment implements
             && doMod(CHECK_IN_PERSIST_PROP, CHECK_IN_PROP, String.valueOf(value ? 1 : DISABLE));
         } else if (preference == m3gSpeedPref) {
             value = m3gSpeedPref.isChecked();
-            return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_0, String.valueOf(value ? 2 : DISABLE))
+            if (propExists(THREE_G_PROP_0)) {
+                return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_1, String.valueOf(value ? 32: DISABLE))
+                && doMod(null, THREE_G_PROP_2, String.valueOf(value ? 1: DISABLE))
+                && doMod(null, THREE_G_PROP_3, String.valueOf(value ? 28: DISABLE))
+                && doMod(null, THREE_G_PROP_4, String.valueOf(value ? 1: DISABLE))
+                && doMod(null, THREE_G_PROP_5, value ? "4294967295" : "disable")
+                && doMod(null, THREE_G_PROP_6, value ? "268449905" : "disable")
+                && doMod(null, THREE_G_PROP_7, String.valueOf(value ? 9 : DISABLE))
+                && doMod(null, THREE_G_PROP_8, String.valueOf(value ? 1 : DISABLE))
+                && doMod(null, THREE_G_PROP_9, String.valueOf(value ? 1 : DISABLE))
+                && doMod(null, THREE_G_PROP_10, value ? "23402,23410,23411" : "disable")
+                && doMod(null, THREE_G_PROP_11, String.valueOf(value ? 0 : DISABLE))
+                && doMod(null, THREE_G_PROP_12, String.valueOf(value ? 0 : DISABLE))
+                && doMod(null, THREE_G_PROP_13, String.valueOf(value ? 0 : DISABLE));
+            } else {
+                return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_0, String.valueOf(value ? 2 : DISABLE))
                 && doMod(null, THREE_G_PROP_1, String.valueOf(value ? 32: DISABLE))
                 && doMod(null, THREE_G_PROP_2, String.valueOf(value ? 1: DISABLE))
                 && doMod(null, THREE_G_PROP_3, String.valueOf(value ? 28: DISABLE))
@@ -525,12 +540,13 @@ public class PropModder extends PreferenceFragment implements
                 && doMod(null, THREE_G_PROP_5, value ? "4294967295" : "disable")
                 && doMod(null, THREE_G_PROP_6, value ? "268449905" : "disable")
                 && doMod(null, THREE_G_PROP_7, String.valueOf(value ? 9 : DISABLE))
-            && doMod(null, THREE_G_PROP_8, String.valueOf(value ? 1 : DISABLE))
-            && doMod(null, THREE_G_PROP_9, String.valueOf(value ? 1 : DISABLE))
-            && doMod(null, THREE_G_PROP_10, value ? "23402,23410,23411" : "disable")
-            && doMod(null, THREE_G_PROP_11, String.valueOf(value ? 0 : DISABLE))
-            && doMod(null, THREE_G_PROP_12, String.valueOf(value ? 0 : DISABLE))
-            && doMod(null, THREE_G_PROP_13, String.valueOf(value ? 0 : DISABLE));
+                && doMod(null, THREE_G_PROP_8, String.valueOf(value ? 1 : DISABLE))
+                && doMod(null, THREE_G_PROP_9, String.valueOf(value ? 1 : DISABLE))
+                && doMod(null, THREE_G_PROP_10, value ? "23402,23410,23411" : "disable")
+                && doMod(null, THREE_G_PROP_11, String.valueOf(value ? 0 : DISABLE))
+                && doMod(null, THREE_G_PROP_12, String.valueOf(value ? 0 : DISABLE))
+                && doMod(null, THREE_G_PROP_13, String.valueOf(value ? 0 : DISABLE));
+            }
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
             return doMod(GPU_PERSIST_PROP, GPU_PROP, String.valueOf(value ? 1 : DISABLE));
