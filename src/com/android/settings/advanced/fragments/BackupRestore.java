@@ -566,7 +566,7 @@ public class BackupRestore extends SettingsPreferenceFragment {
             return true;
         } else if (pref == mRestore) {
             if (DEBUG) Log.d(TAG, "calling restore method");
-            runRestore();
+            showDialog(LOAD_CONFIG_DIALOG);
             return true;
         }
         return super.onPreferenceTreeClick(prefScreen, pref);
@@ -622,14 +622,12 @@ public class BackupRestore extends SettingsPreferenceFragment {
     }
 
     private void runRestore() {
-        /*Intent open_file = new Intent(mContext, com.android.settings.tools.FilePicker.class);
+        Intent open_file = new Intent(mContext, com.android.settings.tools.FilePicker.class);
         open_file.putExtra(OPEN_FILENAME, BLANK);
         open_file.putExtra("action", false);
         open_file.putExtra("path", PATH_TO_CONFIGS);
         open_file.putExtra("lock_dir", false);
-        startActivityForResult(open_file, 1);*/
-        String supplied = getActivity().getFilesDir().toString() + "/BuildBack.prop";
-        wantToDeleteOrApply(supplied, false);
+        startActivityForResult(open_file, 1);
     }
 
     private boolean restore(final String open_data_string, final boolean isTheme) {
@@ -1117,6 +1115,25 @@ public class BackupRestore extends SettingsPreferenceFragment {
                         startActivityForResult(save_file, 2);*/
                         String supplied = getActivity().getFilesDir().toString() + "/BuildBack.prop";
                         runBackup(supplied, null, null);
+                    }
+                });
+                AlertDialog ad_theme = askTheme.create();
+                ad_theme.show();
+                return ad_theme;
+            case LOAD_CONFIG_DIALOG:
+                // ask if user wants to make a theme
+                AlertDialog.Builder askTheme = new AlertDialog.Builder(getActivity());
+                askTheme.setTitle(getString(R.string.want_to_make_theme_title));
+                askTheme.setMessage(getString(R.string.want_to_make_theme_message));
+                askTheme.setPositiveButton(getString(R.string.positive_theme_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        runRestore();
+                    }
+                });
+                askTheme.setNegativeButton(getString(R.string.negative_theme_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String supplied = getActivity().getFilesDir().toString() + "/BuildBack.prop";
+                        wantToDeleteOrApply(supplied, false);
                     }
                 });
                 AlertDialog ad_theme = askTheme.create();
