@@ -100,6 +100,7 @@ public class BackupRestore extends SettingsPreferenceFragment {
     // Dialogs
     private static final int THEME_INFO_DIALOG = 100;
     private static final int SAVE_CONFIG_DIALOG = 101;
+    private static final int LOAD_CONFIG_DIALOG = 102;
     
     private final CMDProcessor cmd = new CMDProcessor();
 
@@ -1122,23 +1123,23 @@ public class BackupRestore extends SettingsPreferenceFragment {
                 return ad_theme;
             case LOAD_CONFIG_DIALOG:
                 // ask if user wants to make a theme
-                AlertDialog.Builder askTheme = new AlertDialog.Builder(getActivity());
-                askTheme.setTitle(getString(R.string.want_to_make_theme_title));
-                askTheme.setMessage(getString(R.string.want_to_make_theme_message));
-                askTheme.setPositiveButton(getString(R.string.positive_theme_button), new DialogInterface.OnClickListener() {
+                AlertDialog.Builder askRestore = new AlertDialog.Builder(getActivity());
+                askRestore.setTitle(getString(R.string.want_to_make_theme_title));
+                askRestore.setMessage(getString(R.string.want_to_make_theme_message));
+                askRestore.setPositiveButton(getString(R.string.positive_theme_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         runRestore();
                     }
                 });
-                askTheme.setNegativeButton(getString(R.string.negative_theme_button), new DialogInterface.OnClickListener() {
+                askRestore.setNegativeButton(getString(R.string.negative_theme_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String supplied = getActivity().getFilesDir().toString() + "/BuildBack.prop";
                         wantToDeleteOrApply(supplied, false);
                     }
                 });
-                AlertDialog ad_theme = askTheme.create();
-                ad_theme.show();
-                return ad_theme;
+                AlertDialog ad_restore = askRestore.create();
+                ad_restore.show();
+                return ad_restore;
             default:
                 return null;
         }
