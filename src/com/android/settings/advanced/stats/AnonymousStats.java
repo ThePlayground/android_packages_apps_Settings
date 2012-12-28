@@ -69,7 +69,8 @@ public class AnonymousStats extends SettingsPreferenceFragment
             mViewStats = (Preference) prefSet.findPreference(VIEW_STATS);
             boolean firstBoot = mPrefs.getBoolean(ANONYMOUS_FIRST_BOOT, true);
             if (mEnableReporting.isChecked() && firstBoot) {
-                mPrefs.edit().putBoolean(ANONYMOUS_FIRST_BOOT, false).apply();
+                //mPrefs.edit().putBoolean(ANONYMOUS_FIRST_BOOT, false).apply();
+                mPrefs.edit().putBoolean(ANONYMOUS_FIRST_BOOT, false).commit();
                 ReportingServiceManager.launchService(getActivity());
             }
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -98,7 +99,8 @@ public class AnonymousStats extends SettingsPreferenceFragment
                 mOkDialog.setOnDismissListener(this);
             } else {
                 // Disable reporting
-                mPrefs.edit().putBoolean(ANONYMOUS_OPT_IN, false).apply();
+                //mPrefs.edit().putBoolean(ANONYMOUS_OPT_IN, false).apply();
+                mPrefs.edit().putBoolean(ANONYMOUS_OPT_IN, false).commit();
             }
         } else if (preference == mViewStats) {
             // Display the stats page
