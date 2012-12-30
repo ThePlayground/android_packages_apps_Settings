@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2012 The CyanogenMod Project
  * Copyright (C) 2012 LiquidSmooth
- * Copyright (C) 2012 Lounge Cat Entertainment
+ * Copyright (C) 2012 Lounge Katt Entertainment
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.advanced.stats;
+package com.android.settings.statistics;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -64,7 +64,7 @@ public class AnonymousStats extends SettingsPreferenceFragment
         if (getPreferenceManager() != null) {
             addPreferencesFromResource(R.xml.anonymous_stats);
             PreferenceScreen prefSet = getPreferenceScreen();
-            mPrefs = getActivity().getSharedPreferences("LoungeCatStats", 0);
+            mPrefs = getActivity().getSharedPreferences("PlaygroundStats", 0);
             mEnableReporting = (CheckBoxPreference) prefSet.findPreference(ANONYMOUS_OPT_IN);
             mViewStats = (Preference) prefSet.findPreference(VIEW_STATS);
             boolean firstBoot = mPrefs.getBoolean(ANONYMOUS_FIRST_BOOT, true);

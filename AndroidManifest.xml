@@ -133,7 +133,7 @@
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:clearTaskOnLaunch="true">
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
-                android:value="com.android.settings.advanced.stats.AnonymousStats" />
+                android:value="com.android.settings.statistics.AnonymousStats" />
         </activity>
 
         <!-- Keep compatibility with old shortcuts. -->
@@ -919,20 +919,19 @@
         <activity android:name="ChooseLockPatternTutorial" android:exported="false"/>
 
         <!-- Anonymous Statistics -->
-        <receiver android:name=".advanced.stats.ReportingServiceManager"
+        <receiver android:name=".statistics.ReportingServiceManager"
             android:enabled="true"
             android:exported="false"
             android:label="ReportingServiceManager">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
         <service android:label="ReportingService"
             android:enabled="true"
             android:exported="false"
-            android:name=".advanced.stats.ReportingService">
+            android:name=".statistics.ReportingService">
         </service>
 
         <!-- Runs in the phone process since it needs access to the Phone object -->

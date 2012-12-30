@@ -1,4 +1,4 @@
-package com.android.settings.advanced.stats;
+package com.android.settings.statistics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import com.android.settings.R;
 import com.android.settings.Settings;
 
 public class ReportingService extends Service {
-    protected static final String TAG = "LoungeCatStats";
+    protected static final String TAG = "PlaygroundStats";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -80,7 +80,7 @@ public class ReportingService extends Service {
             kv.add(new BasicNameValuePair("device_carrier_id", deviceCarrierId));
             httppost.setEntity(new UrlEncodedFormEntity(kv));
             httpclient.execute(httppost);
-            getSharedPreferences("LoungeCatStats", 0).edit().putLong(AnonymousStats.ANONYMOUS_LAST_CHECKED,
+            getSharedPreferences("PlaygroundStats", 0).edit().putLong(AnonymousStats.ANONYMOUS_LAST_CHECKED,
                     System.currentTimeMillis()).apply();
         } catch (Exception e) {
             Log.e(TAG, "Got Exception", e);

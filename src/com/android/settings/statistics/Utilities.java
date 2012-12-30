@@ -1,4 +1,4 @@
-package com.android.settings.advanced.stats;
+package com.android.settings.statistics;
 
 import java.math.BigInteger;
 import java.net.NetworkInterface;

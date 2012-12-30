@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.advanced.stats;
+package com.android.settings.statistics;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
