@@ -87,7 +87,7 @@ public class GooImSupport extends SettingsPreferenceFragment {
     private static final String TAG = "Settings : GooImSupport";
     private static final String DEVICE_NAME = android.os.Build.DEVICE;
 
-    public static final String BUILD_JSON_PARSER = "http://goo.im/json2&path=/devs/twistedumbrella/"
+    public static final String BUILD_JSON_PARSER = "http://goo.im/json2&path=/devs/playground/"
             + (DEVICE_NAME.contains("mecha") ? "vzw" : "cdma");
     public static final String JSON_PARSER = "http://goo.im/json2&path=/devs&ro_board=mecha";
     private static final String FORMATED_JSON_PATH = "http://goo.im/json2&path=%s&ro_board=mecha";
