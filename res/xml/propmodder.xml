@@ -166,11 +166,6 @@
             android:summary="@string/pref_check_in_summary"
             android:persistent="true" />
 
-        <CheckBoxPreference android:key="pref_g_speed"
-            android:title="@string/pref_g_speed_title"
-            android:summary="@string/pref_g_speed_summary"
-            android:persistent="true" />
-
         <CheckBoxPreference android:key="pref_gpu"
             android:title="@string/pref_gpu_title"
             android:summary="@string/pref_gpu_summary"

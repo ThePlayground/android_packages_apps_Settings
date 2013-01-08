@@ -157,22 +157,6 @@ public class PropModder extends PreferenceFragment implements
     private static final String CHECK_IN_PROP_HTC = "ro.config.htc.nocheckin";
     private static final String SDCARD_BUFFER_PREF = "pref_sdcard_buffer";
     private static final String SDCARD_BUFFER_PRESIST_PROP = "persist_sdcard_buffer";
-    private static final String THREE_G_PREF = "pref_g_speed";
-    private static final String THREE_G_PERSIST_PROP = "persist_3g_speed";
-    private static final String THREE_G_PROP_0 = FAST_UP_PROP;
-    private static final String THREE_G_PROP_1 = "ro.ril.gprsclass";
-    private static final String THREE_G_PROP_2 = "ro.ril.hep";
-    private static final String THREE_G_PROP_3 = "ro.ril.hsdpa.category";
-    private static final String THREE_G_PROP_4 = "ro.ril.enable.3g.prefix";
-    private static final String THREE_G_PROP_5 = "ro.ril.htcmaskw1.bitmask";
-    private static final String THREE_G_PROP_6 = "ro.ril.htcmaskw1";
-    private static final String THREE_G_PROP_7 = "ro.ril.hsupa.category";
-    private static final String THREE_G_PROP_8 = "ro.ril.enable.sdr";
-    private static final String THREE_G_PROP_9 = "ro.ril.enable.gea3";
-    private static final String THREE_G_PROP_10 = "ro.ril.enable.fd.plmn.prefix";
-    private static final String THREE_G_PROP_11 = "ro.ril.enable.a52";
-    private static final String THREE_G_PROP_12 = "ro.ril.enable.a53";
-    private static final String THREE_G_PROP_13 = "ro.ril.enable.dtm";
     private static final String GPU_PREF = "pref_gpu";
     private static final String GPU_PERSIST_PROP = "persist_gpu";
     private static final String GPU_PROP = "debug.sf.hw";
@@ -227,7 +211,6 @@ public class PropModder extends PreferenceFragment implements
     private CheckBoxPreference mTcpStackPref;
     private CheckBoxPreference mCheckInPref;
     private ListPreference mSdcardBufferPref;
-    private CheckBoxPreference m3gSpeedPref;
     private CheckBoxPreference mGpuPref;
     private AlertDialog mAlertDialog;
     private NotificationManager mNotificationManager;
@@ -314,8 +297,6 @@ public class PropModder extends PreferenceFragment implements
         //     for now we will just let it go with a generic summary displayed
         mSdcardBufferPref = (ListPreference) prefSet.findPreference(SDCARD_BUFFER_PREF);
         mSdcardBufferPref.setOnPreferenceChangeListener(this);
-
-        m3gSpeedPref = (CheckBoxPreference) prefSet.findPreference(THREE_G_PREF);
 
         mGpuPref = (CheckBoxPreference) prefSet.findPreference(GPU_PREF);
         
@@ -515,38 +496,6 @@ public class PropModder extends PreferenceFragment implements
             value = mCheckInPref.isChecked();
             return doMod(null, CHECK_IN_PROP_HTC, String.valueOf(value ? 1 : DISABLE))
             && doMod(CHECK_IN_PERSIST_PROP, CHECK_IN_PROP, String.valueOf(value ? 1 : DISABLE));
-        } else if (preference == m3gSpeedPref) {
-            value = m3gSpeedPref.isChecked();
-            if (propExists(THREE_G_PROP_0)) {
-                return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_1, String.valueOf(value ? 32: DISABLE))
-                && doMod(null, THREE_G_PROP_2, String.valueOf(value ? 1: DISABLE))
-                && doMod(null, THREE_G_PROP_3, String.valueOf(value ? 28: DISABLE))
-                && doMod(null, THREE_G_PROP_4, String.valueOf(value ? 1: DISABLE))
-                && doMod(null, THREE_G_PROP_5, value ? "4294967295" : "disable")
-                && doMod(null, THREE_G_PROP_6, value ? "268449905" : "disable")
-                && doMod(null, THREE_G_PROP_7, String.valueOf(value ? 9 : DISABLE))
-                && doMod(null, THREE_G_PROP_8, String.valueOf(value ? 1 : DISABLE))
-                && doMod(null, THREE_G_PROP_9, String.valueOf(value ? 1 : DISABLE))
-                && doMod(null, THREE_G_PROP_10, value ? "23402,23410,23411" : "disable")
-                && doMod(null, THREE_G_PROP_11, String.valueOf(value ? 0 : DISABLE))
-                && doMod(null, THREE_G_PROP_12, String.valueOf(value ? 0 : DISABLE))
-                && doMod(null, THREE_G_PROP_13, String.valueOf(value ? 0 : DISABLE));
-            } else {
-                return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_0, String.valueOf(value ? 2 : DISABLE))
-                && doMod(null, THREE_G_PROP_1, String.valueOf(value ? 32: DISABLE))
-                && doMod(null, THREE_G_PROP_2, String.valueOf(value ? 1: DISABLE))
-                && doMod(null, THREE_G_PROP_3, String.valueOf(value ? 28: DISABLE))
-                && doMod(null, THREE_G_PROP_4, String.valueOf(value ? 1: DISABLE))
-                && doMod(null, THREE_G_PROP_5, value ? "4294967295" : "disable")
-                && doMod(null, THREE_G_PROP_6, value ? "268449905" : "disable")
-                && doMod(null, THREE_G_PROP_7, String.valueOf(value ? 9 : DISABLE))
-                && doMod(null, THREE_G_PROP_8, String.valueOf(value ? 1 : DISABLE))
-                && doMod(null, THREE_G_PROP_9, String.valueOf(value ? 1 : DISABLE))
-                && doMod(null, THREE_G_PROP_10, value ? "23402,23410,23411" : "disable")
-                && doMod(null, THREE_G_PROP_11, String.valueOf(value ? 0 : DISABLE))
-                && doMod(null, THREE_G_PROP_12, String.valueOf(value ? 0 : DISABLE))
-                && doMod(null, THREE_G_PROP_13, String.valueOf(value ? 0 : DISABLE));
-            }
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
             return doMod(GPU_PERSIST_PROP, GPU_PROP, String.valueOf(value ? 1 : DISABLE));
@@ -793,9 +742,6 @@ public class PropModder extends PreferenceFragment implements
         String tcp;
         String mod;
         String chk;
-        String g0;
-        String g3;
-        String g6;
         String gpu;
 
         public UpdateScreen() {
@@ -818,9 +764,6 @@ public class PropModder extends PreferenceFragment implements
             tcp = Helpers.findBuildPropValueOf(TCP_STACK_PROP_0);
             mod = Helpers.findBuildPropValueOf(MOD_VERSION_PROP);
             chk = Helpers.findBuildPropValueOf(CHECK_IN_PROP);
-            g0 = Helpers.findBuildPropValueOf(THREE_G_PROP_0);
-            g3 = Helpers.findBuildPropValueOf(THREE_G_PROP_3);
-            g6 = Helpers.findBuildPropValueOf(THREE_G_PROP_6);
             gpu = Helpers.findBuildPropValueOf(GPU_PROP);
             return null;
         }
@@ -885,11 +828,6 @@ public class PropModder extends PreferenceFragment implements
                 mCheckInPref.setChecked(true);
             } else {
                 mCheckInPref.setChecked(false);
-            }
-            if (g0.equals("1") && g3.equals("1") && g6.equals("1")) {
-                m3gSpeedPref.setChecked(true);
-            } else {
-                m3gSpeedPref.setChecked(false);
             }
             if (!gpu.equals(DISABLE)) {
                 mGpuPref.setChecked(true);
