@@ -514,12 +514,8 @@ public class Navbar extends SettingsPreferenceFragment implements
                     || (requestCode == REQUEST_PICK_LANDSCAPE_ICON)) {
 
                 String iconName = "navbar_icon_" + mPendingIconIndex + ".png";
-                FileOutputStream iconStream = null;
                 try {
-                    iconStream = mContext.openFileOutput(iconName, Context.MODE_WORLD_READABLE);
-                } catch (FileNotFoundException e) {
-                    return; // NOOOOO
-                }
+                FileOutputStream iconStream = mContext.openFileOutput(iconName, Context.MODE_WORLD_READABLE);
 
                 Uri selectedImageUri = getTempFileUri();
                 Log.e(TAG, "Selected image path: " + selectedImageUri.getPath());
@@ -531,6 +527,10 @@ public class Navbar extends SettingsPreferenceFragment implements
                         Settings.System.NAVIGATION_CUSTOM_APP_ICONS[mPendingIconIndex],
                         Uri.fromFile(
                                 new File(mContext.getFilesDir(), iconName)).getPath());
+                } catch (FileNotFoundException e) {
+                Log.e(TAG, "image not found: " + e);
+                return; // NOOOOO
+                }
 
                 File f = new File(selectedImageUri.getPath());
                 if (f.exists())
